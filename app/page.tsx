@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import styles from "./page.module.css";
+import DomainSection from "./components/domain";
 
 const TIMELINE_DATA = [
   { date: "March 15, 2026", title: "Registration Opens", desc: "Sign up with your team and secure your spot in SYNERGY 3.0." },
@@ -10,15 +11,6 @@ const TIMELINE_DATA = [
   { date: "March 28–29, 2026", title: "Hackathon Begins", desc: "24-hour coding marathon. Build, innovate, and collaborate." },
   { date: "March 29, 2026", title: "Submissions Due", desc: "Submit your projects for review before the deadline." },
   { date: "March 30, 2026", title: "Judging & Awards", desc: "Top projects get showcased. Winners announced live." },
-];
-
-const DOMAINS_DATA = [
-  { icon: "🤖", title: "Artificial Intelligence", desc: "Build intelligent systems using machine learning, NLP, and computer vision to solve real-world problems." },
-  { icon: "🌐", title: "Web3 & Blockchain", desc: "Create decentralized applications, smart contracts, and explore the future of distributed systems." },
-  { icon: "🛡️", title: "Cybersecurity", desc: "Design security tools, vulnerability scanners, and defend against modern cyber threats." },
-  { icon: "📱", title: "IoT & Hardware", desc: "Connect the physical and digital worlds with innovative IoT solutions and embedded systems." },
-  { icon: "🌿", title: "Sustainability", desc: "Leverage technology to address environmental challenges and build a greener future." },
-  { icon: "🏥", title: "HealthTech", desc: "Innovate in healthcare with AI diagnostics, telemedicine, and patient care solutions." },
 ];
 
 const GUIDELINES_DATA = [
@@ -116,23 +108,7 @@ export default function Home() {
       </section>
 
       {/* ===== DOMAINS ===== */}
-      <section className="section" id="domains">
-        <div className="container">
-          <h2 className="section-title">Domains</h2>
-          <p className="section-subtitle">
-            Choose your track and build something extraordinary in one of these exciting domains.
-          </p>
-          <div className={styles.domainsGrid}>
-            {DOMAINS_DATA.map((d, i) => (
-              <div key={i} className={styles.domainCard}>
-                <span className={styles.domainIcon}>{d.icon}</span>
-                <h3 className={styles.domainCardTitle}>{d.title}</h3>
-                <p className={styles.domainCardDesc}>{d.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <DomainSection />
 
       {/* ===== PRIZES ===== */}
       <section className="section" id="prizes">
