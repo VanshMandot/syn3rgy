@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
 import BorderlandTimeline from "./components/BorderlandTimeline";
@@ -38,13 +38,18 @@ const FAQ_DATA = [
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [isMounted, setIsMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   return (
     <main>
       {/* ===== HERO ===== */}
       <section className={styles.hero}>
         <div className={styles.heroParticles}>
-          {[...Array(20)].map((_, i) => (
+          {isMounted && [...Array(20)].map((_, i) => (
             <div
               key={i}
               className={styles.particle}

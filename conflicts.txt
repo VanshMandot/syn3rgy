@@ -1,6 +1,0 @@
-﻿.gitignore
-README.md
-app/layout.tsx
-package-lock.json
-package.json
-tsconfig.json

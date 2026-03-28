@@ -1,6 +1,0 @@
-﻿  master
-* synergy-timeline
-  remotes/origin/HEAD -> origin/main
-  remotes/origin/domain
-  remotes/origin/main
-  remotes/origin/synergy-timeline
