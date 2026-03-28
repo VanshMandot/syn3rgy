@@ -2,8 +2,8 @@
 
 import "./timeline.css";
 import React, { useState, useEffect } from "react";
-import TimelineCard, { DayData } from "./components/TimelineCard";
-import CardDeck from "./components/CardDeck";
+import TimelineCard, { DayData } from "../components/TimelineCard";
+import CardDeck from "../components/CardDeck";
 
 const hackathonDays: DayData[] = [
   {
