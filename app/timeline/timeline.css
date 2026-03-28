@@ -1,0 +1,158 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'CloisterBlack';
+  src: url('/fonts/CloisterBlack.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --background: #050508;
+  --foreground: #ededed;
+  --crimson: #d90429;
+  --crimson-dark: #8d0801;
+  --gold: #ffd60a;
+  --glass-bg: rgba(10, 10, 15, 0.6);
+  --glass-border: rgba(217, 4, 41, 0.4);
+}
+
+/* stylelint-disable-next-line at-rule-no-unknown */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-crimson: var(--crimson);
+  --color-crimson-dark: var(--crimson-dark);
+  --color-gold: var(--gold);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-orbitron: var(--font-orbitron);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'CloisterBlack', var(--font-sans), sans-serif;
+  overflow-x: hidden;
+  letter-spacing: 0.05em;
+  scroll-behavior: smooth;
+}
+
+/* Hide Scrollbar */
+::-webkit-scrollbar {
+  display: none;
+}
+html { scrollbar-width: none; }
+
+/* ========== Timeline Container ========== */
+.snap-container {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.snap-section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 0;
+}
+
+/* ========== Cinematic Elements ========== */
+.bg-vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(5, 5, 8, 0.8) 60%, rgba(2, 2, 4, 1) 100%);
+  pointer-events: none;
+  z-index: 10;
+}
+
+.bg-scanlines {
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.02) 2px,
+    rgba(255, 255, 255, 0.02) 4px
+  );
+  pointer-events: none;
+  z-index: 11;
+  opacity: 0.4;
+}
+
+.bg-blur-image {
+  position: fixed;
+  inset: -5%;
+  background-image: url('/wmremove-transformed.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px) brightness(0.7);
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ========== Glass Panel & Neumorphism ========== */
+.cyber-glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 0 30px rgba(217, 4, 41, 0.1), inset 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+/* ========== Text Shadows ========== */
+.borderland-glow {
+  text-shadow: 0 0 10px rgba(217, 4, 41, 0.8), 0 0 30px rgba(217, 4, 41, 0.4);
+}
+
+.borderland-gold-glow {
+  text-shadow: 0 0 10px rgba(255, 214, 10, 0.8), 0 0 30px rgba(255, 214, 10, 0.4);
+}
+
+/* ========== Particles Animation ========== */
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.2;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-20vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: fixed;
+  bottom: -50px;
+  color: var(--crimson);
+  font-size: 24px;
+  opacity: 0;
+  z-index: 5;
+  pointer-events: none;
+  animation: floatUp 15s linear infinite;
+}
+
+@keyframes pulseOpacity {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+.pulse-opacity {
+  animation: pulseOpacity 2s ease-in-out infinite;
+}

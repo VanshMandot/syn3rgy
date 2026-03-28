@@ -1,0 +1,29 @@
+﻿On branch synergy-timeline
+Your branch is up to date with 'origin/synergy-timeline'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   app/components/Card.tsx
+	modified:   app/components/CardDeck.tsx
+	modified:   app/globals.css
+	modified:   app/page.tsx
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	app/components/TimelineCard.tsx
+	branches.txt
+	diff_main.txt
+	files_head.txt
+	files_main.txt
+	main_tree.txt
+	public/bg-landscape.png
+	public/bg-portrait.png
+	public/billboard.png
+	public/facedown.png
+	public/table.png
+	public/timelinecard.png
+	status.txt
+	status_utf8.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")

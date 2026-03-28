@@ -87,43 +87,45 @@ export default function Card({ day, index }: CardProps) {
       className={`scroll-reveal-card ${isVisible ? "revealed" : ""}`}
       style={{ animationDelay: `${index * 0.15}s` }}
     >
-      {/* The playing card pack (scaled down perfectly for mobile) */}
-      <div className="flex-shrink-0 flex items-center justify-center w-[250px] h-[300px] md:w-[380px] md:h-[460px]">
-        <div className="card-visual relative origin-center scale-[0.65] md:scale-100" style={{ width: "380px", height: "460px" }}>
-          {/* Background Cards */}
-          {backgroundSuits.map((config, i) => (
+      {/* The playing card pack */}
+      <div className="card-visual flex-shrink-0 relative" style={{ width: "280px", height: "340px" }}>
+        <div className="absolute inset-0 origin-center" style={{ transform: "scale(0.6)", transformOrigin: "center center" }}>
+          <div className="relative" style={{ width: "460px", height: "500px", left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}>
+            {/* Background Cards */}
+            {backgroundSuits.map((config, i) => (
+              <div
+                key={i}
+                className="absolute rounded-2xl border-2 border-[var(--crimson)] bg-[#1a1a2e] overflow-hidden"
+                style={{
+                  width: "300px",
+                  height: "420px",
+                  left: "50%",
+                  top: "50%",
+                  transform: `translate(-50%, -50%) rotate(${config.rotate}deg) translate(${config.x}px, ${config.y}px)`,
+                  zIndex: i,
+                  boxShadow: "0 6px 20px rgba(0, 0, 0, 0.5)",
+                }}
+              >
+                {renderCardFace(config.symbol, config.color)}
+              </div>
+            ))}
+
+            {/* Top Card (Clubs) */}
             <div
-              key={i}
-              className="absolute rounded-2xl border-2 border-[var(--crimson)] bg-[#1a1a2e]"
+              className="absolute card-glow rounded-2xl border-2 border-[var(--crimson)] bg-[#1a1a2e] overflow-hidden"
               style={{
                 width: "300px",
                 height: "420px",
                 left: "50%",
                 top: "50%",
-                transform: `translate(-50%, -50%) rotate(${config.rotate}deg) translate(${config.x}px, ${config.y}px)`,
-                zIndex: i,
-                boxShadow: "0 6px 20px rgba(0, 0, 0, 0.5)",
+                transform: `translate(-50%, -50%) rotate(12deg) translate(38px, 22px)`,
+                zIndex: 10,
               }}
             >
-              {renderCardFace(config.symbol, config.color)}
+              {renderCardFace("♣", "var(--crimson)")}
             </div>
-          ))}
-
-          {/* Top Card (Clubs) */}
-          <div
-            className="absolute card-glow rounded-2xl border-2 border-[var(--crimson)] bg-[#1a1a2e]"
-            style={{
-              width: "300px",
-            height: "420px",
-            left: "50%",
-            top: "50%",
-            transform: `translate(-50%, -50%) rotate(12deg) translate(38px, 22px)`,
-            zIndex: 10,
-          }}
-        >
-          {renderCardFace("♣", "var(--crimson)")}
+          </div>
         </div>
-      </div>
       </div>
 
       {/* Revealed content — inline beside the card */}

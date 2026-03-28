@@ -1,403 +1,233 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import Card from "./Card";
-import { DayData } from "./DayDetail";
+import React, { useEffect, useState } from "react";
 
-interface CardDeckProps {
-  days: DayData[];
+interface Props {
+  images: string[];
+  onFlyingStart: () => void;
+  onComplete: () => void;
 }
 
-// Animation phases
-type Phase = "stacked" | "shuffling" | "dealing" | "dealt";
+type Phase = "stacked" | "split" | "merge" | "scattering" | "holding" | "flying" | "done";
 
-// Card animation state
-interface AnimCard {
+interface CardState {
+  id: string;
+  image?: string;
+  isTitle?: boolean;
   x: number;
   y: number;
-  rotation: number;
-  zIndex: number;
+  rot: number;
+  z: number;
   scale: number;
   opacity: number;
 }
 
-// Easing functions
-function easeInOutCubic(t: number): number {
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-}
-
-function easeOutBack(t: number): number {
-  const c1 = 1.70158;
-  const c3 = c1 + 1;
-  return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
-}
-
-const TOTAL_DECK = 12;
-const CARD_W = 300;
-const CARD_H = 420;
-
-export default function CardDeck({ days }: CardDeckProps) {
+export default function CardDeck({ images, onFlyingStart, onComplete }: Props) {
   const [phase, setPhase] = useState<Phase>("stacked");
-  const [deckCards, setDeckCards] = useState<AnimCard[]>([]);
-  const [dealPositions, setDealPositions] = useState<AnimCard[]>([]);
-  const animFrameRef = useRef<number>(0);
+  const [cards, setCards] = useState<CardState[]>([]);
 
-  // Initialize stacked deck
   useEffect(() => {
-    const cards: AnimCard[] = [];
-    for (let i = 0; i < TOTAL_DECK; i++) {
-      cards.push({
+    // Phase 1: Stacked
+    const initialCards: CardState[] = [
+      ...images.map((img, i) => ({
+        id: `img-${i}`,
+        image: img,
+        isTitle: false,
         x: 0,
-        y: -i * 0.8,
-        rotation: (Math.random() - 0.5) * 2,
-        zIndex: i,
+        y: 0,
+        rot: (Math.random() - 0.5) * 10,
+        z: i,
         scale: 1,
         opacity: 1,
-      });
-    }
-    setDeckCards(cards);
-    const timer = setTimeout(() => setPhase("shuffling"), 600);
-    return () => clearTimeout(timer);
-  }, []);
-
-  // ===== SHUFFLE ANIMATION =====
-  useEffect(() => {
-    if (phase !== "shuffling") return;
-
-    const cards = [...deckCards];
-    const duration = 1800;
-    const splitDuration = 500;
-    const mergeDuration = 1000;
-    const settleDuration = 300;
-    let startTime: number | null = null;
-
-    const piles: ("left" | "right")[] = cards.map(() =>
-      Math.random() > 0.5 ? "left" : "right"
-    );
-
-    const leftIndices = piles
-      .map((p, i) => (p === "left" ? i : -1))
-      .filter((i) => i >= 0);
-    const rightIndices = piles
-      .map((p, i) => (p === "right" ? i : -1))
-      .filter((i) => i >= 0);
-
-    function animate(timestamp: number) {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-
-      const newCards = cards.map((card, i) => {
-        const pile = piles[i];
-        const pileOffset = pile === "left" ? -1 : 1;
-
-        if (elapsed < splitDuration) {
-          const t = easeInOutCubic(elapsed / splitDuration);
-          return {
-            ...card,
-            x: pileOffset * 100 * t,
-            y: -i * 0.8 + (Math.random() - 0.5) * 2 * t,
-            rotation: pileOffset * 8 * t + (Math.random() - 0.5) * 3 * t,
-            zIndex: i,
-            scale: 1,
-            opacity: 1,
-          };
-        } else if (elapsed < splitDuration + mergeDuration) {
-          const mergeT = (elapsed - splitDuration) / mergeDuration;
-          const cardDelay = (i / cards.length) * 0.6;
-          const cardT = Math.max(0, Math.min(1, (mergeT - cardDelay) / 0.4));
-          const smoothT = easeInOutCubic(cardT);
-          const leftIdx = leftIndices.indexOf(i);
-          const rightIdx = rightIndices.indexOf(i);
-          const newZ =
-            leftIdx >= 0 ? leftIdx * 2 : rightIdx >= 0 ? rightIdx * 2 + 1 : i;
-
-          return {
-            ...card,
-            x: pileOffset * 100 * (1 - smoothT),
-            y: -(newZ * 0.8) * smoothT + (-i * 0.8) * (1 - smoothT),
-            rotation:
-              (pileOffset * 8 + (Math.random() - 0.5) * 3) * (1 - smoothT),
-            zIndex: Math.round(newZ * smoothT + i * (1 - smoothT)),
-            scale: 1,
-            opacity: 1,
-          };
-        } else if (elapsed < duration) {
-          const settleT = easeInOutCubic(
-            (elapsed - splitDuration - mergeDuration) / settleDuration
-          );
-          const leftIdx = leftIndices.indexOf(i);
-          const rightIdx = rightIndices.indexOf(i);
-          const newZ =
-            leftIdx >= 0 ? leftIdx * 2 : rightIdx >= 0 ? rightIdx * 2 + 1 : i;
-
-          return {
-            ...card,
-            x: 0,
-            y: -newZ * 0.8 * (1 - settleT * 0.5),
-            rotation: (Math.random() - 0.5) * 1 * (1 - settleT),
-            zIndex: newZ,
-            scale: 1,
-            opacity: 1,
-          };
-        }
-        return card;
-      });
-
-      setDeckCards(newCards);
-
-      if (elapsed < duration) {
-        animFrameRef.current = requestAnimationFrame(animate);
-      } else {
-        setPhase("dealing");
-      }
-    }
-
-    animFrameRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animFrameRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase]);
-
-  // ===== DEAL ANIMATION =====
-  useEffect(() => {
-    if (phase !== "dealing") return;
-
-    const duration = 1200;
-    let startTime: number | null = null;
-
-    // Cards deal to vertical positions — we just need them centered, layout handled by CSS
-    const gap = CARD_H + 140; // card height + generous gap for content
-    const targets = [
-      { x: 0, y: 0, rotation: 0 },
-      { x: 0, y: gap, rotation: 0 },
-      { x: 0, y: gap * 2, rotation: 0 },
+      })),
+      {
+        id: "title",
+        isTitle: true,
+        x: 0,
+        y: 0,
+        rot: 0,
+        z: 999, // 12th card (Timeline)
+        scale: 1,
+        opacity: 1,
+      },
     ];
+    setCards(initialCards);
 
-    function animate(timestamp: number) {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-
-      const finalPositions: AnimCard[] = targets.map((target, i) => {
-        const delay = i * 200;
-        const cardElapsed = Math.max(0, elapsed - delay);
-        const t = Math.min(1, cardElapsed / (duration - delay));
-        const smoothT = easeOutBack(t);
-
-        const arcHeight = -120 - i * 30;
-        const arcY = arcHeight * Math.sin(Math.PI * t);
-        const spinRotation = 360 * (1 - t) * (i % 2 === 0 ? 1 : -1);
-
-        return {
-          x: target.x * smoothT,
-          y: target.y * smoothT + arcY * (1 - t),
-          rotation: spinRotation * (1 - smoothT),
-          zIndex: 100 + i,
-          scale: 0.6 + 0.4 * smoothT,
-          opacity: Math.min(1, t * 3),
-        };
-      });
-
-      setDealPositions(finalPositions);
-
-      setDeckCards((prev) =>
-        prev.map((card) => ({
-          ...card,
-          opacity: Math.max(0, 1 - elapsed / 600),
-          scale: Math.max(0.5, 1 - elapsed / 2000),
-        }))
+    // Sequence the animation
+    const t1 = setTimeout(() => {
+      // Phase 2: Split (Shuffling Part 1)
+      setPhase("split");
+      setCards((prev) =>
+        prev.map((c) => {
+          if (c.isTitle) return { ...c, rot: 0 };
+          let xTarget = 120 + Math.random() * 80;
+          if (Math.random() < 0.5) xTarget *= -1;
+          return {
+            ...c,
+            x: xTarget,
+            y: (Math.random() - 0.5) * 40,
+            rot: (Math.random() - 0.5) * 20,
+          };
+        })
       );
 
-      if (elapsed < duration + 200) {
-        animFrameRef.current = requestAnimationFrame(animate);
-      } else {
-        setDealPositions(
-          targets.map((target, i) => ({
-            x: target.x,
-            y: target.y,
-            rotation: 0,
-            zIndex: 100 + i,
-            scale: 1,
-            opacity: 1,
+      const t2 = setTimeout(() => {
+        // Phase 3: Merge (Shuffling Part 2)
+        setPhase("merge");
+        setCards((prev) =>
+          prev.map((c, i) => ({
+            ...c,
+            x: 0,
+            y: 0,
+            rot: c.isTitle ? 0 : (Math.random() - 0.5) * 10,
           }))
         );
-        setDeckCards([]);
-        setPhase("dealt");
-      }
-    }
 
-    animFrameRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animFrameRef.current);
-  }, [phase]);
+          const t3 = setTimeout(() => {
+          // Phase 4: Scattering Phase (1000ms duration)
+          setPhase("scattering");
+          setCards((prev) =>
+            prev.map((c, i) => {
+              if (c.isTitle) {
+                return { ...c, x: 0, y: 0, rot: 0, scale: 1.4, z: 999 };
+              }
+              const angle = ((Math.PI * 2) / images.length) * i;
+              const radius = 220 + Math.random() * 120;
+              return {
+                ...c,
+                x: Math.cos(angle) * radius,
+                y: Math.sin(angle) * radius,
+                rot: (Math.random() - 0.5) * 60,
+                scale: 0.8,
+                opacity: 1, // Fully visible playing cards
+              };
+            })
+          );
 
-  const handleReshuffle = React.useCallback(() => {
-    setPhase("stacked");
-    setDealPositions([]);
-    setDeckCards([]);
-    const cards: AnimCard[] = [];
-    for (let i = 0; i < TOTAL_DECK; i++) {
-      cards.push({
-        x: 0,
-        y: -i * 0.8,
-        rotation: (Math.random() - 0.5) * 2,
-        zIndex: i,
-        scale: 1,
-        opacity: 1,
-      });
-    }
-    setDeckCards(cards);
-    setTimeout(() => setPhase("shuffling"), 400);
-  }, []);
+          const t4 = setTimeout(() => {
+            // Phase 5: Holding Phase (3000ms)
+            setPhase("holding");
 
-  const isDealt = phase === "dealt";
+            const t5 = setTimeout(() => {
+              // Phase 6: Flying Phase (1200ms)
+              setPhase("flying");
+              onFlyingStart(); // Trigger header fade in
+
+              setCards((prev) =>
+                prev.map((c, i) => {
+                  if (c.isTitle) {
+                    // Timeline flies towards header and fades/shrinks
+                    return { ...c, y: -400, scale: 0.5, opacity: 0 };
+                  }
+                  // Day cards deal to their timeline layout
+                  let yPos = window.innerHeight * 0.6;
+                  if (i < 4) yPos = window.innerHeight * 0.6;
+                  else if (i < 8) yPos = window.innerHeight * 1.2;
+                  else yPos = window.innerHeight * 1.8;
+                  
+                  return {
+                    ...c,
+                    x: (Math.random() - 0.5) * 200,
+                    y: yPos,
+                    rot: (Math.random() - 0.5) * 45,
+                    opacity: 0,
+                    scale: 0.5,
+                  };
+                })
+              );
+
+              const t6 = setTimeout(() => {
+                setPhase("done");
+                onComplete();
+              }, 1200); // Wait for flying animation
+              
+            }, 3000); // Holding duration
+
+          }, 1000); // Scattering duration
+
+        }, 600); // Shuffling merge duration
+
+      }, 500); // Shuffling split duration
+
+    }, 500); // Initial delay
+
+    return () => clearInterval(t1);
+  }, [images, onFlyingStart, onComplete]);
+
+  if (phase === "done") return null;
 
   return (
-    <div className="relative flex flex-col items-center justify-center origin-center scale-[0.55] sm:scale-[0.75] md:scale-100">
-      {/* Shuffle + deal animation area */}
-      {!isDealt && (
-        <div
-          className="relative"
-          style={{
-            width: `${CARD_W + 240}px`,
-            height: `${CARD_H + 40}px`,
-          }}
-        >
-          {deckCards.map((card, i) => (
+    <div
+      className="fixed inset-0 z-[100] flex items-center justify-center transition-colors duration-[1200ms]"
+      style={{ 
+        backgroundColor: phase === "flying" ? "transparent" : "#050508",
+        pointerEvents: "none"
+      }}
+    >
+      {/* Background vignette fades out when flying so timeline shows */}
+      <div 
+        className="absolute inset-0 bg-vignette transition-opacity duration-[1200ms]" 
+        style={{ opacity: phase === "flying" ? 0 : 1 }}
+      />
+
+      <div className="relative w-[160px] h-[224px] sm:w-[200px] sm:h-[280px] perspective-[1000px]">
+        {cards.map((card) => {
+          const isFacedown = ["stacked", "split", "merge"].includes(phase);
+            
+          return (
             <div
-              key={`deck-${i}`}
-              className="absolute rounded-2xl"
+              key={card.id}
+              className="absolute inset-0 transition-all rounded-2xl"
               style={{
-                width: `${CARD_W}px`,
-                height: `${CARD_H}px`,
-                left: "50%",
-                top: "50%",
-                transform: `translate(-50%, -50%) translate(${card.x}px, ${card.y}px) rotate(${card.rotation}deg) scale(${card.scale})`,
-                zIndex: card.zIndex,
+                zIndex: card.z,
+                transform: `translate(${card.x}px, ${card.y}px) rotate(${card.rot}deg) scale(${card.scale}) rotateY(${isFacedown ? 180 : 0}deg)`,
                 opacity: card.opacity,
-                transition: phase === "stacked" ? "all 0.3s ease" : "none",
+                transitionDuration: phase === "flying" ? "1.2s" : phase === "scattering" ? "1s" : phase === "split" ? "0.5s" : "0.6s",
+                transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                boxShadow: isFacedown ? "0 10px 30px rgba(0,0,0,0.8)" : (card as any).boxShadow || "0 10px 40px rgba(0,0,0,0.6)",
+                transformStyle: "preserve-3d",
               }}
             >
-              <div
-                className="w-full h-full rounded-2xl border-2 border-[var(--crimson)] card-back-pattern"
-                style={{ boxShadow: "0 4px 20px rgba(0,0,0,0.4)" }}
+              {/* Front Face (Actual Card - 0deg) */}
+              <div 
+                className={`absolute inset-0 w-full h-full rounded-2xl overflow-hidden ${
+                  card.isTitle ? "bg-transparent" : "bg-[#0a0a0a] border border-[var(--crimson)]"
+                }`}
+                style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(0deg)" }}
               >
-                <div className="w-full h-full flex items-center justify-center">
-                  <div
-                    className="text-4xl"
-                    style={{
-                      color: "var(--crimson)",
-                      opacity: 0.6,
-                      filter: "drop-shadow(0 0 6px rgba(230,57,70,0.3))",
-                    }}
-                  >
-                    ♣
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {dealPositions.map((pos, i) => {
-            if (i >= days.length) return null;
-            const day = days[i];
-            return (
-              <div
-                key={`deal-${day.dayNumber}`}
-                className="absolute"
-                style={{
-                  left: "50%",
-                  top: 0,
-                  transform: `translate(-50%, 0) translate(${pos.x}px, ${pos.y}px) rotate(${pos.rotation}deg) scale(${pos.scale})`,
-                  zIndex: pos.zIndex,
-                  opacity: pos.opacity,
-                }}
-              >
-                {day.cardImages?.["♣"] ? (
-                  <div
-                    className="card-glow relative rounded-2xl overflow-hidden border-2 border-[var(--crimson)]"
-                    style={{ width: `${CARD_W}px`, height: `${CARD_H}px` }}
-                  >
-                    <img
-                      src={day.cardImages["♣"]}
-                      alt={`${day.cardValue} of Clubs`}
-                      className="w-full h-full object-cover rounded-2xl"
-                      draggable={false}
-                    />
-                  </div>
+                {card.isTitle ? (
+                  <img
+                    src="/timelinecard.png"
+                    alt="Timeline Title Card"
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                  />
                 ) : (
-                  <div
-                    className="card-glow relative rounded-2xl border-2 border-[var(--crimson)]"
-                    style={{ width: `${CARD_W}px`, height: `${CARD_H}px` }}
-                  >
-                    <div
-                      className="absolute inset-0 rounded-2xl flex flex-col justify-between p-3"
-                      style={{
-                        background:
-                          "linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
-                      }}
-                    >
-                      <div className="flex flex-col items-start leading-none">
-                        <span className="text-xl font-bold" style={{ color: "var(--crimson)" }}>
-                          {day.cardValue}
-                        </span>
-                        <span className="text-lg" style={{ color: "var(--crimson)" }}>♣</span>
-                      </div>
-                      <div className="flex flex-col items-center justify-center flex-1">
-                        <span
-                          className="text-4xl mb-1"
-                          style={{
-                            color: "var(--crimson)",
-                          }}
-                        >
-                          ♣
-                        </span>
-                        <span
-                          className="text-[10px] font-semibold tracking-[0.25em] uppercase mt-1"
-                          style={{ color: "var(--gold)" }}
-                        >
-                          Day {day.dayNumber}
-                        </span>
-                      </div>
-                      <div className="flex flex-col items-end leading-none rotate-180">
-                        <span className="text-xl font-bold" style={{ color: "var(--crimson)" }}>
-                          {day.cardValue}
-                        </span>
-                        <span className="text-lg" style={{ color: "var(--crimson)" }}>♣</span>
-                      </div>
-                      <div
-                        className="absolute inset-2 rounded-xl border pointer-events-none"
-                        style={{ borderColor: "rgba(230, 57, 70, 0.15)" }}
-                      />
-                    </div>
-                  </div>
+                  <img
+                    src={card.image!}
+                    alt="Card"
+                    className="w-full h-full object-cover"
+                    draggable={false}
+                  />
                 )}
               </div>
-            );
-          })}
-        </div>
-      )}
 
-      {/* After dealt: scrollable card list with inline content */}
-      {isDealt && (
-        <div className="dealt-cards-container">
-          {days.map((day, i) => (
-            <Card key={day.dayNumber} day={day} index={i} />
-          ))}
-
-          {/* Reshuffle button */}
-          <button
-            onClick={handleReshuffle}
-            className="mt-8 px-5 py-2 rounded-full text-xs font-mono uppercase tracking-widest
-                       border border-[var(--crimson)] text-[var(--crimson)]
-                       hover:bg-[var(--crimson)] hover:text-white
-                       transition-all duration-300 cursor-pointer mx-auto block"
-            style={{
-              opacity: 0,
-              animation: "fadeIn 0.5s ease 0.8s forwards",
-            }}
-          >
-            ♣ Reshuffle
-          </button>
-        </div>
-      )}
+              {/* Back Face (Facedown - 180deg) */}
+              <div 
+                className="absolute inset-0 w-full h-full rounded-2xl overflow-hidden bg-[#0a0a0a] border border-[var(--crimson)]"
+                style={{ backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+              >
+                <img
+                  src="/facedown.png"
+                  alt="Facedown Card"
+                  className="w-full h-full object-cover"
+                  draggable={false}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
