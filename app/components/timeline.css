@@ -16,6 +16,7 @@
   --gold: #ffd60a;
   --glass-bg: rgba(10, 10, 15, 0.6);
   --glass-border: rgba(217, 4, 41, 0.4);
+  --font-cloister: 'CloisterBlack', var(--font-sans), sans-serif;
 }
 
 /* stylelint-disable-next-line at-rule-no-unknown */
@@ -41,7 +42,7 @@
   overflow-x: hidden;
   background: var(--background);
   color: var(--foreground);
-  font-family: 'CloisterBlack', var(--font-sans), sans-serif;
+  font-family: var(--font-cloister);
   letter-spacing: 0.05em;
   scroll-behavior: smooth;
 }
