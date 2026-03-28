@@ -204,7 +204,10 @@ export default function BorderlandTimeline() {
         <header className="w-full relative z-20 flex flex-col items-center justify-center text-center px-4 pt-16 sm:pt-24 pb-8 sm:pb-12">
           <div className="flex items-center gap-3 sm:gap-4 mb-2 sm:mb-4">
             <span className="text-3xl sm:text-5xl text-[var(--crimson)] borderland-glow">♣</span>
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white borderland-glow tracking-widest text-shadow uppercase">
+            <h1 
+              className="text-4xl sm:text-6xl md:text-7xl font-extrabold text-white borderland-glow tracking-widest text-shadow uppercase"
+              style={{ fontFamily: 'var(--font-cloister)' }}
+            >
               Timeline
             </h1>
             <span className="text-3xl sm:text-5xl text-[var(--crimson)] borderland-glow">♣</span>
