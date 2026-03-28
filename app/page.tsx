@@ -1,16 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import styles from "./page.module.css";
+import BorderlandTimeline from "./components/BorderlandTimeline";
 
-const TIMELINE_DATA = [
-  { date: "March 15, 2026", title: "Registration Opens", desc: "Sign up with your team and secure your spot in SYNERGY 3.0." },
-  { date: "March 25, 2026", title: "Registration Closes", desc: "Last day to register. Late entries will not be accepted." },
-  { date: "March 28, 2026", title: "Opening Ceremony", desc: "Kickoff with keynote speakers and event orientation." },
-  { date: "March 28–29, 2026", title: "Hackathon Begins", desc: "24-hour coding marathon. Build, innovate, and collaborate." },
-  { date: "March 29, 2026", title: "Submissions Due", desc: "Submit your projects for review before the deadline." },
-  { date: "March 30, 2026", title: "Judging & Awards", desc: "Top projects get showcased. Winners announced live." },
-];
+
 
 const DOMAINS_DATA = [
   { icon: "🤖", title: "Artificial Intelligence", desc: "Build intelligent systems using machine learning, NLP, and computer vision to solve real-world problems." },
@@ -92,28 +87,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ===== TIMELINE ===== */}
-      <section className={`section ${styles.timeline}`} id="timeline">
-        <div className="container">
-          <h2 className="section-title">Timeline</h2>
-          <p className="section-subtitle">
-            Key milestones and dates for SYNERGY 3.0. Mark your calendars!
-          </p>
-          <div className={styles.timelineTrack}>
-            <div className={styles.timelineLine} />
-            {TIMELINE_DATA.map((item, i) => (
-              <div key={i} className={styles.timelineItem}>
-                <div className={styles.timelineDot} />
-                <div className={styles.timelineCard}>
-                  <p className={styles.timelineDate}>{item.date}</p>
-                  <h3 className={styles.timelineCardTitle}>{item.title}</h3>
-                  <p className={styles.timelineCardDesc}>{item.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* ===== BORDERLAND TIMELINE ===== */}
+      <BorderlandTimeline />
 
       {/* ===== DOMAINS ===== */}
       <section className="section" id="domains">

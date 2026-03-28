@@ -2,8 +2,8 @@
 
 import "./timeline.css";
 import React, { useState, useEffect } from "react";
-import TimelineCard, { DayData } from "../components/TimelineCard";
-import CardDeck from "../components/CardDeck";
+import TimelineCard, { DayData } from "./TimelineCard";
+import CardDeck from "./CardDeck";
 
 const hackathonDays: DayData[] = [
   {
@@ -135,23 +135,27 @@ export default function BorderlandTimeline() {
   const [introDone, setIntroDone] = useState(false);
   const [headerVisible, setHeaderVisible] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+  const sectionRef = React.useRef<HTMLElement>(null);
   
   useEffect(() => {
     setIsMounted(true);
-    // Force the browser to reset scroll position on reload
-    if (typeof window !== "undefined") {
-      // Disable native browser scroll restoration
-      if ('scrollRestoration' in window.history) {
-        window.history.scrollRestoration = 'manual';
-      }
-      
-      // Fire slightly after paint to override Next.js routing scroll behaviors
-      setTimeout(() => {
-        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
-      }, 50);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasEnteredViewport(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 } // Trigger when 20% of section is visible
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
+
+    return () => observer.disconnect();
   }, []);
   
   // Extract all 12 card images to pass into the intro deck shuffle
@@ -159,7 +163,7 @@ export default function BorderlandTimeline() {
 
   return (
     <>
-      {!introDone && (
+      {hasEnteredViewport && !introDone && (
         <CardDeck 
           images={allCardImages} 
           onFlyingStart={() => setHeaderVisible(true)}
@@ -167,7 +171,11 @@ export default function BorderlandTimeline() {
         />
       )}
       
-      <main className="snap-container bg-[#050508] relative overflow-hidden">
+      <section 
+        id="timeline-borderland" 
+        ref={sectionRef}
+        className="snap-container bg-[#050508] relative overflow-hidden w-full"
+      >
         {/* Cinematic Background Elements */}
         <div className="bg-blur-image pulse-opacity" />
         <div className="bg-vignette" />
@@ -210,7 +218,7 @@ export default function BorderlandTimeline() {
         {hackathonDays.map((day) => (
           <TimelineCard key={day.dayNumber} day={day} />
         ))}
-      </main>
+      </section>
     </>
   );
 }
