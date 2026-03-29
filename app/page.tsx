@@ -11,7 +11,6 @@ export default function Home() {
   const [hasStarted, setHasStarted] = useState(false);
   const [isFlipped, setIsFlipped] = useState(false);
   const [startVideo, setStartVideo] = useState(false);
-  const [enableSound, setEnableSound] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [glitch, setGlitch] = useState(false);
 
@@ -21,37 +20,20 @@ export default function Home() {
     if (!hasStarted) return;
 
     const videoTimer = setTimeout(() => setStartVideo(true), 1000); // Shifting sequence forward as text was removed
-    const soundTimer = setTimeout(() => setEnableSound(true), 3000);
 
     return () => {
       clearTimeout(videoTimer);
-      clearTimeout(soundTimer);
     };
   }, [hasStarted]);
 
   useEffect(() => {
     if (startVideo && videoRef.current) {
+      videoRef.current.muted = false; // Directly unmute original video track natively
       videoRef.current.play().catch((error) => {
         console.warn("Video autoplay prevented:", error);
       });
     }
   }, [startVideo]);
-
-  useEffect(() => {
-    if (enableSound && videoRef.current) {
-      videoRef.current.muted = false;
-
-      // Ominous Distorted Borderland Voice (Delayed 1.5s until AFTER the frame changes!)
-      setTimeout(() => {
-        window.speechSynthesis.cancel(); // Clear any trailing speech
-        const distUtterance = new SpeechSynthesisUtterance("Welcome to Borderland.");
-        distUtterance.pitch = 0.1; // Drops the voice to extreme demonic depths
-        distUtterance.rate = 0.6;  // Slows down the delivery menacingly
-        distUtterance.volume = 1.0;
-        window.speechSynthesis.speak(distUtterance);
-      }, 1500);
-    }
-  }, [enableSound]);
 
   const handleVideoEnded = () => {
     setGlitch(true);
