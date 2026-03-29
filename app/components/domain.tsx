@@ -10,7 +10,7 @@ const DOMAINS = [
     id: "web-app",
     label: "Web / App",
     title: "WEB DEV",
-    subtitle: "Playstyle: Smart, adaptive, problem-solver",
+    subtitle: "Playstyle: Smart, adaptive, problem-solver, detail-oriented, system thinker....",
     description: "A master of logic and structure, Arisu navigates complex systems with precision. He builds seamless digital worlds, solving problems step by step and turning chaos into clean, functional design.",
     image: "/characters/web.png",
     themeRgb: "0, 191, 255", // Neon Cyan
@@ -27,7 +27,7 @@ const DOMAINS = [
     id: "blockchain",
     label: "Blockchain",
     title: "BLOCKCHAIN",
-    subtitle: "Playstyle: Strategic, unpredictable, high IQ plays..",
+    subtitle: "Playstyle: Strategic, unpredictable, high IQ plays....",
     description: "Cold, calculated, and always ten steps ahead. Chishiya thrives in systems built on trust and deception, mastering decentralization, cryptography, and high-stakes decision-making.",
     image: "/characters/blockchain.png",
     themeRgb: "234, 179, 8", // Neon Gold/Yellow
@@ -44,7 +44,7 @@ const DOMAINS = [
     id: "cyber",
     label: "Cybersecurity",
     title: "CYBERSECURITY",
-    subtitle: "Playstyle: Defensive offense, sharp instincts, resilience.",
+    subtitle: "Playstyle: Defensive offense, sharp instincts, resilience....",
     description: "Fearless and relentless, Kuina protects systems like a warrior. She anticipates threats, breaks through defenses, and ensures nothing slips past unnoticed.",
     image: "/characters/cyber.png",
     themeRgb: "255, 0, 51", // Brutal Red
@@ -61,7 +61,7 @@ const DOMAINS = [
     id: "aiml",
     label: "AI / ML",
     title: "AI / ML",
-    subtitle: "Playstyle: Speed, adaptability, pattern recognition.",
+    subtitle: "Playstyle: Speed, adaptability, pattern recognition....",
     description: "Fast, precise, and always learning. Faith moves through data like a city skyline—adapting, predicting, and optimizing every step with intelligence and agility.",
     image: "/characters/aiml.png",
     themeRgb: "0, 255, 170", // Neon Mint Green
@@ -78,7 +78,7 @@ const DOMAINS = [
     id: "open-innovation",
     label: "Open Innovation",
     title: "OPEN INNOVATION",
-    subtitle: "Playstyle: Aggressive, decisive, team-driven.",
+    subtitle: "Playstyle: Aggressive, decisive, team-driven....",
     description: "A force of raw ambition and leadership. Aguni drives bold ideas into action, uniting people under pressure and pushing innovation beyond limits.",
     image: "/characters/open.png",
     themeRgb: "176, 38, 255", // Neon Purple
