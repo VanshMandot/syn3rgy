@@ -1,3 +1,242 @@
+/* ==============================================================
+   PART 1: NEW ANIMATED HERO COMPONENT (Smaller cards)
+============================================================== */
+.container {
+  height: 350vh; /* increased scroll area for smoother transition */
+  position: relative;
+  background-color: #050508; /* matte black */
+  padding: 0;
+  margin: 0;
+}
+
+.stickyArea {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bgOverlay {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  background-position: center;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bgOverlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 0%, #050508 70%);
+}
+
+.titleWrapper {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.glitchTitle {
+  font-family: 'Orbitron', 'Outfit', sans-serif;
+  font-size: clamp(4rem, 10vw, 12rem);
+  font-weight: 900;
+  color: rgba(255, 10, 50, 0.85);
+  text-transform: uppercase;
+  letter-spacing: 15px;
+  margin: 0;
+  text-align: center;
+  text-shadow: 
+    0 0 10px rgba(255, 10, 50, 0.8),
+    0 0 30px rgba(255, 10, 50, 0.6),
+    0 0 60px rgba(255, 10, 50, 0.4);
+  position: relative;
+}
+
+@keyframes glitch-anim {
+  0% { transform: translate(0); text-shadow: 0 0 10px rgba(255, 10, 50, 0.8), 0 0 30px rgba(255, 10, 50, 0.6); }
+  2% { transform: translate(-3px, 2px); text-shadow: -2px 0 rgba(0, 255, 255, 0.7), 2px 0 rgba(0, 255, 0, 0.7); }
+  4% { transform: translate(3px, -2px); }
+  6% { transform: translate(0); text-shadow: 0 0 10px rgba(255, 10, 50, 0.8), 0 0 30px rgba(255, 10, 50, 0.6); }
+  100% { transform: translate(0); }
+}
+
+.cardsCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Reduced card size */
+.card {
+  position: absolute;
+  width: 240px;
+  height: 360px; /* Slightly taller for card proportion */
+  background: rgba(10, 10, 15, 0.85);
+  background-image: radial-gradient(circle at center, rgba(255,255,255,0.05) 0%, transparent 70%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid transparent; 
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: -180px; /* half height */
+  left: -120px; /* half width */
+  transform-origin: center center;
+  transition: box-shadow 0.3s ease, background 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 6px; /* Inner border like a card */
+  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.card:hover {
+  background: rgba(15, 15, 25, 0.95);
+}
+
+.suitIconGraphic {
+  width: 24px;
+  height: 30px;
+  background-image: url('/dripping-suits.png');
+  background-size: 400% 100%; /* 4 columns for 4 suits */
+  background-repeat: no-repeat;
+  display: inline-block;
+  margin-top: 4px;
+  filter: drop-shadow(0 0 5px currentColor);
+}
+.suitIconGraphic.club { background-position: 0% center; }
+.suitIconGraphic.diamond { background-position: 33.33% center; }
+.suitIconGraphic.spade { background-position: 66.66% center; }
+.suitIconGraphic.heart { background-position: 100% center; }
+.suitIconGraphic.joker { background-image: none; display: flex; align-items: center; justify-content: center; }
+.suitIconGraphic.joker::before { content: "★"; font-size: 28px; line-height: 1; display: block; text-shadow: 0 0 10px currentColor; }
+
+.cardCornerTop {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Orbitron', 'Outfit', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1;
+  text-shadow: 0 0 10px currentColor;
+}
+
+.cardCornerBottom {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Orbitron', 'Outfit', sans-serif;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1;
+  transform: rotate(180deg);
+  text-shadow: 0 0 10px currentColor;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  z-index: 2;
+  margin-top: 10px;
+}
+
+.cardImg {
+  width: 140px;
+  height: 180px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 15px rgba(255,255,255,0.15));
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover .cardImg {
+  transform: scale(1.08) translateY(-5px);
+}
+
+.cardLabel {
+  font-family: 'Orbitron', 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+  margin: 0;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+  background: rgba(0,0,0,0.5);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+@media (max-width: 1200px) {
+  .card {
+     width: 200px;
+     height: 300px;
+     top: -150px;
+     left: -100px;
+  }
+  .cardImg { width: 120px; height: 150px; }
+  .cardCornerTop, .cardCornerBottom { font-size: 1rem; }
+  .cardLabel { font-size: 0.9rem; }
+}
+
+@media (max-width: 768px) {
+  .glitchTitle { font-size: 3rem; letter-spacing: 8px; }
+  .card {
+     width: 140px;
+     height: 200px;
+     top: -100px;
+     left: -70px;
+     border-width: 1px;
+     border-radius: 8px;
+  }
+  .cardImg { width: 80px; height: 100px; }
+  .cardCornerTop { top: 8px; left: 8px; font-size: 0.8rem; }
+  .cardCornerBottom { bottom: 8px; right: 8px; font-size: 0.8rem; }
+  .cardLabel { font-size: 0.6rem; letter-spacing: 1px; padding: 2px 6px;}
+}
+
+
+/* ==============================================================
+   PART 2: ORIGINAL DOMAINS COMPONENT (Character layout)
+============================================================== */
+
 .domainSection {
   min-height: 100vh;
   display: flex;
@@ -5,7 +244,8 @@
   justify-content: center;
   position: relative;
   overflow: hidden;
-  padding: 120px 0 80px;
+  padding: 80px 0 80px; /* Reduced top padding to connect smoothly */
+  background-color: #050508; /* Blend seamlessly from hero */
 }
 
 .domainHeader {
@@ -79,8 +319,6 @@
   gap: 20px;
 }
 
-
-
 .domainTitle {
   font-family: 'Outfit', sans-serif;
   font-size: clamp(2.5rem, 6vw, 4.5rem);
@@ -98,8 +336,6 @@
   background-clip: text;
 }
 
-
-
 .domainDesc {
   font-size: 0.95rem;
   color: var(--text-secondary);
@@ -113,6 +349,7 @@
 /* Domain selector cards */
 .domainCards {
   display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin-top: 32px;
 }
@@ -183,8 +420,6 @@
 .domainCard.active .domainCardLabel {
   color: #ffffff;
 }
-
-
 
 /* Right side — Character image */
 .domainRight {
@@ -260,10 +495,6 @@
 
   .domainCards {
     justify-content: center;
-  }
-
-  .registerBtn {
-    align-self: center;
   }
 
   .domainRight {
