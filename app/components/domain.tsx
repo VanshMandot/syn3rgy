@@ -14,6 +14,7 @@ const DOMAINS = [
     description: "A master of logic and structure, Arisu navigates complex systems with precision. He builds seamless digital worlds, solving problems step by step and turning chaos into clean, functional design.",
     image: "/characters/web.png",
     cardImage: "/cards/spade.png",
+    backImage: "/characters/blue.png",
     themeRgb: "0, 191, 255", // Neon Cyan
     stats: [
       { name: "HP", val: 92 },
@@ -32,6 +33,7 @@ const DOMAINS = [
     description: "Cold, calculated, and always ten steps ahead. Chishiya thrives in systems built on trust and deception, mastering decentralization, cryptography, and high-stakes decision-making.",
     image: "/characters/blockchain.png",
     cardImage: "/cards/club.png",
+    backImage: "/characters/yellow.png",
     themeRgb: "234, 179, 8", // Neon Gold/Yellow
     stats: [
       { name: "HP", val: 88 },
@@ -50,6 +52,7 @@ const DOMAINS = [
     description: "Fearless and relentless, Kuina protects systems like a warrior. She anticipates threats, breaks through defenses, and ensures nothing slips past unnoticed.",
     image: "/characters/cyber.png",
     cardImage: "/cards/heart.png",
+    backImage: "/characters/red.png",
     themeRgb: "255, 0, 51", // Brutal Red
     stats: [
       { name: "HP", val: 95 },
@@ -68,6 +71,7 @@ const DOMAINS = [
     description: "Fast, precise, and always learning. Faith moves through data like a city skyline—adapting, predicting, and optimizing every step with intelligence and agility.",
     image: "/characters/aiml.png",
     cardImage: "/cards/diamond.png",
+    backImage: "/characters/green.png",
     themeRgb: "0, 255, 170", // Neon Mint Green
     stats: [
       { name: "HP", val: 90 },
@@ -86,6 +90,7 @@ const DOMAINS = [
     description: "A force of raw ambition and leadership. Aguni drives bold ideas into action, uniting people under pressure and pushing innovation beyond limits.",
     image: "/characters/open.png",
     cardImage: "/cards/joker.png",
+    backImage: "/characters/purple.png",
     themeRgb: "176, 38, 255", // Neon Purple
     stats: [
       { name: "HP", val: 85 },
@@ -145,6 +150,13 @@ export default function HybridDomainPage() {
       clearInterval(typingInterval);
       clearInterval(countdownInterval);
     };
+  }, []);
+
+  useEffect(() => {
+    const autoplay = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % DOMAINS.length);
+    }, 7000);
+    return () => clearInterval(autoplay);
   }, []);
 
   const active = DOMAINS[activeIndex];
@@ -261,12 +273,12 @@ export default function HybridDomainPage() {
                     </div>
                   </div>
                   {!isActive && (
-                    <div className={styles.cardSuitContainer}>
+                    <div className={styles.cardBackFull}>
                       <Image
-                        src={domain.cardImage}
-                        alt={`${domain.label} card`}
+                        src={domain.backImage}
+                        alt={`${domain.label} back`}
                         fill
-                        className={styles.cardSuitImage}
+                        className={styles.characterImage}
                       />
                     </div>
                   )}
