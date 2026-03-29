@@ -1,8 +1,7 @@
 .container {
   position: relative;
   width: 100vw;
-  min-height: 130vh;
-  padding-bottom: 25vh;
+  min-height: 100vh;
   background-color: #050505;
   background-image: 
     linear-gradient(rgba(var(--theme-rgb), 0.05) 1px, transparent 1px),
@@ -14,6 +13,16 @@
   font-family: 'Share Tech Mono', monospace;
   color: #FFFFFF;
   transition: background-image 0.5s ease;
+}
+
+.mainContent {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  justify-content: space-between;
+  align-items: stretch;
+  position: relative;
+  z-index: 10;
 }
 
 /* SCANLINES & NOISE */
@@ -40,9 +49,9 @@
 
 /* DASHBOARD HEADER - Static Flex */
 .dashboardHeader {
-  flex: 0 0 6vh;
+  flex: 0 0 auto;
   width: 100%;
-  padding: 0 4vw;
+  padding: 2vh 4vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -119,20 +128,30 @@
 
 /* CAROUSEL STAGE - Dynamic Flex */
 .carouselStage {
-  flex: 1; /* Takes all remaining mid-space safely */
+  flex: 1;
   position: relative;
-  width: 100vw;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+  perspective: 1200px;
+  padding: 0 2vw;
+}
+
+.carouselCenter {
+  flex: 1;
+  position: relative;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
-  perspective: 1200px;
 }
 
 .characterItem {
   position: absolute;
   top: 25%;
-  left: 50%;
+  left: 28%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
@@ -144,7 +163,7 @@
 
 .charFrame {
   position: relative;
-  height: 48vh; /* Reduced height to fit completely on-screen */
+  height: 45vh; /* Reduced height to fit completely on-screen */
   aspect-ratio: 3/4;
   border-radius: 0; /* Brutalist */
   overflow: hidden;
@@ -205,6 +224,12 @@
 .activeChar .charFrame {
   box-shadow: 0 0 40px rgba(var(--theme-rgb), 0.4), inset 0 0 20px rgba(var(--theme-rgb), 0.2);
   border: 2px solid rgb(var(--theme-rgb));
+  transition: all 0.3s ease;
+}
+
+.activeChar .charFrame:hover {
+  transform: scale(1.05) rotateY(5deg);
+  box-shadow: 0 0 60px rgba(var(--theme-rgb), 0.7), inset 0 0 30px rgba(var(--theme-rgb), 0.4), 0 0 30px rgba(var(--theme-rgb), 0.5);
 }
 
 .inactiveChar .charFrame {
@@ -249,14 +274,14 @@
 
 /* BOTTOM HUD - Static Flex */
 .bottomHUD {
-  flex: 0 0 35vh;
+  flex: 1;
   position: relative;
-  width: 100vw;
+  width: 50%;
   z-index: 110;
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 0;
+  justify-content: flex-start;
+  padding: 2vw 3vw;
 }
 
 .hudContainer {
@@ -269,16 +294,12 @@
 }
 
 .hudCenter {
-  position: absolute;
-  left: 10vw;
-  top: 15%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
   text-align: left;
-  width: auto;
-  max-width: 650px;
+  width: 100%;
 }
 
 .titleAreaHud {
@@ -315,8 +336,7 @@
   align-items: flex-start;
   gap: 30px;
   text-align: left;
-  border-left: 2px solid rgb(var(--theme-rgb));
-  padding-left: 15px;
+  padding-top: 1vw;
   transition: border-color 0.5s ease;
 }
 
@@ -378,7 +398,7 @@
   color: rgb(var(--theme-rgb));
   font-weight: bold;
   cursor: pointer;
-  z-index: 50;
+  z-index: 150;
   opacity: 0.5;
   transition: all 0.3s ease;
   padding: 0 20px;

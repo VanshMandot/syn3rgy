@@ -165,9 +165,46 @@ export default function HybridDomainPage() {
         </div>
       </div>
 
-      {/* CAROUSEL STAGE */}
-      <div className={styles.carouselStage}>
-        <AnimatePresence initial={false}>
+      {/* CAROUSEL STAGE & HUD CONTENT */}
+      <div className={styles.mainContent}>
+        {/* BOTTOM HUD - Left Side */}
+        <div className={styles.bottomHUD}>
+          <div className={styles.hudContainer}>
+            <div className={styles.hudCenter}>
+              <div className={styles.titleAreaHud}>
+                <h1 className={styles.titleText}>{active.title}</h1>
+              </div>
+
+              <div className={styles.subtitle}>{active.subtitle}</div>
+
+              <div className={styles.statsAndDesc}>
+                <div className={styles.statsBlock}>
+                  {active.stats.map(stat => {
+                    const barLevel = Math.min(10, Math.max(0, Math.round(stat.val / 10)));
+                    return (
+                      <div key={stat.name} className={styles.statRow}>
+                        <span className={styles.statName}>{stat.name}</span>
+                        <div className={styles.statBar}>
+                          {Array.from({ length: 10 }).map((_, idx) => (
+                            <div key={idx} className={`${styles.statChunk} ${idx < barLevel ? styles.filled : ""}`} />
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <p className={styles.descText}>{active.description}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* CAROUSEL STAGE - Right Side */}
+        <div className={styles.carouselStage}>
+          <button className={`${styles.navArrow} ${styles.navLeft}`} onClick={handlePrev}>&lt;</button>
+          <div className={styles.carouselCenter}>
+            <AnimatePresence initial={false}>
           {DOMAINS.map((domain, i) => {
             const isActive = i === activeIndex;
             let offset = i - activeIndex;
@@ -219,42 +256,8 @@ export default function HybridDomainPage() {
               </motion.div>
             );
           })}
-        </AnimatePresence>
-      </div>
-
-      {/* BOTTOM HUD - Dystopian Style */}
-      <div className={styles.bottomHUD}>
-        <div className={styles.hudContainer}>
-          <button className={`${styles.navArrow} ${styles.navLeft}`} onClick={handlePrev}>&lt;</button>
-
-          <div className={styles.hudCenter}>
-            <div className={styles.titleAreaHud}>
-              <h1 className={styles.titleText}>{active.title}</h1>
-            </div>
-
-            <div className={styles.subtitle}>{active.subtitle}</div>
-
-            <div className={styles.statsAndDesc}>
-              <div className={styles.statsBlock}>
-                {active.stats.map(stat => {
-                  const barLevel = Math.min(10, Math.max(0, Math.round(stat.val / 10)));
-                  return (
-                    <div key={stat.name} className={styles.statRow}>
-                      <span className={styles.statName}>{stat.name}</span>
-                      <div className={styles.statBar}>
-                        {Array.from({ length: 10 }).map((_, idx) => (
-                          <div key={idx} className={`${styles.statChunk} ${idx < barLevel ? styles.filled : ""}`} />
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-
-              <p className={styles.descText}>{active.description}</p>
-            </div>
+            </AnimatePresence>
           </div>
-
           <button className={`${styles.navArrow} ${styles.navRight}`} onClick={handleNext}>&gt;</button>
         </div>
       </div>
