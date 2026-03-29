@@ -10,85 +10,85 @@ const DOMAINS = [
     id: "web-app",
     label: "Web / App",
     title: "WEB DEV",
-    subtitle: "HIGH-PERFORMANCE INTERFACES",
-    description: "Architect the grand digital frontier. Build high-speed applications enforcing fluid interactive experiences.",
+    subtitle: "Playstyle: Smart, adaptive, problem-solver",
+    description: "A master of logic and structure, Arisu navigates complex systems with precision. He builds seamless digital worlds, solving problems step by step and turning chaos into clean, functional design.",
     image: "/characters/web.png",
     themeRgb: "0, 191, 255", // Neon Cyan
     stats: [
-      { name: "LOG", val: 9 },
-      { name: "CRE", val: 8 },
-      { name: "SEC", val: 5 },
-      { name: "SPD", val: 8 },
-      { name: "INT", val: 9 },
-      { name: "IMP", val: 8 }
+      { name: "HP", val: 92 },
+      { name: "ARMOR  ", val: 75 },
+      { name: "MOBILITY  ", val: 84 },
+      { name: "ACCURACY  ", val: 88 },
+      { name: "STEALTH  ", val: 64 },
+      { name: "TACTICS  ", val: 90 }
     ]
   },
   {
     id: "blockchain",
     label: "Blockchain",
     title: "BLOCKCHAIN",
-    subtitle: "DECENTRALIZED ARCHITECTURE",
-    description: "Herald of the decentralized network. Travel node to node enforcing trustless truth and absolute order.",
+    subtitle: "Playstyle: Strategic, unpredictable, high IQ plays..",
+    description: "Cold, calculated, and always ten steps ahead. Chishiya thrives in systems built on trust and deception, mastering decentralization, cryptography, and high-stakes decision-making.",
     image: "/characters/blockchain.png",
     themeRgb: "234, 179, 8", // Neon Gold/Yellow
     stats: [
-      { name: "LOG", val: 10 },
-      { name: "CRE", val: 4 },
-      { name: "SEC", val: 10 },
-      { name: "SPD", val: 5 },
-      { name: "INT", val: 3 },
-      { name: "IMP", val: 9 }
+      { name: "HP", val: 88 },
+      { name: "ARMOR", val: 82 },
+      { name: "MOBILITY", val: 62 },
+      { name: "ACCURACY", val: 70 },
+      { name: "STEALTH", val: 48 },
+      { name: "TACTICS", val: 95 }
     ]
   },
   {
     id: "cyber",
     label: "Cybersecurity",
     title: "CYBERSECURITY",
-    subtitle: "PEACE & ORDER BY SHIELD",
-    description: "Defends the digital frontier against emerging threats. Navigates the network detecting exploits securely.",
+    subtitle: "Playstyle: Defensive offense, sharp instincts, resilience.",
+    description: "Fearless and relentless, Kuina protects systems like a warrior. She anticipates threats, breaks through defenses, and ensures nothing slips past unnoticed.",
     image: "/characters/cyber.png",
     themeRgb: "255, 0, 51", // Brutal Red
     stats: [
-      { name: "LOG", val: 9 },
-      { name: "CRE", val: 5 },
-      { name: "SEC", val: 10 },
-      { name: "SPD", val: 9 },
-      { name: "INT", val: 4 },
-      { name: "IMP", val: 8 }
+      { name: "HP", val: 95 },
+      { name: "ARMOR", val: 88 },
+      { name: "MOBILITY", val: 78 },
+      { name: "ACCURACY", val: 82 },
+      { name: "STEALTH", val: 79 },
+      { name: "TACTICS", val: 84 }
     ]
   },
   {
     id: "aiml",
     label: "AI / ML",
     title: "AI / ML",
-    subtitle: "AUTONOMOUS EVOLUTION",
-    description: "Harness the power of neural networks. Train intelligent algorithms capable of adapting autonomously.",
+    subtitle: "Playstyle: Speed, adaptability, pattern recognition.",
+    description: "Fast, precise, and always learning. Faith moves through data like a city skyline—adapting, predicting, and optimizing every step with intelligence and agility.",
     image: "/characters/aiml.png",
     themeRgb: "0, 255, 170", // Neon Mint Green
     stats: [
-      { name: "LOG", val: 10 },
-      { name: "CRE", val: 9 },
-      { name: "SEC", val: 4 },
-      { name: "SPD", val: 10 },
-      { name: "INT", val: 6 },
-      { name: "IMP", val: 10 }
+      { name: "HP", val: 90 },
+      { name: "ARMOR", val: 65 },
+      { name: "MOBILITY", val: 94 },
+      { name: "ACCURACY", val: 92 },
+      { name: "STEALTH", val: 70 },
+      { name: "TACTICS", val: 96 }
     ]
   },
   {
     id: "open-innovation",
     label: "Open Innovation",
     title: "OPEN INNOVATION",
-    subtitle: "NO BOUNDARIES NO MASTERS",
-    description: "Explore without boundaries or constraints. Blend disciplines to invent wildly and enforce the unimaginable.",
+    subtitle: "Playstyle: Aggressive, decisive, team-driven.",
+    description: "A force of raw ambition and leadership. Aguni drives bold ideas into action, uniting people under pressure and pushing innovation beyond limits.",
     image: "/characters/open.png",
     themeRgb: "176, 38, 255", // Neon Purple
     stats: [
-      { name: "LOG", val: 7 },
-      { name: "CRE", val: 10 },
-      { name: "SEC", val: 6 },
-      { name: "SPD", val: 8 },
-      { name: "INT", val: 8 },
-      { name: "IMP", val: 10 }
+      { name: "HP", val: 85 },
+      { name: "ARMOR", val: 70 },
+      { name: "MOBILITY", val: 88 },
+      { name: "ACCURACY", val: 83 },
+      { name: "STEALTH", val: 80 },
+      { name: "TACTICS", val: 92 }
     ]
   },
 ];
@@ -206,6 +206,12 @@ export default function HybridDomainPage() {
                     className={styles.characterImage}
                     priority={isActive}
                   />
+                  <div className={styles.charOverlay}>
+                    <div className={styles.overlayText}>
+                      <span className={styles.overlayTitle}>{domain.title}</span>
+                      <span className={styles.overlaySubtitle}>{domain.subtitle}</span>
+                    </div>
+                  </div>
                   {!isActive && (
                     <span className={styles.silhouetteLabel}>?</span>
                   )}
@@ -231,16 +237,19 @@ export default function HybridDomainPage() {
 
             <div className={styles.statsAndDesc}>
               <div className={styles.statsBlock}>
-                {active.stats.map(stat => (
-                  <div key={stat.name} className={styles.statRow}>
-                    <span className={styles.statName}>{stat.name}</span>
-                    <div className={styles.statBar}>
-                      {Array.from({ length: 10 }).map((_, idx) => (
-                        <div key={idx} className={`${styles.statChunk} ${idx < stat.val ? styles.filled : ""}`} />
-                      ))}
+                {active.stats.map(stat => {
+                  const barLevel = Math.min(10, Math.max(0, Math.round(stat.val / 10)));
+                  return (
+                    <div key={stat.name} className={styles.statRow}>
+                      <span className={styles.statName}>{stat.name}</span>
+                      <div className={styles.statBar}>
+                        {Array.from({ length: 10 }).map((_, idx) => (
+                          <div key={idx} className={`${styles.statChunk} ${idx < barLevel ? styles.filled : ""}`} />
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               <p className={styles.descText}>{active.description}</p>
