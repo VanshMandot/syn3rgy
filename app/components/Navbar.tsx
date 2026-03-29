@@ -48,18 +48,35 @@ export default function Navbar() {
   };
 
   return (
-    <nav
-      className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`}
-      id="navbar"
-    >
+    <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ""}`} id="navbar">
       <div className={styles.navContainer}>
-        <div
-          className={styles.logo}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        >
+        {/* LEFT - Glitch Logo */}
+        <div className={styles.logo} onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           SYNERGY <span className={styles.logoAccent}>3.0</span>
         </div>
 
+        {/* RIGHT - Navigation & Status */}
+        <div className={styles.rightSide}>
+          <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
+            {NAV_ITEMS.map((item) => (
+              <li key={item.href}>
+                <button
+                  className={`${styles.navLink} ${activeSection === item.href.slice(1) ? styles.active : ""}`}
+                  onClick={() => handleNavClick(item.href)}
+                >
+                  {item.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+          
+          <div className={styles.statusBlock}>
+            <div className={styles.statusDot} />
+            <span>SYSTEM_STATUS: OPERATIONAL</span>
+          </div>
+        </div>
+
+        {/* MOBILE TOGGLE */}
         <button
           className={`${styles.menuToggle} ${menuOpen ? styles.open : ""}`}
           onClick={() => setMenuOpen(!menuOpen)}
@@ -69,21 +86,6 @@ export default function Navbar() {
           <span />
           <span />
         </button>
-
-        <ul className={`${styles.navLinks} ${menuOpen ? styles.open : ""}`}>
-          {NAV_ITEMS.map((item) => (
-            <li key={item.href}>
-              <button
-                className={`${styles.navLink} ${
-                  activeSection === item.href.slice(1) ? styles.active : ""
-                }`}
-                onClick={() => handleNavClick(item.href)}
-              >
-                {item.label}
-              </button>
-            </li>
-          ))}
-        </ul>
       </div>
     </nav>
   );

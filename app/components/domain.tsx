@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import styles from "./domain.module.css";
 
@@ -9,247 +9,242 @@ const DOMAINS = [
   {
     id: "web-app",
     label: "Web / App",
-    title: ["WEB", " DEVELOPMENT"],
-    suit: "Spades",
-    description: "Build the next generation of digital experiences. From high-performance web applications to immersive creative interfaces.",
-    image: "/characters/lucid-origin_Spade_—_AGENT_AGUNI_The_Knight_Pursuer_Character_Aguni_Morizono_Role_Duelist_E-0.jpg",
-    color: "#00bfff",
-    glowColor: "rgba(0, 191, 255, 0.5)",
-    spriteClass: "spade",
-    cardLetter: "A",
+    title: "WEB DEV",
+    subtitle: "HIGH-PERFORMANCE INTERFACES",
+    description: "Architect the grand digital frontier. Build high-speed applications enforcing fluid interactive experiences.",
+    image: "/characters/web.png",
+    stats: [
+      { name: "LOG", val: 9 },
+      { name: "CRE", val: 8 },
+      { name: "SEC", val: 5 },
+      { name: "SPD", val: 8 },
+      { name: "INT", val: 9 },
+      { name: "IMP", val: 8 }
+    ]
   },
   {
     id: "blockchain",
     label: "Blockchain",
-    title: ["BLOCK", " CHAIN"],
-    suit: "Hearts",
-    description: "Architect decentralized systems and smart contracts. Explore the frontier of trustless computing and digital sovereignty.",
-    image: "/characters/lucid-origin_Heart_—_AGENT_USAGI_The_Lover_Guide_Character_Yuzuha_Usagi_Role_Initiator_Inte-0.jpg",
-    color: "#ff0055",
-    glowColor: "rgba(255, 0, 85, 0.5)",
-    spriteClass: "heart",
-    cardLetter: "A",
+    title: "BLOCKCHAIN",
+    subtitle: "DECENTRALIZED ARCHITECTURE",
+    description: "Herald of the decentralized network. Travel node to node enforcing trustless truth and absolute order.",
+    image: "/characters/blockchain.png",
+    stats: [
+      { name: "LOG", val: 10 },
+      { name: "CRE", val: 4 },
+      { name: "SEC", val: 10 },
+      { name: "SPD", val: 5 },
+      { name: "INT", val: 3 },
+      { name: "IMP", val: 9 }
+    ]
   },
   {
     id: "cyber",
     label: "Cybersecurity",
-    title: ["CYBER", " SECURITY"],
-    suit: "Diamonds",
-    description: "Defend the digital frontier against emerging threats. Design resilient security architectures and exploit detection systems.",
-    image: "/characters/lucid-origin_Diamond_—_AGENT_CHISHIYA_The_Strategist_Character_Shuntarō_Chishiya_Role_Cont-0.jpg",
-    color: "#ffaa00",
-    glowColor: "rgba(255, 170, 0, 0.5)",
-    spriteClass: "diamond",
-    cardLetter: "A",
+    title: "CYBERSECURITY",
+    subtitle: "PEACE & ORDER BY SHIELD",
+    description: "Defends the digital frontier against emerging threats. Navigates the network detecting exploits securely.",
+    image: "/characters/cyber.png",
+    stats: [
+      { name: "LOG", val: 9 },
+      { name: "CRE", val: 5 },
+      { name: "SEC", val: 10 },
+      { name: "SPD", val: 9 },
+      { name: "INT", val: 4 },
+      { name: "IMP", val: 8 }
+    ]
   },
   {
     id: "aiml",
     label: "AI / ML",
-    title: ["AI /", " ML"],
-    suit: "Clubs",
-    description: "Harness the power of neural networks and intelligent algorithms. Build systems that learn, adapt, and evolve autonomously.",
-    image: "/characters/lucid-origin_Club_—_AGENT_ARISU_The_Hero_Protagonist_Character_Ryōhei_Arisu_Role_Duelist_A-0.jpg",
-    color: "#00ffaa",
-    glowColor: "rgba(0, 255, 170, 0.5)",
-    spriteClass: "club",
-    cardLetter: "A",
+    title: "AI / ML",
+    subtitle: "AUTONOMOUS EVOLUTION",
+    description: "Harness the power of neural networks. Train intelligent algorithms capable of adapting autonomously.",
+    image: "/characters/aiml.png",
+    stats: [
+      { name: "LOG", val: 10 },
+      { name: "CRE", val: 9 },
+      { name: "SEC", val: 4 },
+      { name: "SPD", val: 10 },
+      { name: "INT", val: 6 },
+      { name: "IMP", val: 10 }
+    ]
   },
   {
     id: "open-innovation",
     label: "Open Innovation",
-    title: ["OPEN", " INNOVATION"],
-    suit: "Joker",
-    description: "Innovate without boundaries. Blend disciplines, invent wildly, and bring your most unconventional, rule-breaking ideas to life.",
-    image: "/characters/open_innovation_joker.png",
-    color: "#b026ff",
-    glowColor: "rgba(176, 38, 255, 0.5)",
-    spriteClass: "joker",
-    cardLetter: "J",
+    title: "OPEN INNOVATION",
+    subtitle: "NO BOUNDARIES NO MASTERS",
+    description: "Explore without boundaries or constraints. Blend disciplines to invent wildly and enforce the unimaginable.",
+    image: "/characters/open.png",
+    stats: [
+      { name: "LOG", val: 7 },
+      { name: "CRE", val: 10 },
+      { name: "SEC", val: 6 },
+      { name: "SPD", val: 8 },
+      { name: "INT", val: 8 },
+      { name: "IMP", val: 10 }
+    ]
   },
 ];
 
-function DomainHero() {
-  const containerRef = useRef<HTMLElement>(null);
+export default function HybridDomainPage() {
+  const [activeIndex, setActiveIndex] = useState(2);
+  const [timer, setTimer] = useState("72:00:00");
+  const [typedText, setTypedText] = useState("");
+  const fullText = "> PROTOCOL_ACCESS_GRANTED::AWAITING_INPUT";
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 60,
-    damping: 25,
-    restDelta: 0.001
-  });
-
-  // Made cards move smoothly and sizes will be smaller in CSS
-  const yTop = useTransform(smoothProgress, [0, 0.4], ["0vh", "-30vh"]);
-  const xTop = useTransform(smoothProgress, [0, 0.4], ["0vw", "0vw"]);
-  const opacityTop = useTransform(smoothProgress, [0, 0.1, 0.4], [0.3, 0.8, 1]);
-
-  const xLeft = useTransform(smoothProgress, [0, 0.4], ["0vw", "-28vw"]);
-  const yLeft = useTransform(smoothProgress, [0, 0.4], ["0vh", "0vh"]);
-  const opacityLeft = useTransform(smoothProgress, [0, 0.1, 0.4], [0.3, 0.8, 1]);
-
-  const xRight = useTransform(smoothProgress, [0, 0.4], ["0vw", "28vw"]);
-  const yRight = useTransform(smoothProgress, [0, 0.4], ["0vh", "0vh"]);
-  const opacityRight = useTransform(smoothProgress, [0, 0.1, 0.4], [0.3, 0.8, 1]);
-
-  const yBottom = useTransform(smoothProgress, [0, 0.4], ["0vh", "30vh"]);
-  const xBottom = useTransform(smoothProgress, [0, 0.4], ["0vw", "0vw"]);
-  const opacityBottom = useTransform(smoothProgress, [0, 0.1, 0.4], [0.3, 0.8, 1]);
-
-  const yCenter = useTransform(smoothProgress, [0, 0.4], ["0vh", "0vh"]);
-  const xCenter = useTransform(smoothProgress, [0, 0.4], ["0vw", "0vw"]);
-  const opacityCenter = useTransform(smoothProgress, [0, 0.1, 0.4], [0.3, 0.8, 1]);
-
-  const rotTop = useTransform(smoothProgress, [0, 0.4], [-8, 0]);
-  const rotLeft = useTransform(smoothProgress, [0, 0.4], [-3, 0]);
-  const rotRight = useTransform(smoothProgress, [0, 0.4], [4, 0]);
-  const rotBottom = useTransform(smoothProgress, [0, 0.4], [8, 0]);
-  const rotCenter = useTransform(smoothProgress, [0, 0.4], [12, 0]);
-
-  const titleScale = useTransform(smoothProgress, [0, 0.4], [1, 1.2]);
-  const titleOpacity = useTransform(smoothProgress, [0, 0.2, 0.5], [1, 0.8, 0]);
-
-  const renderCard = (d: typeof DOMAINS[0], isTop: boolean, isLeft: boolean, isRight: boolean, isBottom: boolean, isCenter: boolean = false) => {
-    let y = useTransform(smoothProgress, [0, 1], ["0vh", "0vh"]);
-    let x = useTransform(smoothProgress, [0, 1], ["0vw", "0vw"]);
-    let rot = useTransform(smoothProgress, [0, 1], [0, 0]);
-    let op = useTransform(smoothProgress, [0, 1], [1, 1]);
-    let z = 1;
-
-    if (isTop) { y = yTop; x = xTop; rot = rotTop; op = opacityTop; z = 5; }
-    if (isLeft) { y = yLeft; x = xLeft; rot = rotLeft; op = opacityLeft; z = 4; }
-    if (isRight) { y = yRight; x = xRight; rot = rotRight; op = opacityRight; z = 3; }
-    if (isBottom) { y = yBottom; x = xBottom; rot = rotBottom; op = opacityBottom; z = 2; }
-    if (isCenter) { y = yCenter; x = xCenter; rot = rotCenter; op = opacityCenter; z = 6; }
-
-    return (
-      <motion.div
-        className={styles.card}
-        style={{ y, x, rotate: rot, opacity: op, borderColor: d.color, boxShadow: `0 0 20px ${d.glowColor}, inset 0 0 10px ${d.glowColor}`, zIndex: z }}
-      >
-        <div className={styles.cardCornerTop} style={{ color: d.color }}>
-          <span>{d.cardLetter}</span>
-          <div className={`${styles.suitIconGraphic} ${styles[d.spriteClass]}`} />
-        </div>
-
-        <div className={styles.cardContent}>
-          <Image src={d.image} alt={d.label} width={140} height={140} className={styles.cardImg} />
-          <h3 className={styles.cardLabel}>{d.label}</h3>
-        </div>
-
-        <div className={styles.cardCornerBottom} style={{ color: d.color }}>
-          <span>{d.cardLetter}</span>
-          <div className={`${styles.suitIconGraphic} ${styles[d.spriteClass]}`} />
-        </div>
-      </motion.div>
-    );
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % DOMAINS.length);
   };
 
-  return (
-    <section className={styles.container} ref={containerRef} id="domains">
-      <div className={styles.stickyArea}>
-        <div className={styles.bgOverlay} />
-
-        <motion.div
-          className={styles.titleWrapper}
-          style={{ scale: titleScale, opacity: titleOpacity }}
-        >
-          <h1 className={styles.glitchTitle} data-text="DOMAIN">DOMAIN</h1>
-        </motion.div>
-
-        <div className={styles.cardsCenter}>
-          {renderCard(DOMAINS[0], true, false, false, false, false)}
-          {renderCard(DOMAINS[1], false, true, false, false, false)}
-          {renderCard(DOMAINS[2], false, false, true, false, false)}
-          {renderCard(DOMAINS[3], false, false, false, true, false)}
-          {renderCard(DOMAINS[4], false, false, false, false, true)}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function DomainDetails() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [animating, setAnimating] = useState(false);
-
-  const active = DOMAINS[activeIndex];
-
-  const handleSwitch = (index: number) => {
-    if (index === activeIndex) return;
-    setAnimating(true);
-    setTimeout(() => {
-      setActiveIndex(index);
-      setTimeout(() => setAnimating(false), 50);
-    }, 200);
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + DOMAINS.length) % DOMAINS.length);
   };
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      handleSwitch((activeIndex + 1) % DOMAINS.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [activeIndex]);
+    // Fake typing logic
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= fullText.length) {
+        setTypedText(fullText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 50);
+
+    // Countdown logic
+    let [hours, minutes, seconds] = [71, 59, 59];
+    const countdownInterval = setInterval(() => {
+      seconds--;
+      if (seconds < 0) {
+        seconds = 59;
+        minutes--;
+        if (minutes < 0) {
+          minutes = 59;
+          hours--;
+        }
+      }
+      setTimer(
+        `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
+      );
+    }, 1000);
+
+    return () => {
+      clearInterval(typingInterval);
+      clearInterval(countdownInterval);
+    };
+  }, []);
+
+  const active = DOMAINS[activeIndex];
 
   return (
-    <section className={styles.domainSection}>
-      <div className={styles.domainBg} />
+    <section className={styles.container} id="domains">
+      <div className={styles.noiseOverlay} />
 
-      <div className={styles.domainInner}>
-        {/* Left Content */}
-        <div className={styles.domainLeft}>
-          <h2 className={styles.domainTitle}>
-            {active.title[0]}
-            <span className={styles.domainTitleAccent}>{active.title[1]}</span>
-          </h2>
-          <p className={styles.domainDesc}>{active.description}</p>
-
-          {/* Selector Cards */}
-          <div className={styles.domainCards}>
-            {DOMAINS.map((d, i) => (
-              <div
-                key={d.id}
-                className={`${styles.domainCard} ${i === activeIndex ? styles.active : ""
-                  }`}
-                onClick={() => handleSwitch(i)}
-              >
-                <div className={styles.domainCardThumb}>
-                  <Image src={d.image} alt={d.label} width={48} height={48} />
-                </div>
-                <span className={styles.domainCardLabel}>{d.label}</span>
-              </div>
-            ))}
-          </div>
+      {/* DASHBOARD HEADER */}
+      <div className={styles.dashboardHeader}>
+        <div className={styles.titleArea}>
+          <div className={styles.subLabel}>SYSTEM_READY // INITIATING</div>
+          <h2 className={styles.phaseTitle}>PHASE 02: DOMAIN SELECTION</h2>
         </div>
 
-        {/* Right — Character Image */}
-        <div className={styles.domainRight}>
-          <div className={styles.characterGlow} />
-          <Image
-            key={active.id}
-            src={active.image}
-            alt={active.label}
-            width={500}
-            height={580}
-            className={`${styles.characterImage} ${!animating ? styles.entering : ""
-              }`}
-            style={{ opacity: animating ? 0 : 1 }}
-            priority
-          />
+        <div className={styles.terminalBox}>
+          <div className={styles.typingText}>{typedText}</div>
+        </div>
+
+        <div className={styles.timerBox}>
+          <div className={styles.timerLabel}>T-MINUS // SURVIVAL TICKER</div>
+          <div className={styles.timerValue}>{timer}</div>
+        </div>
+      </div>
+
+      {/* CAROUSEL STAGE */}
+      <div className={styles.carouselStage}>
+        <AnimatePresence initial={false}>
+          {DOMAINS.map((domain, i) => {
+            const isActive = i === activeIndex;
+            let offset = i - activeIndex;
+
+            if (offset > 2) offset -= DOMAINS.length;
+            if (offset < -2) offset += DOMAINS.length;
+
+            const xPos = offset * 30; // Spread out to 30vw to make room for giant center card
+            const yPos = Math.abs(offset) * -2;
+            const zPos = Math.abs(offset) * -200;
+            const scaleAmount = isActive ? 1.15 : Math.max(0.65, 1 - Math.abs(offset) * 0.15);
+
+            return (
+              <motion.div
+                key={domain.id}
+                className={`${styles.characterItem} ${isActive ? styles.activeChar : styles.inactiveChar}`}
+                onClick={() => setActiveIndex(i)}
+                initial={{ opacity: 0, scale: scaleAmount, x: `${xPos}vw`, z: zPos, y: `${yPos}vh` }}
+                animate={{
+                  opacity: Math.abs(offset) > 2 ? 0 : 1,
+                  scale: scaleAmount,
+                  x: `${xPos}vw`,
+                  z: zPos,
+                  y: `${yPos}vh`,
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                style={{ zIndex: 100 - Math.abs(offset) * 10 }}
+              >
+                {isActive && <div className={styles.pedestal} />}
+
+                <div className={styles.charFrame}>
+                  <Image
+                    src={domain.image}
+                    alt={domain.label}
+                    fill
+                    className={styles.characterImage}
+                    priority={isActive}
+                  />
+                  {!isActive && (
+                    <span className={styles.silhouetteLabel}>?</span>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+      </div>
+
+      {/* BOTTOM HUD - Dystopian Style */}
+      <div className={styles.bottomHUD}>
+        <div className={styles.hudContainer}>
+          <button className={`${styles.navArrow} ${styles.navLeft}`} onClick={handlePrev}>&lt;</button>
+
+          <div className={styles.hudCenter}>
+            <div className={styles.youChoose}>[ YOU_CHOOSE ]</div>
+            <div className={styles.titleAreaHud}>
+              <h1 className={styles.titleText}>{active.title}</h1>
+            </div>
+
+            <div className={styles.subtitle}>{active.subtitle}</div>
+
+            <div className={styles.statsAndDesc}>
+              <div className={styles.statsBlock}>
+                {active.stats.map(stat => (
+                  <div key={stat.name} className={styles.statRow}>
+                    <span className={styles.statName}>{stat.name}</span>
+                    <div className={styles.statBar}>
+                      {Array.from({ length: 10 }).map((_, idx) => (
+                        <div key={idx} className={`${styles.statChunk} ${idx < stat.val ? styles.filled : ""}`} />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <p className={styles.descText}>{active.description}</p>
+            </div>
+          </div>
+
+          <button className={`${styles.navArrow} ${styles.navRight}`} onClick={handleNext}>&gt;</button>
         </div>
       </div>
     </section>
-  );
-}
-
-export default function DomainPage() {
-  return (
-    <>
-      <DomainHero />
-      <DomainDetails />
-    </>
   );
 }
