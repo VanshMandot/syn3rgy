@@ -1,8 +1,8 @@
 .container {
   position: relative;
   width: 100vw;
-  min-height: 105vh;
-  padding-bottom: 5vh;
+  min-height: 130vh;
+  padding-bottom: 25vh;
   background-color: #050505;
   background-image: 
     linear-gradient(rgba(var(--theme-rgb), 0.05) 1px, transparent 1px),
@@ -40,9 +40,9 @@
 
 /* DASHBOARD HEADER - Static Flex */
 .dashboardHeader {
-  flex: 0 0 15vh;
+  flex: 0 0 6vh;
   width: 100%;
-  padding: 2vh 4vw;
+  padding: 0 4vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -131,7 +131,7 @@
 
 .characterItem {
   position: absolute;
-  top: 50%;
+  top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -144,8 +144,7 @@
 
 .charFrame {
   position: relative;
-  height: 52vh; /* Safely proportional within the Carousel Stage */
-  max-height: 700px;
+  height: 48vh; /* Reduced height to fit completely on-screen */
   aspect-ratio: 3/4;
   border-radius: 0; /* Brutalist */
   overflow: hidden;
@@ -250,41 +249,36 @@
 
 /* BOTTOM HUD - Static Flex */
 .bottomHUD {
-  flex: 0 0 30vh;
+  flex: 0 0 35vh;
   position: relative;
   width: 100vw;
   z-index: 110;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 5vh;
+  padding: 0;
 }
 
 .hudContainer {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 3vw;
+  justify-content: space-between;
   width: 100%;
-  max-width: 1200px;
-  padding: 0 20px;
-  margin-left: -120px;
+  padding: 0 3vw;
+  position: relative;
 }
 
 .hudCenter {
+  position: absolute;
+  left: 10vw;
+  top: 15%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  width: 400px;
-}
-
-.youChoose {
-  font-size: 0.85rem;
-  color: #9CA3AF;
-  letter-spacing: 3px;
-  margin-bottom: 5px;
+  align-items: flex-start;
+  text-align: left;
+  width: auto;
+  max-width: 650px;
 }
 
 .titleAreaHud {
@@ -317,8 +311,9 @@
 
 .statsAndDesc {
   display: flex;
+  flex-direction: row;
   align-items: flex-start;
-  gap: 20px;
+  gap: 30px;
   text-align: left;
   border-left: 2px solid rgb(var(--theme-rgb));
   padding-left: 15px;
@@ -329,7 +324,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
-  width: 400px;
+  width: auto;
 }
 
 .statRow {
@@ -345,7 +340,7 @@
 }
 
 .statBar {
-  margin-left: auto;
+  margin-left: 20px;
   height: 8px;
   display: flex;
   gap: 2px;
@@ -372,7 +367,6 @@
   line-height: 1.4;
   max-width: 350px;
   margin: 0;
-  margin-left: 30px;
 }
 
 /* NAVIGATION ARROWS */
@@ -402,7 +396,7 @@
   .carouselStage { flex: 1; height: 45vh; }
   .bottomHUD { height: auto; padding: 20px 0; }
   .hudContainer { flex-direction: row; justify-content: space-between; gap: 10px; }
-  .hudCenter { width: 60%; }
+  .hudCenter { width: 60%; position: static; transform: none; }
   .statsAndDesc { flex-direction: column; border-left: none; border-top: 2px solid rgb(var(--theme-rgb)); padding-left: 0; padding-top: 15px; text-align: center; align-items: center; }
   .descText { text-align: center; }
   .navArrow { font-size: 3rem; }

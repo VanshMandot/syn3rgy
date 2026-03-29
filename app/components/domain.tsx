@@ -228,7 +228,6 @@ export default function HybridDomainPage() {
           <button className={`${styles.navArrow} ${styles.navLeft}`} onClick={handlePrev}>&lt;</button>
 
           <div className={styles.hudCenter}>
-            <div className={styles.youChoose}>[ YOU_CHOOSE ]</div>
             <div className={styles.titleAreaHud}>
               <h1 className={styles.titleText}>{active.title}</h1>
             </div>
