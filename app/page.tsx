@@ -114,6 +114,10 @@ export default function Home() {
 
             <div
               onClick={() => setIsFlipped(!isFlipped)}
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                setIsFlipped(!isFlipped);
+              }}
               className={`relative w-64 h-96 md:w-80 md:h-[30rem] transition-all duration-[1000ms] [transform-style:preserve-3d] cursor-pointer shadow-[0_30px_50px_rgba(255,0,0,0.1)] ${isFlipped ? '[transform:rotateY(180deg)_scale(1.05)]' : 'hover:scale-105 hover:shadow-[0_0_50px_rgba(255,0,0,0.4)]'
                 }`}
             >
@@ -146,6 +150,11 @@ export default function Home() {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
+                    setHasStarted(true);
+                  }}
+                  onTouchEnd={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
                     setHasStarted(true);
                   }}
                   className={`mt-10 border-2 border-red-500/80 px-8 py-4 z-20 backdrop-blur-md transition-all duration-300 hover:scale-110 hover:shadow-[0_0_30px_rgba(255,0,0,1)] shadow-[0_0_15px_rgba(255,0,0,0.3)] ${isFlipped ? 'bg-[#050000] opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none disabled'

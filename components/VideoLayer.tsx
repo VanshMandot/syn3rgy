@@ -16,7 +16,7 @@ export function VideoLayer({ videoRef, isVisible, onEnded, className = '' }: Vid
       playsInline
       preload="auto"
       onEnded={onEnded}
-      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+      className={`absolute inset-0 w-full h-full object-contain md:object-cover object-center bg-black transition-opacity duration-1000 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       } ${className}`}
     />
