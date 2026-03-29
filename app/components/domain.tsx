@@ -13,6 +13,7 @@ const DOMAINS = [
     subtitle: "HIGH-PERFORMANCE INTERFACES",
     description: "Architect the grand digital frontier. Build high-speed applications enforcing fluid interactive experiences.",
     image: "/characters/web.png",
+    themeRgb: "0, 191, 255", // Neon Cyan
     stats: [
       { name: "LOG", val: 9 },
       { name: "CRE", val: 8 },
@@ -29,6 +30,7 @@ const DOMAINS = [
     subtitle: "DECENTRALIZED ARCHITECTURE",
     description: "Herald of the decentralized network. Travel node to node enforcing trustless truth and absolute order.",
     image: "/characters/blockchain.png",
+    themeRgb: "234, 179, 8", // Neon Gold/Yellow
     stats: [
       { name: "LOG", val: 10 },
       { name: "CRE", val: 4 },
@@ -45,6 +47,7 @@ const DOMAINS = [
     subtitle: "PEACE & ORDER BY SHIELD",
     description: "Defends the digital frontier against emerging threats. Navigates the network detecting exploits securely.",
     image: "/characters/cyber.png",
+    themeRgb: "255, 0, 51", // Brutal Red
     stats: [
       { name: "LOG", val: 9 },
       { name: "CRE", val: 5 },
@@ -61,6 +64,7 @@ const DOMAINS = [
     subtitle: "AUTONOMOUS EVOLUTION",
     description: "Harness the power of neural networks. Train intelligent algorithms capable of adapting autonomously.",
     image: "/characters/aiml.png",
+    themeRgb: "0, 255, 170", // Neon Mint Green
     stats: [
       { name: "LOG", val: 10 },
       { name: "CRE", val: 9 },
@@ -77,6 +81,7 @@ const DOMAINS = [
     subtitle: "NO BOUNDARIES NO MASTERS",
     description: "Explore without boundaries or constraints. Blend disciplines to invent wildly and enforce the unimaginable.",
     image: "/characters/open.png",
+    themeRgb: "176, 38, 255", // Neon Purple
     stats: [
       { name: "LOG", val: 7 },
       { name: "CRE", val: 10 },
@@ -140,7 +145,7 @@ export default function HybridDomainPage() {
   const active = DOMAINS[activeIndex];
 
   return (
-    <section className={styles.container} id="domains">
+    <section className={styles.container} style={{ "--theme-rgb": active.themeRgb } as React.CSSProperties} id="domains">
       <div className={styles.noiseOverlay} />
 
       {/* DASHBOARD HEADER */}
