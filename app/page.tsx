@@ -2,9 +2,9 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { VideoLayer } from "../components/VideoLayer";
-import { GlitchOverlay } from "../components/GlitchOverlay";
-import { EnterButton } from "../components/EnterButton";
+import { VideoLayer } from "./components/VideoLayer";
+import { GlitchOverlay } from "./components/GlitchOverlay";
+import { EnterButton } from "./components/EnterButton";
 
 export default function Home() {
   const router = useRouter();
