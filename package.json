@@ -1,25 +1,27 @@
-{
-  "name": "synergy-3.0",
+﻿{
+  "name": "alice-entry",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint"
   },
   "dependencies": {
-    "framer-motion": "^12.38.0",
-    "next": "^16.2.1",
-    "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "next": "16.2.1",
+    "postcss": "^8.5.8",
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
-    "@types/node": "^20.19.37",
-    "@types/react": "^18.3.28",
-    "@types/react-dom": "^18.3.7",
-    "eslint": "^8.57.1",
-    "eslint-config-next": "^15.5.14",
-    "typescript": "^5.9.3"
+    "@tailwindcss/postcss": "^4.2.2",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.2.1",
+    "tailwindcss": "^4.2.2",
+    "typescript": "^5"
   }
 }
