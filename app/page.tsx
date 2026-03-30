@@ -192,7 +192,7 @@ export default function Home() {
       {/* Skip Button */}
       {startVideo && !showButton && (
         <button
-          onClick={() => { router.push("/home"); }}
+          onClick={() => { router.push("/timeline"); }}
           className="absolute top-6 right-6 lg:top-10 lg:right-10 z-[999] pointer-events-auto text-white font-mono text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-2 border-red-500 bg-red-900/90 px-6 py-3 shadow-[0_0_20px_rgba(255,0,0,0.8)] backdrop-blur-md transition-all duration-300 hover:bg-red-600 hover:scale-105"
         >
           Skip ΓçÑ
