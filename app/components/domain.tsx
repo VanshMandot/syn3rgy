@@ -222,70 +222,70 @@ export default function HybridDomainPage() {
           <button className={`${styles.navArrow} ${styles.navLeft}`} onClick={handlePrev}>&lt;</button>
           <div className={styles.carouselCenter}>
             <AnimatePresence initial={false}>
-          {DOMAINS.map((domain, i) => {
-            const isActive = i === activeIndex;
-            let offset = i - activeIndex;
+              {DOMAINS.map((domain, i) => {
+                const isActive = i === activeIndex;
+                let offset = i - activeIndex;
 
-            if (offset > Math.floor(DOMAINS.length / 2)) offset -= DOMAINS.length;
-            if (offset < -Math.floor(DOMAINS.length / 2)) offset += DOMAINS.length;
+                if (offset > Math.floor(DOMAINS.length / 2)) offset -= DOMAINS.length;
+                if (offset < -Math.floor(DOMAINS.length / 2)) offset += DOMAINS.length;
 
-            // Only show active card and up to two cards on the left side
-            if (offset > 0) return null;
+                // Only show active card and up to two cards on the left side
+                if (offset > 0) return null;
 
-            const layer = Math.min(2, Math.abs(offset));
+                const layer = Math.min(2, Math.abs(offset));
 
-            const xPos = isActive ? 0 : -11 - (layer - 1) * 8;
-            const yPos = isActive ? 0 :  0 + layer * 10;
-            const zPos = isActive ? 0 : -60 * layer;
-            const cardRotateY = isActive ? 0 : -16;
-            const scaleAmount = isActive ? 1.12 : 0.82;
-            const visibleOpacity = isActive ? 1 : 0.65 - layer * 0.2;
+                const xPos = isActive ? 0 : -11 - (layer - 1) * 8;
+                const yPos = isActive ? 0 : 0 + layer * 10;
+                const zPos = isActive ? 0 : -60 * layer;
+                const cardRotateY = isActive ? 0 : -16;
+                const scaleAmount = isActive ? 1.12 : 0.82;
+                const visibleOpacity = isActive ? 1 : 0.65 - layer * 0.2;
 
-            return (
-              <motion.div
-                key={domain.id}
-                className={`${styles.characterItem} ${isActive ? styles.activeChar : styles.inactiveChar}`}
-                onClick={() => setActiveIndex(i)}
-                initial={{ opacity: 0, scale: scaleAmount, x: `${xPos}vw`, z: zPos, y: `${yPos}vh`, rotateY: `${cardRotateY}deg` }}
-                animate={{
-                  opacity: visibleOpacity,
-                  scale: scaleAmount,
-                  x: `${xPos}vw`,
-                  z: zPos,
-                  y: `${yPos}vh`,
-                  rotateY: `${cardRotateY}deg`
-                }}
-                transition={{ duration: 0.45, ease: "easeOut" }}
-                style={{ "--card-rgb": domain.themeRgb, zIndex: 200 - layer * 10 } as React.CSSProperties}
-              >
-                <div className={styles.charFrame}>
-                  <Image
-                    src={domain.image}
-                    alt={domain.label}
-                    fill
-                    className={styles.characterImage}
-                    priority={isActive}
-                  />
-                  <div className={styles.charOverlay}>
-                    <div className={styles.overlayText}>
-                      <span className={styles.overlayTitle}>{domain.title}</span>
-                      <span className={styles.overlaySubtitle}>{domain.subtitle}</span>
-                    </div>
-                  </div>
-                  {!isActive && (
-                    <div className={styles.cardBackFull}>
+                return (
+                  <motion.div
+                    key={domain.id}
+                    className={`${styles.characterItem} ${isActive ? styles.activeChar : styles.inactiveChar}`}
+                    onClick={() => setActiveIndex(i)}
+                    initial={{ opacity: 0, scale: scaleAmount, x: `${xPos}vw`, z: zPos, y: `${yPos}vh`, rotateY: `${cardRotateY}deg` }}
+                    animate={{
+                      opacity: visibleOpacity,
+                      scale: scaleAmount,
+                      x: `${xPos}vw`,
+                      z: zPos,
+                      y: `${yPos}vh`,
+                      rotateY: `${cardRotateY}deg`
+                    }}
+                    transition={{ duration: 0.45, ease: "easeOut" }}
+                    style={{ "--card-rgb": domain.themeRgb, zIndex: 200 - layer * 10 } as React.CSSProperties}
+                  >
+                    <div className={styles.charFrame}>
                       <Image
-                        src={domain.backImage}
-                        alt={`${domain.label} back`}
+                        src={domain.image}
+                        alt={domain.label}
                         fill
                         className={styles.characterImage}
+                        priority={isActive}
                       />
+                      <div className={styles.charOverlay}>
+                        <div className={styles.overlayText}>
+                          <span className={styles.overlayTitle}>{domain.title}</span>
+                          <span className={styles.overlaySubtitle}>{domain.subtitle}</span>
+                        </div>
+                      </div>
+                      {!isActive && (
+                        <div className={styles.cardBackFull}>
+                          <Image
+                            src={domain.backImage}
+                            alt={`${domain.label} back`}
+                            fill
+                            className={styles.characterImage}
+                          />
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </motion.div>
-            );
-          })}
+                  </motion.div>
+                );
+              })}
             </AnimatePresence>
           </div>
           <button className={`${styles.navArrow} ${styles.navRight}`} onClick={handleNext}>&gt;</button>

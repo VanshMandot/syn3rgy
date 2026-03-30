@@ -15,7 +15,7 @@ function GunModel({ targetRotation }: { targetRotation: [number, number, number]
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    
+
     scene.traverse((child: any) => {
       if (child.isMesh) {
         child.material.emissiveIntensity = 0.6;
@@ -37,10 +37,10 @@ function GunModel({ targetRotation }: { targetRotation: [number, number, number]
   return (
     <group ref={groupRef}>
       {/* SCALE INCREASED: Gun is now larger and positioned higher (closer to user) */}
-      <primitive 
-        object={scene} 
-        scale={isMobile ? 2.8 : 5.0} 
-        position={isMobile ? [0, -1.0, 0] : [0, -1.6, 0]} 
+      <primitive
+        object={scene}
+        scale={isMobile ? 2.8 : 5.0}
+        position={isMobile ? [0, -1.0, 0] : [0, -1.6, 0]}
       />
     </group>
   );
@@ -51,17 +51,17 @@ function ShatterEffect({ color }: { color: string }) {
   const shards = Array.from({ length: 18 }).map((_, i) => ({
     id: i, left: Math.random() * 100 + '%', top: Math.random() * 100 + '%',
     tx: (Math.random() - 0.5) * 500, ty: Math.random() * 600 + 400, rot: Math.random() * 720,
-    size: Math.random() * 20 + 5, delay: Math.random() * 0.1, bg: i % 3 === 0 ? '#fff' : color, 
+    size: Math.random() * 20 + 5, delay: Math.random() * 0.1, bg: i % 3 === 0 ? '#fff' : color,
   }));
   return (
     <div className="absolute inset-0 pointer-events-none z-50">
       {shards.map((s) => (
         <div key={s.id} className="absolute backdrop-blur-[1px]" style={{
-            left: s.left, top: s.top, width: `${s.size}px`, height: `${s.size}px`, backgroundColor: s.bg,
-            boxShadow: `0 0 15px ${s.bg}`, clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)',
-            animation: `fallDown 1.4s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94) ${s.delay}s`,
-            '--tx': `${s.tx}px`, '--ty': `${s.ty}px`, '--rot': `${s.rot}deg`,
-          } as any} />
+          left: s.left, top: s.top, width: `${s.size}px`, height: `${s.size}px`, backgroundColor: s.bg,
+          boxShadow: `0 0 15px ${s.bg}`, clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)',
+          animation: `fallDown 1.4s forwards cubic-bezier(0.25, 0.46, 0.45, 0.94) ${s.delay}s`,
+          '--tx': `${s.tx}px`, '--ty': `${s.ty}px`, '--rot': `${s.rot}deg`,
+        } as any} />
       ))}
     </div>
   );
@@ -95,7 +95,7 @@ function TrophyCard({ id, prize, glowColor, isRevealed, delay, imageSrc, frontIm
     if (!isFanned) return 'translate(0, 0) scale(0.3)';
     if (isMobile) {
       switch (id) {
-        case 'c2': return 'translate(0, -42%) scale(0.78)'; 
+        case 'c2': return 'translate(0, -42%) scale(0.78)';
         case 'c1': return 'translate(-42%, 35%) scale(0.78)';
         case 'c3': return 'translate(42%, 35%) scale(0.78)';
         default: return 'translate(0,0)';
@@ -107,7 +107,7 @@ function TrophyCard({ id, prize, glowColor, isRevealed, delay, imageSrc, frontIm
   };
 
   return (
-    <div id={id} onClick={() => onManualClick(id, glowColor)} 
+    <div id={id} onClick={() => onManualClick(id, glowColor)}
       className={`absolute w-[150px] h-[210px] md:w-[280px] md:h-[400px] cursor-crosshair transition-transform active:scale-95 ${isRevealed ? 'pointer-events-none' : 'pointer-events-auto'}`}
       style={{ transform: getTransform(), opacity: isFanned ? 1 : 0.8, zIndex: isFanned ? (id === 'c2' ? 1010 : 1000 + index) : 1000 + index, transition: 'all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
       <div className="w-full h-full preserve-3d" style={{ animation: isFanned ? `drift 8s ease-in-out infinite ${delay}` : 'none' }}>
@@ -144,7 +144,7 @@ export default function BorderlandGame() {
   const laserRef = useRef<HTMLDivElement>(null);
   const breakSound = useRef<HTMLAudioElement | null>(null);
   const laserSound = useRef<HTMLAudioElement | null>(null);
-  
+
   const autoShootTimer = useRef<NodeJS.Timeout | null>(null);
 
   const CARDS_DATA = [
@@ -174,7 +174,7 @@ export default function BorderlandGame() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting) {
-          setIsFanned(true); 
+          setIsFanned(true);
           observer.disconnect();
         }
       },
@@ -183,7 +183,7 @@ export default function BorderlandGame() {
 
     if (sectionRef.current) observer.observe(sectionRef.current);
 
-    return () => { 
+    return () => {
       if (autoShootTimer.current) clearTimeout(autoShootTimer.current);
       observer.disconnect();
     };
@@ -204,11 +204,11 @@ export default function BorderlandGame() {
       gunRef.current.style.transform = `translateX(calc(-50% + ${mouseXFromCenter}px))`;
       gunRef.current.style.setProperty('--sway', `${mouseXFromCenter}px`);
 
-      const pitch = 0.5 - (mouseYPercent * 0.6); 
-      const yaw = Math.PI - (mouseXFromCenter / window.innerWidth * 0.4); 
+      const pitch = 0.5 - (mouseYPercent * 0.6);
+      const yaw = Math.PI - (mouseXFromCenter / window.innerWidth * 0.4);
       setGunRotation([pitch, yaw, 0]);
     };
-    
+
     const handleTouchMove = (e: TouchEvent) => {
       if (isFiring || revealedIds.length >= 3 || !gunRef.current) return;
       const touch = e.touches[0];
@@ -235,14 +235,14 @@ export default function BorderlandGame() {
     const rect = targetEl.getBoundingClientRect();
     const tx = rect.left + rect.width / 2;
     const ty = rect.top + rect.height / 2;
-    
+
     const targetXOffset = tx - window.innerWidth / 2;
 
     gunRef.current.style.setProperty('--sway', `${targetXOffset}px`);
     gunRef.current.style.transform = `translateX(calc(-50% + ${targetXOffset}px))`;
-    setGunRotation([0.45, Math.PI, 0]); 
+    setGunRotation([0.45, Math.PI, 0]);
 
-    if (laserSound.current) { laserSound.current.currentTime = 0; laserSound.current.play().catch(() => {}); }
+    if (laserSound.current) { laserSound.current.currentTime = 0; laserSound.current.play().catch(() => { }); }
 
     setIsFiring(true);
     setActiveColor(color);
@@ -255,14 +255,14 @@ export default function BorderlandGame() {
     const laser = laserRef.current;
     laser.style.left = `${originX}px`;
     laser.style.top = `${originY}px`;
-    laser.style.height = `${dist}px`; 
+    laser.style.height = `${dist}px`;
     laser.style.opacity = '1';
-    laser.style.backgroundColor = 'white'; 
+    laser.style.backgroundColor = 'white';
     laser.style.boxShadow = `0 0 50px ${color}`;
-    
+
     setShake(true);
-    setCrackingId(targetId); 
-    if (breakSound.current) { breakSound.current.currentTime = 0; breakSound.current.play().catch(() => {}); }
+    setCrackingId(targetId);
+    if (breakSound.current) { breakSound.current.currentTime = 0; breakSound.current.play().catch(() => { }); }
 
     setTimeout(() => {
       laser.style.opacity = '0'; setShake(false);
@@ -274,7 +274,7 @@ export default function BorderlandGame() {
   return (
     <div ref={sectionRef} className={`relative w-full h-screen min-h-[600px] pt-16 md:pt-20 overflow-hidden transition-transform duration-75 ${shake ? 'scale-[1.04]' : 'scale-100'}`}>
       <div className="absolute inset-0 z-0 bg-center bg-cover" style={{ backgroundImage: "url('/bg_image.jpeg')", filter: 'brightness(1.1) contrast(1.1)' }} />
-      
+
       <div className="absolute top-6 md:top-10 left-1/2 -translate-x-1/2 z-[4000] text-center w-full px-4 pointer-events-none">
         <h1 className="text-white text-3xl md:text-6xl font-black italic tracking-tighter" style={{ textShadow: '0 0 40px #ff0000' }}>PRIZE VAULT</h1>
         <p className="text-white/80 mt-1 text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] md:tracking-[0.5em]">Shoot the cards to reveal prize pool</p>
@@ -283,12 +283,12 @@ export default function BorderlandGame() {
       <div ref={laserRef} className="fixed w-[4px] md:w-[6px] z-[1500] pointer-events-none origin-top opacity-0 transition-opacity duration-100" />
 
       {/* Gun is lifted slightly closer to the viewer using -bottom-4 instead of -bottom-6 */}
-      <div ref={gunRef} className={`fixed left-1/2 w-[220px] md:w-[450px] h-[320px] md:h-[650px] z-[2000] pointer-events-none -translate-x-1/2 transition-all duration-300 ease-out ${isFiring ? 'animate-recoil' : ''} ${revealedIds.length >= 3 ? '-bottom-96 opacity-0' : '-bottom-4 md:-bottom-24 opacity-100'}`} style={{'--sway': '0px'} as any}>
+      <div ref={gunRef} className={`fixed left-1/2 w-[220px] md:w-[450px] h-[320px] md:h-[650px] z-[2000] pointer-events-none -translate-x-1/2 transition-all duration-300 ease-out ${isFiring ? 'animate-recoil' : ''} ${revealedIds.length >= 3 ? '-bottom-96 opacity-0' : '-bottom-4 md:-bottom-24 opacity-100'}`} style={{ '--sway': '0px' } as any}>
         <div className="relative w-full h-full">
           {isFiring && (
             <div className="absolute top-10 md:top-12 left-1/2 -translate-x-1/2 w-20 md:w-40 h-20 md:h-40 z-50 pointer-events-none">
-                <div className="absolute inset-0 bg-white rounded-full blur-xl animate-muzzle-flare" />
-                <div className="absolute inset-0 rounded-full blur-[30px] animate-muzzle-flare" style={{ backgroundColor: activeColor, opacity: 1 }} />
+              <div className="absolute inset-0 bg-white rounded-full blur-xl animate-muzzle-flare" />
+              <div className="absolute inset-0 rounded-full blur-[30px] animate-muzzle-flare" style={{ backgroundColor: activeColor, opacity: 1 }} />
             </div>
           )}
           <Canvas shadows dpr={[1, 2]}>

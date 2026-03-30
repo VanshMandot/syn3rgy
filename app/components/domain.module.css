@@ -3,7 +3,7 @@
   width: 100vw;
   min-height: 100vh;
   background-color: #050505;
-  background-image: 
+  background-image:
     linear-gradient(rgba(var(--theme-rgb), 0.05) 1px, transparent 1px),
     linear-gradient(90deg, rgba(var(--theme-rgb), 0.05) 1px, transparent 1px);
   background-size: 40px 40px;
@@ -30,7 +30,10 @@
   content: " ";
   display: block;
   position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(var(--theme-rgb), 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
   z-index: 2;
   background-size: 100% 4px, 6px 100%;
@@ -40,7 +43,10 @@
 
 .noiseOverlay {
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
   opacity: 0.05;
   pointer-events: none;
@@ -96,6 +102,7 @@
   align-items: center;
   transition: all 0.5s ease;
 }
+
 .typingText {
   white-space: nowrap;
   overflow: hidden;
@@ -103,19 +110,40 @@
   animation: typing 2.5s steps(40, end), blink-caret .75s step-end infinite;
 }
 
-@keyframes typing { from { width: 0 } to { width: 100% } }
-@keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: rgb(var(--theme-rgb)); } }
+@keyframes typing {
+  from {
+    width: 0
+  }
+
+  to {
+    width: 100%
+  }
+}
+
+@keyframes blink-caret {
+
+  from,
+  to {
+    border-color: transparent
+  }
+
+  50% {
+    border-color: rgb(var(--theme-rgb));
+  }
+}
 
 .timerBox {
   text-align: right;
   display: flex;
   flex-direction: column;
 }
+
 .timerLabel {
   font-size: 0.8rem;
   color: #9CA3AF;
   letter-spacing: 2px;
 }
+
 .timerValue {
   font-size: 2.2rem;
   color: rgb(var(--theme-rgb));
@@ -190,7 +218,7 @@
 
 .activeChar .charFrame {
   height: 56vh;
-  box-shadow: 0 0 72px rgba(var(--theme-rgb), 0.72), 0 20px 60px rgba(0,0,0,0.5);
+  box-shadow: 0 0 72px rgba(var(--theme-rgb), 0.72), 0 20px 60px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -442,6 +470,7 @@
   border: 1px solid rgba(var(--theme-rgb), 0.2);
   transition: all 0.5s ease;
 }
+
 .statChunk.filled {
   background: rgb(var(--theme-rgb));
   border-color: rgb(var(--theme-rgb));
@@ -470,6 +499,7 @@
   transition: all 0.3s ease;
   padding: 0 20px;
 }
+
 .navArrow:hover {
   opacity: 1;
   text-shadow: 0 0 20px rgb(var(--theme-rgb));
@@ -478,13 +508,56 @@
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .dashboardHeader { flex-direction: column; align-items: center; gap: 10px; height: auto; text-align: center; }
-  .terminalBox { min-width: 100%; justify-content: center; }
-  .carouselStage { flex: 1; height: 45vh; }
-  .bottomHUD { height: auto; padding: 20px 0; }
-  .hudContainer { flex-direction: row; justify-content: space-between; gap: 10px; }
-  .hudCenter { width: 60%; position: static; transform: none; }
-  .statsAndDesc { flex-direction: column; border-left: none; border-top: 2px solid rgb(var(--theme-rgb)); padding-left: 0; padding-top: 15px; text-align: center; align-items: center; }
-  .descText { text-align: center; }
-  .navArrow { font-size: 3rem; }
+  .dashboardHeader {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    height: auto;
+    text-align: center;
+  }
+
+  .terminalBox {
+    min-width: 100%;
+    justify-content: center;
+  }
+
+  .carouselStage {
+    flex: 1;
+    height: 45vh;
+  }
+
+  .bottomHUD {
+    height: auto;
+    padding: 20px 0;
+  }
+
+  .hudContainer {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .hudCenter {
+    width: 60%;
+    position: static;
+    transform: none;
+  }
+
+  .statsAndDesc {
+    flex-direction: column;
+    border-left: none;
+    border-top: 2px solid rgb(var(--theme-rgb));
+    padding-left: 0;
+    padding-top: 15px;
+    text-align: center;
+    align-items: center;
+  }
+
+  .descText {
+    text-align: center;
+  }
+
+  .navArrow {
+    font-size: 3rem;
+  }
 }
