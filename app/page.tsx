@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import DomainSection from "./components/domain";
 
@@ -35,25 +35,31 @@ const FAQ_DATA = [
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [particles, setParticles] = useState<React.CSSProperties[]>([]);
+
+  useEffect(() => {
+    const generatedParticles = [...Array(20)].map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 5}s`,
+      animationDuration: `${4 + Math.random() * 4}s`,
+      opacity: 0.1 + Math.random() * 0.3,
+      width: `${2 + Math.random() * 4}px`,
+      height: `${2 + Math.random() * 4}px`,
+    }));
+    setParticles(generatedParticles);
+  }, []);
 
   return (
     <main>
       {/* ===== HERO ===== */}
       <section className={styles.hero}>
         <div className={styles.heroParticles}>
-          {[...Array(20)].map((_, i) => (
+          {particles.map((style, i) => (
             <div
               key={i}
               className={styles.particle}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${4 + Math.random() * 4}s`,
-                opacity: 0.1 + Math.random() * 0.3,
-                width: `${2 + Math.random() * 4}px`,
-                height: `${2 + Math.random() * 4}px`,
-              }}
+              style={style}
             />
           ))}
         </div>
