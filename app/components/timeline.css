@@ -1,13 +1,5 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'CloisterBlack';
-  src: url('/fonts/CloisterBlack.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 :root {
   --background: #050508;
   --foreground: #ededed;
@@ -16,7 +8,6 @@
   --gold: #ffd60a;
   --glass-bg: rgba(10, 10, 15, 0.6);
   --glass-border: rgba(217, 4, 41, 0.4);
-  --font-cloister: 'CloisterBlack', var(--font-sans), sans-serif;
 }
 
 /* stylelint-disable-next-line at-rule-no-unknown */
@@ -68,13 +59,11 @@
 .bg-scanlines {
   position: fixed;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(255, 255, 255, 0.02) 2px,
-    rgba(255, 255, 255, 0.02) 4px
-  );
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.02) 2px,
+      rgba(255, 255, 255, 0.02) 4px);
   pointer-events: none;
   z-index: 11;
   opacity: 0.4;
@@ -116,12 +105,15 @@
     transform: translateY(100vh) rotate(0deg);
     opacity: 0;
   }
+
   10% {
     opacity: 0.2;
   }
+
   90% {
     opacity: 0.2;
   }
+
   100% {
     transform: translateY(-20vh) rotate(360deg);
     opacity: 0;
@@ -140,9 +132,17 @@
 }
 
 @keyframes pulseOpacity {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.8; }
+
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
 }
+
 .pulse-opacity {
   animation: pulseOpacity 2s ease-in-out infinite;
 }

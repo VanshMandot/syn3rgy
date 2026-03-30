@@ -3,9 +3,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import styles from "./page.module.css";
-import BorderlandTimeline from "./components/BorderlandTimeline";
-
-
+// 1. Updated import path to match the merged file name
+import BorderlandTimeline from "./components/timeline";
 
 const DOMAINS_DATA = [
   { icon: "🤖", title: "Artificial Intelligence", desc: "Build intelligent systems using machine learning, NLP, and computer vision to solve real-world problems." },
@@ -79,7 +78,8 @@ export default function Home() {
             className={styles.heroCta}
             onClick={() =>
               document
-                .getElementById("timeline")
+                // 2. Updated target ID to match the timeline section
+                .getElementById("timeline-borderland")
                 ?.scrollIntoView({ behavior: "smooth" })
             }
           >
@@ -259,9 +259,8 @@ export default function Home() {
             {FAQ_DATA.map((item, i) => (
               <div
                 key={i}
-                className={`${styles.faqItem} ${
-                  openFaq === i ? styles.open : ""
-                }`}
+                className={`${styles.faqItem} ${openFaq === i ? styles.open : ""
+                  }`}
               >
                 <button
                   className={styles.faqQuestion}
