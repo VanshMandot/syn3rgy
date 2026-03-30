@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'CloisterBlack';
+  src: url('/fonts/CloisterBlack.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   --background: #050508;
   --foreground: #ededed;
@@ -8,6 +16,7 @@
   --gold: #ffd60a;
   --glass-bg: rgba(10, 10, 15, 0.6);
   --glass-border: rgba(217, 4, 41, 0.4);
+  --font-cloister: 'CloisterBlack', var(--font-sans), sans-serif;
 }
 
 /* stylelint-disable-next-line at-rule-no-unknown */
