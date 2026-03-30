@@ -77,7 +77,7 @@ export function EnterButton({ showButton, onClick, className = '' }: EnterButton
     }
 
     setTimeout(() => {
-      router.push("/domain");
+      router.push("/timeline");
     }, 500);
   };
 
