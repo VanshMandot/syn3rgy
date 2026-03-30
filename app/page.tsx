@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./page.module.css";
 import DomainSection from "./components/domain";
+import PrizeSection from "./components/prize_page"
 
 const TIMELINE_DATA = [
   { date: "March 15, 2026", title: "Registration Opens", desc: "Sign up with your team and secure your spot in SYNERGY 3.0." },
@@ -35,25 +36,31 @@ const FAQ_DATA = [
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [particles, setParticles] = useState<React.CSSProperties[]>([]);
+
+  useEffect(() => {
+    const generatedParticles = [...Array(20)].map(() => ({
+      left: `${Math.random() * 100}%`,
+      top: `${Math.random() * 100}%`,
+      animationDelay: `${Math.random() * 5}s`,
+      animationDuration: `${4 + Math.random() * 4}s`,
+      opacity: 0.1 + Math.random() * 0.3,
+      width: `${2 + Math.random() * 4}px`,
+      height: `${2 + Math.random() * 4}px`,
+    }));
+    setParticles(generatedParticles);
+  }, []);
 
   return (
     <main>
       {/* ===== HERO ===== */}
       <section className={styles.hero}>
         <div className={styles.heroParticles}>
-          {[...Array(20)].map((_, i) => (
+          {particles.map((style, i) => (
             <div
               key={i}
               className={styles.particle}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                animationDuration: `${4 + Math.random() * 4}s`,
-                opacity: 0.1 + Math.random() * 0.3,
-                width: `${2 + Math.random() * 4}px`,
-                height: `${2 + Math.random() * 4}px`,
-              }}
+              style={style}
             />
           ))}
         </div>
@@ -111,34 +118,7 @@ export default function Home() {
       <DomainSection />
 
       {/* ===== PRIZES ===== */}
-      <section className="section" id="prizes">
-        <div className="container">
-          <h2 className="section-title">Prizes</h2>
-          <p className="section-subtitle">
-            Compete for exciting prizes and earn recognition for your innovation.
-          </p>
-          <div className={styles.prizesGrid}>
-            <div className={`${styles.prizeCard} ${styles.silver}`}>
-              <span className={styles.prizeTrophy}>🥈</span>
-              <p className={styles.prizeRank}>2nd Place</p>
-              <p className={styles.prizeAmount}>₹15,000</p>
-              <p className={styles.prizeSub}>+ Certificates & Swag</p>
-            </div>
-            <div className={`${styles.prizeCard} ${styles.gold}`}>
-              <span className={styles.prizeTrophy}>🏆</span>
-              <p className={styles.prizeRank}>1st Place</p>
-              <p className={styles.prizeAmount}>₹25,000</p>
-              <p className={styles.prizeSub}>+ Internship Opportunities</p>
-            </div>
-            <div className={`${styles.prizeCard} ${styles.bronze}`}>
-              <span className={styles.prizeTrophy}>🥉</span>
-              <p className={styles.prizeRank}>3rd Place</p>
-              <p className={styles.prizeAmount}>₹10,000</p>
-              <p className={styles.prizeSub}>+ Certificates & Swag</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PrizeSection/>
 
       {/* ===== GUIDELINES ===== */}
       <section className="section" id="guidelines">
