@@ -50,7 +50,7 @@ const DOMAINS = [
     title: "CYBERSECURITY",
     subtitle: "Playstyle: Defensive offense, sharp instincts, resilience....",
     description: "Fearless and relentless, Kuina protects systems like a warrior. She anticipates threats, breaks through defenses, and ensures nothing slips past unnoticed.",
-    image: "/characters/cyber.png",
+    image: "/characters/kuina.png",
     cardImage: "/cards/heart.png",
     backImage: "/characters/red.png",
     themeRgb: "255, 0, 51", // Brutal Red
@@ -105,16 +105,40 @@ const DOMAINS = [
 
 export default function HybridDomainPage() {
   const [activeIndex, setActiveIndex] = useState(2);
+  const [glitchPhase, setGlitchPhase] = useState("idle");
+  const [glitchingIndex, setGlitchingIndex] = useState<number | null>(null);
+
   const [timer, setTimer] = useState("72:00:00");
   const [typedText, setTypedText] = useState("");
   const fullText = "> PROTOCOL_ACCESS_GRANTED::AWAITING_INPUT";
 
+  const triggerGlitchWipe = (newIndex: number) => {
+    if (glitchPhase !== "idle") return;
+    setGlitchingIndex(activeIndex);
+    setGlitchPhase("corrupting");
+
+    setTimeout(() => {
+      setActiveIndex(newIndex);
+      setGlitchingIndex(newIndex);
+      setGlitchPhase("revealing");
+
+      setTimeout(() => {
+        setGlitchPhase("lockin");
+
+        setTimeout(() => {
+          setGlitchPhase("idle");
+          setGlitchingIndex(null);
+        }, 300);
+      }, 400);
+    }, 200);
+  };
+
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % DOMAINS.length);
+    triggerGlitchWipe((activeIndex + 1) % DOMAINS.length);
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + DOMAINS.length) % DOMAINS.length);
+    triggerGlitchWipe((activeIndex - 1 + DOMAINS.length) % DOMAINS.length);
   };
 
   useEffect(() => {
@@ -154,10 +178,12 @@ export default function HybridDomainPage() {
 
   useEffect(() => {
     const autoplay = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % DOMAINS.length);
+      if (glitchPhase === "idle") {
+        triggerGlitchWipe((activeIndex + 1) % DOMAINS.length);
+      }
     }, 7000);
     return () => clearInterval(autoplay);
-  }, []);
+  }, [activeIndex, glitchPhase]);
 
   const active = DOMAINS[activeIndex];
 
@@ -241,11 +267,21 @@ export default function HybridDomainPage() {
                 const scaleAmount = isActive ? 1.12 : 0.82;
                 const visibleOpacity = isActive ? 1 : 0.65 - layer * 0.2;
 
+                // Determine active classes including glitch phase
+                let charStateClass = isActive ? styles.activeChar : styles.inactiveChar;
+                if (glitchingIndex === i) {
+                  if (glitchPhase === "corrupting") charStateClass += ` ${styles.isCorrupting}`;
+                  if (glitchPhase === "revealing") charStateClass += ` ${styles.isRevealing}`;
+                  if (glitchPhase === "lockin") charStateClass += ` ${styles.isLocked}`;
+                }
+
                 return (
                   <motion.div
                     key={domain.id}
-                    className={`${styles.characterItem} ${isActive ? styles.activeChar : styles.inactiveChar}`}
-                    onClick={() => setActiveIndex(i)}
+                    className={`${styles.characterItem} ${charStateClass}`}
+                    onClick={() => {
+                      if (i !== activeIndex) triggerGlitchWipe(i);
+                    }}
                     initial={{ opacity: 0, scale: scaleAmount, x: `${xPos}vw`, z: zPos, y: `${yPos}vh`, rotateY: `${cardRotateY}deg` }}
                     animate={{
                       opacity: visibleOpacity,
@@ -272,6 +308,14 @@ export default function HybridDomainPage() {
                           <span className={styles.overlaySubtitle}>{domain.subtitle}</span>
                         </div>
                       </div>
+
+                      {/* Web App Glitch Corruption Overlay Elements */}
+                      <div className={styles.corruptionOverlay}>
+                        <div className={styles.glitchBar} style={{ animationDelay: '0.1s', top: '20%' }}></div>
+                        <div className={styles.glitchBar} style={{ animationDelay: '0.3s', top: '50%', height: '8px' }}></div>
+                        <div className={styles.glitchBar} style={{ animationDelay: '0.5s', top: '80%' }}></div>
+                      </div>
+
                       {!isActive && (
                         <div className={styles.cardBackFull}>
                           <Image
