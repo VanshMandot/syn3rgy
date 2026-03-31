@@ -123,12 +123,19 @@ export default function Home() {
             >
               {/* Front of card */}
               <div className="absolute inset-0 bg-black/90 border-[3px] border-red-900/80 rounded-2xl flex flex-col items-center justify-between py-12 card-backface overflow-hidden shadow-[inset_0_0_50px_rgba(255,0,0,0.1)]">
-                <div className="absolute top-4 left-5 text-red-600/80 text-xl md:text-2xl font-serif leading-none text-center drop-shadow-[0_0_10px_red]">K<br />ΓÖÑ</div>
-                <div className="absolute bottom-4 right-5 text-red-600/80 text-xl md:text-2xl font-serif leading-none text-center rotate-180 drop-shadow-[0_0_10px_red]">K<br />ΓÖÑ</div>
+                <div className="absolute top-4 left-5 text-red-600/80 text-xl md:text-2xl font-serif leading-none text-center drop-shadow-[0_0_10px_red]">K<br />♥</div>
+                <div className="absolute bottom-4 right-5 text-red-600/80 text-xl md:text-2xl font-serif leading-none text-center rotate-180 drop-shadow-[0_0_10px_red]">K<br />♥</div>
 
                 <span className={`text-red-600 text-[8rem] leading-none drop-shadow-[0_0_30px_rgba(255,0,0,0.6)] mt-6 transition-transform duration-500 relative ${isFlipped ? 'scale-110' : ''}`}>
-                  <span className="absolute -top-16 left-1/2 -translate-x-1/2 text-5xl font-sans drop-shadow-none opacity-40">ΓÖ¢</span>
-                  ΓÖÑ
+                  <span className="absolute -top-16 left-1/2 -translate-x-1/2 drop-shadow-none">
+                    <svg width="64" height="48" viewBox="0 0 64 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 40 L4 44 L60 44 L60 40 L52 40 L44 14 L32 28 L20 14 L12 40 Z" fill="none" stroke="rgba(255,0,0,0.6)" strokeWidth="1.5" strokeLinejoin="round"/>
+                      <circle cx="4" cy="38" r="3.5" fill="none" stroke="rgba(255,0,0,0.6)" strokeWidth="1"/>
+                      <circle cx="32" cy="24" r="3.5" fill="none" stroke="rgba(255,0,0,0.6)" strokeWidth="1"/>
+                      <circle cx="60" cy="38" r="3.5" fill="none" stroke="rgba(255,0,0,0.6)" strokeWidth="1"/>
+                    </svg>
+                  </span>
+                  ♥
                 </span>
 
                 <div className="text-center z-10 flex flex-col gap-2 mt-4">
@@ -144,7 +151,7 @@ export default function Home() {
               {/* Back of card */}
               <div className="absolute inset-0 bg-gradient-to-b from-red-950 to-red-900 border-[3px] border-red-500 rounded-2xl flex flex-col items-center justify-center card-backface card-back shadow-[0_0_80px_rgba(255,0,0,0.6)] overflow-hidden">
                 <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(0,0,0,0.4)_10px,rgba(0,0,0,0.4)_20px)] pointer-events-none" />
-                <span className="text-white text-[6rem] leading-none animate-pulse drop-shadow-[0_0_15px_white] z-10 mb-4 font-sans">Γÿá</span>
+                <span className="text-white text-[6rem] leading-none animate-pulse drop-shadow-[0_0_15px_white] z-10 mb-4 font-sans">♠</span>
                 <h2 className="text-white font-mono tracking-[0.3em] md:tracking-[0.4em] text-lg md:text-xl uppercase text-center ml-[0.2em] drop-shadow-[0_0_10px_white] z-10">System Override</h2>
 
                 <button
@@ -195,7 +202,7 @@ export default function Home() {
           onClick={() => { router.push("/timeline"); }}
           className="absolute top-6 right-6 lg:top-10 lg:right-10 z-[999] pointer-events-auto text-white font-mono text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-2 border-red-500 bg-red-900/90 px-6 py-3 shadow-[0_0_20px_rgba(255,0,0,0.8)] backdrop-blur-md transition-all duration-300 hover:bg-red-600 hover:scale-105"
         >
-          Skip ΓçÑ
+          Skip →
         </button>
       )}
     </main>
