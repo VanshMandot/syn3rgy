@@ -18,17 +18,13 @@ export default function Home() {
 
   useEffect(() => {
     if (!hasStarted) return;
-
-    const videoTimer = setTimeout(() => setStartVideo(true), 1000); // Shifting sequence forward as text was removed
-
-    return () => {
-      clearTimeout(videoTimer);
-    };
+    const videoTimer = setTimeout(() => setStartVideo(true), 1000);
+    return () => clearTimeout(videoTimer);
   }, [hasStarted]);
 
   useEffect(() => {
     if (startVideo && videoRef.current) {
-      videoRef.current.muted = false; // Directly unmute original video track natively
+      videoRef.current.muted = false;
       videoRef.current.play().catch((error) => {
         console.warn("Video autoplay prevented:", error);
       });
@@ -51,8 +47,8 @@ export default function Home() {
             100% { transform: rotateX(80deg) translateY(100px); }
           }
           @keyframes float-card {
-            0%, 100% { transform: translateY(0) rotateX(5deg) rotateY(-5deg); }
-            50% { transform: translateY(-30px) rotateX(15deg) rotateY(5deg); }
+            0%, 100% { transform: translateY(0) rotateX(10deg) rotateY(-5deg); }
+            50% { transform: translateY(-20px) rotateX(15deg) rotateY(5deg); }
           }
           @keyframes radar-sweep {
             0% { transform: rotate(0deg); }
@@ -70,7 +66,17 @@ export default function Home() {
           .animate-radar { animation: radar-sweep 12s linear infinite; }
           .animate-static { animation: tv-static 0.1s infinite; }
           
-          .card-backface {
+          .card-wrapper {
+            perspective: 2000px;
+          }
+          .card-inner {
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+          }
+          .card-inner.flipped {
+            transform: rotateY(180deg) scale(1.05);
+          }
+          .card-face {
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
           }
@@ -103,14 +109,17 @@ export default function Home() {
           }}
         />
 
-        <div className="absolute top-10 w-full flex justify-between px-10 text-red-600/60 font-mono text-xs tracking-widest z-10 drop-shadow-[0_0_5px_red]">
-          <span>TOKYO METROPOLITAN</span>
-          <span>POPULATION: 0</span>
+        <div className="absolute top-8 w-full flex justify-between items-center px-8 md:px-12 text-red-600/70 font-mono text-xs md:text-sm tracking-[0.3em] uppercase z-10 drop-shadow-[0_0_8px_red]">
+          <span>Tokyo Metropolitan</span>
+          <span className="animate-pulse flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-red-600 shadow-[0_0_10px_red]"></span>
+            Population: 0
+          </span>
         </div>
 
-        {/* Floating wrapper */}
-        <div className="z-20 flex flex-col items-center [perspective:2000px]">
-          <div className="animate-float-card [transform-style:preserve-3d]">
+        {/* Floating Card Wrapper */}
+        <div className="z-20 flex flex-col items-center card-wrapper">
+          <div className="animate-float-card flex items-center justify-center">
 
             <div
               onClick={() => setIsFlipped(!isFlipped)}
@@ -118,54 +127,96 @@ export default function Home() {
                 e.preventDefault();
                 setIsFlipped(!isFlipped);
               }}
-              className={`relative w-64 h-96 md:w-80 md:h-[30rem] transition-all duration-[1000ms] [transform-style:preserve-3d] cursor-pointer shadow-[0_30px_50px_rgba(255,0,0,0.1)] ${isFlipped ? '[transform:rotateY(180deg)_scale(1.05)]' : 'hover:scale-105 hover:shadow-[0_0_50px_rgba(255,0,0,0.4)]'
-                }`}
+              className={`relative w-72 h-[28rem] md:w-80 md:h-[32rem] cursor-pointer shadow-[0_30px_50px_rgba(255,0,0,0.1)] card-inner ${isFlipped ? 'flipped' : 'hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(255,0,0,0.5)] transition-transform duration-300'}`}
             >
-              {/* Front of card */}
-              <div className="absolute inset-0 bg-black/90 border-[3px] border-red-900/80 rounded-2xl flex flex-col items-center justify-between py-12 card-backface overflow-hidden shadow-[inset_0_0_50px_rgba(255,0,0,0.1)]">
-                <div className="absolute top-4 left-5 text-red-600/80 text-xl md:text-2xl font-serif leading-none text-center drop-shadow-[0_0_10px_red]">K<br />♥</div>
-                <div className="absolute bottom-4 right-5 text-red-600/80 text-xl md:text-2xl font-serif leading-none text-center rotate-180 drop-shadow-[0_0_10px_red]">K<br />♥</div>
-
-                <span className={`text-red-600 text-[8rem] leading-none drop-shadow-[0_0_30px_rgba(255,0,0,0.6)] mt-6 transition-transform duration-500 relative ${isFlipped ? 'scale-110' : ''}`}>
-                  <span className="absolute -top-16 left-1/2 -translate-x-1/2 text-5xl font-sans drop-shadow-none opacity-40">♛</span>
-                  ♥
-                </span>
-
-                <div className="text-center z-10 flex flex-col gap-2 mt-4">
-                  <h2 className="text-white font-mono tracking-[0.4em] text-lg md:text-xl uppercase drop-shadow-[0_0_5px_white]">King of Hearts</h2>
-                  <p className="text-red-500 font-mono text-xs tracking-[0.2em] opacity-80">VISA: UNLIMITED</p>
+              {/* --- FRONT OF CARD --- */}
+              <div className="card-face absolute inset-0 bg-black/90 border-[3px] border-red-900/80 rounded-2xl flex flex-col justify-between shadow-[inset_0_0_50px_rgba(255,0,0,0.1)] overflow-hidden pb-8">
+                {/* Crown aligned at center-top */}
+                <div className="absolute top-2 left-1/2 -translate-x-1/2 text-6xl md:text-7xl text-red-600/40 drop-shadow-[0_0_15px_rgba(255,0,0,0.5)] z-0">
+                  ♛
                 </div>
 
-                <span className="text-red-500/80 mt-6 font-mono text-[10px] tracking-[0.2em] animate-pulse border border-red-900/40 px-6 py-2 bg-red-900/10">
-                  {isFlipped ? "AUTHORIZED" : "TAP TO AUTHORIZE"}
-                </span>
+                {/* Vintage Card Details */}
+                <div className="absolute top-5 left-5 text-red-600/90 text-2xl md:text-3xl font-serif leading-none text-center drop-shadow-[0_0_15px_rgba(255,0,0,0.8)] z-10">
+                  K<br /><span className="text-xl md:text-2xl pt-1 block">♥</span>
+                </div>
+                <div className="absolute bottom-5 right-5 text-red-600/90 text-2xl md:text-3xl font-serif leading-none text-center rotate-180 drop-shadow-[0_0_15px_rgba(255,0,0,0.8)] z-10">
+                  K<br /><span className="text-xl md:text-2xl pt-1 block">♥</span>
+                </div>
+
+                {/* Absolute Center: Big Heart + "King of Hearts" + "VISA: Unlimited" */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-full z-10">
+                  <div className={`text-red-600 text-[10rem] md:text-[11rem] leading-none drop-shadow-[0_0_35px_rgba(255,0,0,0.7)] transition-transform duration-500 ${isFlipped ? 'scale-110' : ''}`}>
+                    ♥
+                  </div>
+                  <h2 className="text-white font-mono tracking-[0.4em] text-lg md:text-xl uppercase drop-shadow-[0_0_8px_white] mt-4 text-center">
+                    King of Hearts
+                  </h2>
+                  <p className="text-red-500 font-mono text-[10px] md:text-xs tracking-[0.25em] opacity-80 uppercase mt-2 text-center">
+                    Visa: Unlimited
+                  </p>
+                </div>
+
+                {/* Bottom Section - Anchored to absolute bottom */}
+                <div className="absolute bottom-8 flex flex-col items-center w-full px-6 z-10">
+                  {/* Scanline/Authorization button simulation */}
+                  <div className="relative overflow-hidden border border-red-900/60 bg-red-900/10 px-8 py-3 md:px-14 md:py-4 rounded-sm shadow-[0_0_10px_rgba(255,0,0,0.2)]">
+                    <div className="absolute inset-0 bg-red-500/10 animate-pulse pointer-events-none"></div>
+                    <span className="text-red-500/90 font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase">
+                      {isFlipped ? "Authorized" : "Tap to Authorize"}
+                    </span>
+                  </div>
+                </div>
               </div>
 
-              {/* Back of card */}
-              <div className="absolute inset-0 bg-gradient-to-b from-red-950 to-red-900 border-[3px] border-red-500 rounded-2xl flex flex-col items-center justify-center card-backface card-back shadow-[0_0_80px_rgba(255,0,0,0.6)] overflow-hidden">
-                <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(0,0,0,0.4)_10px,rgba(0,0,0,0.4)_20px)] pointer-events-none" />
-                <span className="text-white text-[6rem] leading-none animate-pulse drop-shadow-[0_0_15px_white] z-10 mb-4 font-sans">☠</span>
-                <h2 className="text-white font-mono tracking-[0.3em] md:tracking-[0.4em] text-lg md:text-xl uppercase text-center ml-[0.2em] drop-shadow-[0_0_10px_white] z-10">System Override</h2>
+              {/* --- BACK OF CARD --- */}
+              <div className="card-face card-back absolute inset-0 bg-gradient-to-b from-[#1a0000] to-red-950 border-[3px] border-red-600 rounded-2xl flex flex-col items-center justify-center shadow-[0_0_60px_rgba(255,0,0,0.5)] overflow-hidden">
+                {/* Diagonal caution stripes */}
+                <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_15px,rgba(0,0,0,0.5)_15px,rgba(0,0,0,0.5)_30px)] pointer-events-none" />
+                
+                {/* Glowing Core */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-red-600/20 blur-[50px] rounded-full pointer-events-none"></div>
 
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setHasStarted(true);
-                  }}
-                  onTouchEnd={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    setHasStarted(true);
-                  }}
-                  className={`mt-10 border-2 border-red-500/80 px-8 py-4 z-20 backdrop-blur-md transition-all duration-300 hover:scale-110 hover:shadow-[0_0_30px_rgba(255,0,0,1)] shadow-[0_0_15px_rgba(255,0,0,0.3)] ${isFlipped ? 'bg-[#050000] opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none disabled'
-                    } group`}
-                >
-                  <p className="text-white font-mono text-[10px] md:text-xs tracking-[0.4em] font-bold group-hover:text-red-500 transition-colors drop-shadow-[0_0_5px_white]">ENTER ARENA</p>
-                </button>
+                <div className="flex flex-col items-center justify-center z-10 space-y-6 flex-grow pt-10">
+                  <span className="text-red-100 text-[6rem] md:text-[7rem] leading-none animate-pulse drop-shadow-[0_0_20px_red]">☠</span>
+                  
+                  <div className="flex flex-col items-center gap-2">
+                    <h2 className="text-white font-mono tracking-[0.3em] md:tracking-[0.4em] text-xl uppercase text-center drop-shadow-[0_0_10px_white]">System Override</h2>
+                    <p className="text-red-500/80 font-mono text-[10px] tracking-[0.2em] uppercase">Security Breach Detected</p>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-4 w-full flex justify-center z-20">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setHasStarted(true);
+                    }}
+                    onTouchEnd={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      setHasStarted(true);
+                    }}
+                    className={`relative border border-red-500/80 bg-red-950/40 px-10 py-3 md:px-16 md:py-4 backdrop-blur-sm transition-all duration-300 hover:bg-red-900/60 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 overflow-hidden group ${
+                      isFlipped ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4 disabled'
+                    }`}
+                  >
+                    {/* Button Glitch Hover Effect */}
+                    <div className="absolute inset-0 bg-red-500/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out skew-x-[-20deg]"></div>
+                    <span className="text-white font-mono text-sm tracking-[0.5em] font-bold group-hover:text-red-200 transition-colors drop-shadow-[0_0_5px_white] relative z-10 uppercase">ENTER ARENA</span>
+                  </button>
+                </div>
               </div>
             </div>
 
           </div>
+        </div>
+
+        {/* Floating Particulates / Glitch Dust Simulation */}
+        <div className="absolute inset-0 pointer-events-none mix-blend-screen opacity-30">
+           <div className="absolute top-[20%] left-[10%] w-1 h-1 bg-red-500 rounded-full animate-ping delay-75"></div>
+           <div className="absolute top-[70%] left-[80%] w-1 h-1 bg-red-500 rounded-full animate-ping delay-300"></div>
+           <div className="absolute top-[40%] left-[60%] w-1 h-1 bg-red-500 rounded-full animate-ping delay-500"></div>
         </div>
       </div>
     );
@@ -182,8 +233,9 @@ export default function Home() {
 
       {/* Dark overlay for readability */}
       <div
-        className={`absolute inset-0 bg-black/60 z-10 pointer-events-none transition-opacity duration-1000 ${startVideo ? 'opacity-100' : 'opacity-0'
-          }`}
+        className={`absolute inset-0 bg-black/60 z-10 pointer-events-none transition-opacity duration-1000 ${
+          startVideo ? 'opacity-100' : 'opacity-0'
+        }`}
       />
 
       <GlitchOverlay active={glitch} className="z-30 backdrop-contrast-200" />
@@ -193,7 +245,7 @@ export default function Home() {
       {startVideo && !showButton && (
         <button
           onClick={() => { router.push("/timeline"); }}
-          className="absolute top-6 right-6 lg:top-10 lg:right-10 z-[999] pointer-events-auto text-white font-mono text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-2 border-red-500 bg-red-900/90 px-6 py-3 shadow-[0_0_20px_rgba(255,0,0,0.8)] backdrop-blur-md transition-all duration-300 hover:bg-red-600 hover:scale-105"
+          className="absolute top-6 right-6 lg:top-10 lg:right-10 z-[999] pointer-events-auto text-white font-mono text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-2 border-red-500 bg-red-900/90 p-1 shadow-[0_0_20px_rgba(255,0,0,0.8)] backdrop-blur-md transition-all duration-300 hover:bg-red-600 hover:scale-105"
         >
           Skip ⇥
         </button>

@@ -128,7 +128,7 @@ export function EnterButton({ showButton, onClick, className = '' }: EnterButton
           {/* The Button */}
           <button 
             onClick={handleEnterClick}
-            className="w-full bg-gradient-to-r from-red-950 via-red-800 to-red-950 py-4 md:py-6 font-mono tracking-[0.3em] md:tracking-[0.4em] text-white text-[10px] md:text-sm uppercase hover:from-red-600 hover:via-red-500 hover:to-red-600 shadow-[0_0_15px_rgba(255,0,0,0.4)] hover:shadow-[0_0_40px_rgba(255,0,0,1)] border border-red-500 transition-all duration-300 relative overflow-hidden group"
+            className="w-full bg-gradient-to-r from-red-950 via-red-800 to-red-950 px-6 py-5 md:px-10 md:py-6 font-mono tracking-[0.3em] md:tracking-[0.4em] text-white text-[10px] md:text-sm uppercase hover:from-red-600 hover:via-red-500 hover:to-red-600 shadow-[0_0_15px_rgba(255,0,0,0.4)] hover:shadow-[0_0_40px_rgba(255,0,0,1)] border border-red-500 transition-all duration-300 relative overflow-hidden group"
           >
             <span className="relative z-10 whitespace-nowrap">{displayText}</span>
             <div className="absolute top-0 left-[-100%] w-full h-[1px] bg-white group-hover:left-[100%] transition-all duration-1000 ease-in-out infinite shadow-[0_0_10px_white]" />
