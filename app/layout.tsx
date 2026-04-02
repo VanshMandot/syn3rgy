@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { LaserCursor } from "./components/GlitchOverlay";
+import { RegisterButton } from "./components/RegisterButton";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <LaserCursor />
+        <RegisterButton />
         {children}
       </body>
     </html>

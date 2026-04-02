@@ -10,7 +10,7 @@
   background: #000000;
   border-bottom: 2px solid rgba(255, 0, 51, 0.5);
   box-shadow: 0 4px 20px rgba(255, 0, 51, 0.1);
-  font-family: 'Share Tech Mono', monospace;
+  /* Remove font-family declaration to use Mileast globally */
   transition: all 0.3s ease;
 }
 
@@ -26,9 +26,9 @@
 
 /* LOGO GLITCH */
 .logo {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Mileast', sans-serif;
   font-size: 2.8rem;
-  font-weight: 400; /* Bebas Neue is naturally bold */
+  font-weight: 400;
   color: #ffffff;
   cursor: pointer;
   letter-spacing: 3px;
@@ -69,7 +69,7 @@
   transition: all 0.2s ease;
   background: none;
   border: none;
-  font-family: inherit;
+  /* Remove font-family declaration to use Mileast globally */
   text-transform: uppercase;
   letter-spacing: 1px;
 }

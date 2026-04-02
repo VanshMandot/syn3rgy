@@ -115,7 +115,7 @@ function TrophyCard({ id, prize, glowColor, isRevealed, delay, imageSrc, frontIm
           {/* TROPHY SCALE INCREASED to 230% */}
           <img src={imageSrc} alt="prize" className="absolute w-[230%] h-[230%] object-contain max-w-none pointer-events-none z-10" style={{ top: '42%', left: '50%', transform: 'translate(-50%, -50%)', filter: isRevealed ? `drop-shadow(0 0 40px ${glowColor})` : 'none' }} />
           <div className="absolute bottom-4 z-20 text-center">
-            <div className="text-white text-xl md:text-5xl font-black italic tracking-tighter" style={{ textShadow: `0 0 20px ${glowColor}` }}>{prize}</div>
+            <div className="text-white text-xl md:text-5xl font-black italic tracking-tighter" style={{ textShadow: `0 0 20px ${glowColor}`, fontFamily: "'Mileast', sans-serif !important" }}>{prize}</div>
           </div>
         </div>
         <div className={`absolute inset-0 z-30 overflow-hidden bg-transparent border border-white/20 rounded-2xl flex items-center justify-center transition-all duration-150 ${isRevealed ? 'animate-shatter pointer-events-none' : 'opacity-100'}`}>
@@ -289,8 +289,8 @@ export default function BorderlandGame() {
       <div className="absolute inset-0 z-0 bg-center bg-cover" style={{ backgroundImage: "url('/bg_image.jpeg')", filter: 'brightness(1.1) contrast(1.1)' }} />
 
       <div className="absolute top-6 md:top-10 left-1/2 -translate-x-1/2 z-[4000] text-center w-full px-4 pointer-events-none">
-        <h1 className="text-white text-3xl md:text-6xl font-black italic tracking-tighter" style={{ textShadow: '0 0 40px #ff0000' }}>PRIZE VAULT</h1>
-        <p className="text-white/80 mt-1 text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] md:tracking-[0.5em]">Shoot the cards to reveal prize pool</p>
+        <h1 className="prize-vault-heading text-white text-3xl md:text-6xl font-black italic tracking-tighter" style={{ textShadow: '0 0 40px #ff0000', fontFamily: "'Mileast', sans-serif !important" }}>PRIZE VAULT</h1>
+        <p className="text-white/80 mt-1 text-[10px] md:text-sm font-bold uppercase tracking-[0.2em] md:tracking-[0.5em]" style={{ fontFamily: "'Mileast', sans-serif" }}>Shoot the cards to reveal prize pool</p>
       </div>
 
       <div ref={laserRef} className="fixed w-[4px] md:w-[6px] z-[1500] pointer-events-none origin-top opacity-0 transition-opacity duration-100" />
@@ -337,6 +337,26 @@ export default function BorderlandGame() {
         .animate-muzzle-flare { animation: muzzle-flare 0.3s ease-out forwards; }
         .animate-shatter { animation: shatter 0.5s forwards ease-out; }
         .preserve-3d { transform-style: preserve-3d; }
+        
+        /* Force Mileast font for Prize Vault heading */
+        .prize-vault-heading {
+          font-family: 'Mileast', sans-serif !important;
+        }
+        h1.text-white {
+          font-family: 'Mileast', sans-serif !important;
+        }
+        .text-white.text-3xl {
+          font-family: 'Mileast', sans-serif !important;
+        }
+        .text-white.text-6xl {
+          font-family: 'Mileast', sans-serif !important;
+        }
+        div[class*="absolute"] h1 {
+          font-family: 'Mileast', sans-serif !important;
+        }
+        * [style*="font-family"] {
+          font-family: 'Mileast', sans-serif !important;
+        }
       `}</style>
     </div>
   );
