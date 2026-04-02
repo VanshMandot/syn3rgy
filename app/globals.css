@@ -73,10 +73,12 @@
 @import "tailwindcss";
 
 /* ========== Reset & Base ========== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 }
 
 @theme inline {
@@ -181,6 +183,18 @@ input, textarea, select {
 
 button {
   font-family: 'Mileast', sans-serif !important;
+}
+
+/* Force monospace font for specific elements that need it */
+.force-mono,
+.force-mono * {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, 'Courier New', monospace !important;
+}
+
+/* Force serif font for playing card elements */
+.force-serif,
+.force-serif * {
+  font-family: Georgia, 'Times New Roman', Times, serif !important;
 }
 
 a {
