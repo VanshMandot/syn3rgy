@@ -137,10 +137,10 @@ export default function Home() {
                 </div>
 
                 {/* Vintage Card Details */}
-                <div className="absolute top-5 left-5 text-red-600/90 text-2xl md:text-3xl font-serif leading-none text-center drop-shadow-[0_0_15px_rgba(255,0,0,0.8)] z-10">
+                <div className="force-serif absolute top-5 left-5 text-red-600/90 text-2xl md:text-3xl leading-none text-center drop-shadow-[0_0_15px_rgba(255,0,0,0.8)] z-10">
                   K<br /><span className="text-xl md:text-2xl pt-1 block">♥</span>
                 </div>
-                <div className="absolute bottom-5 right-5 text-red-600/90 text-2xl md:text-3xl font-serif leading-none text-center rotate-180 drop-shadow-[0_0_15px_rgba(255,0,0,0.8)] z-10">
+                <div className="force-serif absolute bottom-5 right-5 text-red-600/90 text-2xl md:text-3xl leading-none text-center rotate-180 drop-shadow-[0_0_15px_rgba(255,0,0,0.8)] z-10">
                   K<br /><span className="text-xl md:text-2xl pt-1 block">♥</span>
                 </div>
 
@@ -149,10 +149,10 @@ export default function Home() {
                   <div className={`text-red-600 text-[10rem] md:text-[11rem] leading-none drop-shadow-[0_0_35px_rgba(255,0,0,0.7)] transition-transform duration-500 ${isFlipped ? 'scale-110' : ''}`}>
                     ♥
                   </div>
-                  <h2 className="text-white font-mono tracking-[0.4em] text-lg md:text-xl uppercase drop-shadow-[0_0_8px_white] mt-4 text-center">
+                  <span className="force-mono text-white tracking-[0.4em] text-lg md:text-xl uppercase drop-shadow-[0_0_8px_white] mt-4 text-center">
                     King of Hearts
-                  </h2>
-                  <p className="text-red-500 font-mono text-[10px] md:text-xs tracking-[0.25em] opacity-80 uppercase mt-2 text-center">
+                  </span>
+                  <p className="force-mono text-red-500 text-[10px] md:text-xs tracking-[0.25em] opacity-80 uppercase mt-2 text-center">
                     Visa: Unlimited
                   </p>
                 </div>
@@ -160,9 +160,9 @@ export default function Home() {
                 {/* Bottom Section - Anchored to absolute bottom */}
                 <div className="absolute bottom-8 flex flex-col items-center w-full px-6 z-10">
                   {/* Scanline/Authorization button simulation */}
-                  <div className="relative overflow-hidden border border-red-900/60 bg-red-900/10 px-8 py-3 md:px-14 md:py-4 rounded-sm shadow-[0_0_10px_rgba(255,0,0,0.2)]">
+                  <div className="relative overflow-hidden border border-red-900/60 bg-red-900/10 rounded-sm shadow-[0_0_10px_rgba(255,0,0,0.2)]" style={{ padding: '8px 24px' }}>
                     <div className="absolute inset-0 bg-red-500/10 animate-pulse pointer-events-none"></div>
-                    <span className="text-red-500/90 font-mono text-[10px] md:text-xs tracking-[0.3em] uppercase">
+                    <span className="force-mono text-red-500/90 text-[10px] md:text-xs tracking-[0.3em] uppercase whitespace-nowrap">
                       {isFlipped ? "Authorized" : "Tap to Authorize"}
                     </span>
                   </div>
@@ -170,23 +170,18 @@ export default function Home() {
               </div>
 
               {/* --- BACK OF CARD --- */}
-              <div className="card-face card-back absolute inset-0 bg-gradient-to-b from-[#1a0000] to-red-950 border-[3px] border-red-600 rounded-2xl flex flex-col items-center justify-center shadow-[0_0_60px_rgba(255,0,0,0.5)] overflow-hidden">
+              <div className="card-face card-back absolute inset-0 bg-gradient-to-b from-red-950 to-red-900 border-[3px] border-red-600 rounded-2xl flex flex-col items-center justify-center shadow-[0_0_60px_rgba(255,0,0,0.5)] overflow-hidden">
                 {/* Diagonal caution stripes */}
                 <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_15px,rgba(0,0,0,0.5)_15px,rgba(0,0,0,0.5)_30px)] pointer-events-none" />
                 
                 {/* Glowing Core */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-red-600/20 blur-[50px] rounded-full pointer-events-none"></div>
 
-                <div className="flex flex-col items-center justify-center z-10 space-y-6 flex-grow pt-10">
-                  <span className="text-red-100 text-[6rem] md:text-[7rem] leading-none animate-pulse drop-shadow-[0_0_20px_red]">☠</span>
+                <div className="flex flex-col items-center justify-center z-10 space-y-6 flex-grow">
+                  <span className="text-white text-[6rem] leading-none animate-pulse drop-shadow-[0_0_15px_white] font-sans">☠</span>
                   
-                  <div className="flex flex-col items-center gap-2">
-                    <h2 className="text-white font-mono tracking-[0.3em] md:tracking-[0.4em] text-xl uppercase text-center drop-shadow-[0_0_10px_white]">System Override</h2>
-                    <p className="text-red-500/80 font-mono text-[10px] tracking-[0.2em] uppercase">Security Breach Detected</p>
-                  </div>
-                </div>
+                  <span className="force-mono text-white tracking-[0.3em] md:tracking-[0.4em] text-lg md:text-xl uppercase text-center ml-[0.2em] drop-shadow-[0_0_10px_white]">System Override</span>
 
-                <div className="absolute bottom-4 w-full flex justify-center z-20">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
@@ -197,13 +192,11 @@ export default function Home() {
                       e.preventDefault();
                       setHasStarted(true);
                     }}
-                    className={`relative border border-red-500/80 bg-red-950/40 px-10 py-3 md:px-16 md:py-4 backdrop-blur-sm transition-all duration-300 hover:bg-red-900/60 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,0,0,0.8)] focus:outline-none focus:ring-2 focus:ring-red-500 overflow-hidden group ${
-                      isFlipped ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4 disabled'
-                    }`}
+                    className={`border border-white/30 z-20 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_30px_rgba(255,0,0,1)] shadow-[0_0_15px_rgba(255,0,0,0.3)] ${isFlipped ? 'bg-[#050000] opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none disabled'
+                    } group`}
+                    style={{ padding: '16px 30px', marginTop: '40px' }}
                   >
-                    {/* Button Glitch Hover Effect */}
-                    <div className="absolute inset-0 bg-red-500/20 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out skew-x-[-20deg]"></div>
-                    <span className="text-white font-mono text-sm tracking-[0.5em] font-bold group-hover:text-red-200 transition-colors drop-shadow-[0_0_5px_white] relative z-10 uppercase">ENTER ARENA</span>
+                    <p className="force-mono text-white text-[10px] md:text-xs tracking-[0.5em] font-bold group-hover:text-red-500 transition-colors drop-shadow-[0_0_5px_white]">ENTER ARENA</p>
                   </button>
                 </div>
               </div>
@@ -245,7 +238,8 @@ export default function Home() {
       {startVideo && !showButton && (
         <button
           onClick={() => { router.push("/timeline"); }}
-          className="absolute top-6 right-6 lg:top-10 lg:right-10 z-[999] pointer-events-auto text-white font-mono text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-2 border-red-500 bg-red-900/90 p-1 shadow-[0_0_20px_rgba(255,0,0,0.8)] backdrop-blur-md transition-all duration-300 hover:bg-red-600 hover:scale-105"
+          className="absolute top-6 right-6 lg:top-10 lg:right-10 z-[999] pointer-events-auto text-white font-mono text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-2 border-red-500 bg-red-900/90 shadow-[0_0_20px_rgba(255,0,0,0.8)] backdrop-blur-md transition-all duration-300 hover:bg-red-600 hover:scale-105"
+          style={{ padding: '12px 24px' }}
         >
           Skip ⇥
         </button>
