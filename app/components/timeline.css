@@ -27,15 +27,55 @@
   --aib-white: #ededed;
 }
 
-/* ── GLOBAL RESET (scoped) ─────────────────────────────────── */
+/* ── GLOBAL RESET (scoped) ─────────────────────────────────────────── */
 .tl-root {
-  background: var(--aib-bg);
+  /* Same grid background as domain page, using AIB red */
+  background-color: #050505;
+  background-image:
+    linear-gradient(rgba(217, 4, 41, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(217, 4, 41, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
   color: var(--aib-white);
   overflow-x: hidden;
   cursor: none;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+  position: relative;
 }
+
+/* Scanline overlay — same as domain .container::after */
+.tl-root::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background:
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+    linear-gradient(90deg, rgba(217, 4, 41, 0.06), rgba(0, 0, 0, 0.02), rgba(0, 0, 255, 0.04));
+  background-size: 100% 4px, 6px 100%;
+  z-index: 2;
+  pointer-events: none;
+  transition: background 0.5s ease;
+}
+
+/* Noise overlay — same as domain .noiseOverlay */
+.tl-root::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 1;
+}
+
 
 /* ── CUSTOM CURSOR (disabled — using global laser cursor) ──── */
 .tl-cursor {
