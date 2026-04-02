@@ -11,7 +11,7 @@ export default function MainGamePage() {
       </div>
 
       {/* 2. Domains Section */}
-      <div className="w-full relative z-20 block bg-black">
+      <div className="w-full relative z-50 block bg-black">
         <HybridDomainPage />
       </div>
 
