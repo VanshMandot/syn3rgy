@@ -1,6 +1,7 @@
 import BorderlandTimeline from "../components/timeline";
 import HybridDomainPage from "../components/domain";
 import PrizeSection from "../components/prize_page";
+import FAQSection from "../components/faq";
 
 export default function MainGamePage() {
   return (
@@ -18,6 +19,11 @@ export default function MainGamePage() {
       {/* 3. Prize Section */}
       <div className="w-full relative z-30 block bg-black">
         <PrizeSection />
+      </div>
+
+      {/* 4. FAQ Section */}
+      <div className="w-full relative z-40 block bg-black">
+        <FAQSection />
       </div>
     </main>
   );
