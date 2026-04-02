@@ -98,10 +98,10 @@ export function RegisterButton() {
       >
         {/* Outer glow + float container */}
         <div
+          style={{ minWidth: '260px', padding: '0.5rem 2.0rem' }}
           className={`reg-btn-outer relative overflow-hidden border-2 border-red-600/55
             bg-black/88 backdrop-blur-md
-            px-8 py-5 md:px-10 md:py-6
-            flex flex-col items-center gap-[5px]
+            flex flex-col items-center gap-[8px]
             transition-all duration-300
             ${isHovered ? "!bg-red-950/70 scale-105 !animate-none" : ""}
           `}
@@ -123,14 +123,14 @@ export function RegisterButton() {
 
           {/* ── Card suit icon ── */}
           <span
-            className="text-red-500 text-lg leading-none drop-shadow-[0_0_10px_rgba(255,0,51,0.9)] animate-pulse"
+            className="text-red-500 text-3xl leading-none drop-shadow-[0_0_12px_rgba(255,0,51,0.9)] animate-pulse"
           >
             ♠
           </span>
 
           {/* ── Main glitch text ── */}
           <span
-            className={`font-mono text-[10px] md:text-[11px] tracking-[0.32em] uppercase whitespace-nowrap
+            className={`font-mono text-sm md:text-base tracking-[0.32em] uppercase whitespace-nowrap
               transition-colors duration-200
               ${isHovered ? "text-red-400 drop-shadow-[0_0_8px_rgba(255,0,51,0.8)]" : "text-white drop-shadow-[0_0_5px_rgba(255,0,51,0.4)]"}
             `}
@@ -139,7 +139,7 @@ export function RegisterButton() {
           </span>
 
           {/* ── Sub-label ── */}
-          <span className="font-mono text-red-600/65 text-[7px] md:text-[8px] tracking-[0.25em] uppercase">
+          <span className="font-mono text-red-600/65 text-[10px] md:text-[11px] tracking-[0.25em] uppercase">
             VISA REQUIRED
           </span>
 
