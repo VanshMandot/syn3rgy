@@ -40,16 +40,34 @@ export function RegisterButton() {
     };
   }, []);
 
-  // Watch #domains section — move button to bottom-left when visible
+  // Watch #domains section — dynamically poll for it since it might not mount immediately on landing page
   useEffect(() => {
-    const domainsEl = document.getElementById("domains");
-    if (!domainsEl) return;
-    const obs = new IntersectionObserver(
-      ([entry]) => setIsInDomains(entry.isIntersecting),
-      { threshold: 0.1 }
-    );
-    obs.observe(domainsEl);
-    return () => obs.disconnect();
+    let obs: IntersectionObserver | null = null;
+    let observerInterval: ReturnType<typeof setInterval>;
+
+    const connectObserver = () => {
+      const domainsEl = document.getElementById("domains");
+      
+      if (domainsEl && !obs) {
+        obs = new IntersectionObserver(
+          ([entry]) => setIsInDomains(entry.isIntersecting),
+          { threshold: 0.1 }
+        );
+        obs.observe(domainsEl);
+      } else if (!domainsEl && obs) {
+        obs.disconnect();
+        obs = null;
+        setIsInDomains(false);
+      }
+    };
+
+    observerInterval = setInterval(connectObserver, 800);
+    connectObserver();
+
+    return () => {
+      clearInterval(observerInterval);
+      if (obs) obs.disconnect();
+    };
   }, []);
 
   return (
@@ -100,30 +118,32 @@ export function RegisterButton() {
         }
       `}</style>
 
-      <div 
-        className="fixed bottom-8 left-8 right-8 z-[9999] pointer-events-none flex items-end"
-        style={{ justifyContent: isInDomains ? "flex-start" : "flex-end" }}
-      >
-        <motion.a
-          layout
-          transition={{ type: "spring", stiffness: 70, damping: 20 }}
-          id="register-button"
-          href="https://example.com/register"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="pointer-events-auto no-underline focus:outline-none max-w-fit"
-          aria-label="Register for SYNERGY 3.0"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+      <div className="fixed bottom-8 left-8 right-8 z-[9999] pointer-events-none h-20">
+        <div
+          className="absolute bottom-0 w-max pointer-events-auto transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+          style={{
+            left: isInDomains ? "0%" : "100%",
+            transform: isInDomains ? "translateX(0%)" : "translateX(-100%)",
+          }}
         >
-        {/* Outer glow + float container */}
+          <a
+            id="register-button"
+            href="https://example.com/register"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="no-underline focus:outline-none block w-fit"
+            aria-label="Register for SYNERGY 3.0"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
+          {/* Outer glow + float container */}
         <div
           style={{ minWidth: '260px', padding: '0.5rem 2.0rem' }}
           className={`reg-btn-outer relative overflow-hidden border-2 border-red-600/55
             bg-black/88 backdrop-blur-md
             flex flex-col items-center gap-[8px]
             transition-all duration-300
-            ${isHovered ? "!bg-red-950/70 scale-105 !animate-none" : ""}
+            ${isHovered ? "!bg-red-950/70 scale-105" : ""}
           `}
         >
           {/* ── Corner bracket decorations ── */}
@@ -172,7 +192,8 @@ export function RegisterButton() {
             `}
           />
         </div>
-</motion.a>
+          </a>
+        </div>
       </div>
     </>
   );
