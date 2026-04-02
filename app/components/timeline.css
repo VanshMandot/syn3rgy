@@ -190,6 +190,8 @@
   pointer-events: none;
   opacity: 0;
   transition: opacity 1.2s;
+  background: #050505;
+  padding-bottom: 6px;
 }
 
 .tl-hud.on {
@@ -219,11 +221,13 @@
 }
 
 .tl-hud-phase {
-  font-size: clamp(20px, 2.8vw, 32px);
-  letter-spacing: 0.08em;
+  font-family: 'Mileast', sans-serif !important;
+  font-size: clamp(2rem, 3.5vw, 3.5rem);
+  letter-spacing: 4px;
   line-height: 1;
   color: var(--aib-white);
-  text-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+  text-shadow: 2px 2px 0px rgba(217, 4, 41, 0.5);
+  margin: 0;
 }
 
 .tl-hud-c {
@@ -236,12 +240,13 @@
 
 .tl-hud-badge {
   border: 1px solid rgba(217, 4, 41, 0.5);
-  padding: 5px 16px;
-  font-size: 8px;
-  letter-spacing: 0.28em;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
   color: var(--aib-red);
   text-transform: uppercase;
   background: rgba(217, 4, 41, 0.06);
+  box-shadow: inset 0 0 10px rgba(217, 4, 41, 0.1);
   white-space: nowrap;
 }
 
