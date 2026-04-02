@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import styles from "./domain.module.css";
@@ -110,6 +110,9 @@ export default function HybridDomainPage() {
 
   const [timer, setTimer] = useState("72:00:00");
   const [typedText, setTypedText] = useState("");
+  const [sectionVisible, setSectionVisible] = useState(false);
+  const [introComplete, setIntroComplete] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
   const fullText = "> PROTOCOL_ACCESS_GRANTED::AWAITING_INPUT";
 
   const triggerGlitchWipe = (newIndex: number) => {
@@ -141,19 +144,17 @@ export default function HybridDomainPage() {
     triggerGlitchWipe((activeIndex - 1 + DOMAINS.length) % DOMAINS.length);
   };
 
+  // Wait for timeline card intro to finish
   useEffect(() => {
-    // Fake typing logic
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setTypedText(fullText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(typingInterval);
-      }
-    }, 50);
+    const onIntroComplete = () => setIntroComplete(true);
+    window.addEventListener("timeline-intro-complete", onIntroComplete);
+    return () => window.removeEventListener("timeline-intro-complete", onIntroComplete);
+  }, []);
 
-    // Countdown logic
+  // Countdown starts immediately when Phase 01 intro animation completes
+  useEffect(() => {
+    if (!introComplete) return;
+
     let [hours, minutes, seconds] = [71, 59, 59];
     const countdownInterval = setInterval(() => {
       seconds--;
@@ -170,11 +171,43 @@ export default function HybridDomainPage() {
       );
     }, 1000);
 
-    return () => {
-      clearInterval(typingInterval);
-      clearInterval(countdownInterval);
-    };
-  }, []);
+    return () => clearInterval(countdownInterval);
+  }, [introComplete]);
+
+  // Typing effect fires when the domain section actually scrolls into view
+  useEffect(() => {
+    if (!sectionVisible) return;
+
+    let currentIndex = 0;
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= fullText.length) {
+        setTypedText(fullText.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(typingInterval);
+      }
+    }, 50);
+
+    return () => clearInterval(typingInterval);
+  }, [sectionVisible]);
+
+  // Fade in the timer visually when the domain section scrolls into view
+  useEffect(() => {
+    if (!introComplete) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setSectionVisible(true);
+          obs.unobserve(el);
+        }
+      },
+      { threshold: 0.1 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [introComplete]);
 
   useEffect(() => {
     const autoplay = setInterval(() => {
@@ -188,7 +221,12 @@ export default function HybridDomainPage() {
   const active = DOMAINS[activeIndex];
 
   return (
-    <section className={styles.container} style={{ "--theme-rgb": active.themeRgb } as React.CSSProperties} id="domains">
+    <section
+      className={styles.container}
+      style={{ "--theme-rgb": active.themeRgb } as React.CSSProperties}
+      id="domains"
+      ref={sectionRef}
+    >
       <div className={styles.noiseOverlay} />
 
       {/* DASHBOARD HEADER */}
@@ -202,9 +240,15 @@ export default function HybridDomainPage() {
           <div className={styles.typingText}>{typedText}</div>
         </div>
 
-        <div className={styles.timerBox}>
+        <div
+          className={styles.timerBox}
+          style={{
+            opacity: introComplete ? 1 : 0,
+            transition: "opacity 0.8s ease 0.3s",
+          }}
+        >
           <div className={styles.timerLabel}>T-MINUS // SURVIVAL TICKER</div>
-          <div className={styles.timerValue}>{timer}</div>
+          <div className={styles.timerValue}>{introComplete ? timer : "72:00:00"}</div>
         </div>
       </div>
 

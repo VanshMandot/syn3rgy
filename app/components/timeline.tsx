@@ -529,9 +529,10 @@ function StatBar({ stat, difficulty, triggered }: StatBarProps) {
 interface RoundSectionProps {
   round: RoundData;
   onVisibilityChange: (index: number, isVisible: boolean) => void;
+  pageReady: boolean;
 }
 
-function RoundSection({ round, onVisibilityChange }: RoundSectionProps) {
+function RoundSection({ round, onVisibilityChange, pageReady }: RoundSectionProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const [metaIn, setMetaIn] = useState(false);
   const [titleIn, setTitleIn] = useState(false);
@@ -550,7 +551,7 @@ function RoundSection({ round, onVisibilityChange }: RoundSectionProps) {
       ([entry]) => {
         const isVis = entry.isIntersecting;
         onVisibilityChange(round.index, isVis);
-        if (isVis && !revealed) {
+        if (isVis && !revealed && pageReady) {
           setRevealed(true);
           setTimeout(() => setMetaIn(true), 0);
           setTimeout(() => setTitleIn(true), 130);
@@ -565,7 +566,7 @@ function RoundSection({ round, onVisibilityChange }: RoundSectionProps) {
     );
     obs.observe(el);
     return () => obs.disconnect();
-  }, [round.index, revealed, onVisibilityChange]);
+  }, [round.index, revealed, onVisibilityChange, pageReady]);
 
   // Parallax ghost number
   useEffect(() => {
@@ -1034,6 +1035,8 @@ export default function BorderlandTimeline() {
   const handleIntroComplete = useCallback(() => {
     setPageVisible(true);
     setParticlesActive(true);
+    // Signal to RegisterButton and domain timer that the intro is done
+    window.dispatchEvent(new CustomEvent("timeline-intro-complete"));
   }, []);
 
   const handleVisibilityChange = useCallback((index: number, isVisible: boolean) => {
@@ -1104,6 +1107,7 @@ export default function BorderlandTimeline() {
             <RoundSection
               round={round}
               onVisibilityChange={handleVisibilityChange}
+              pageReady={pageVisible}
             />
 
             {/* Section dividers between rounds */}

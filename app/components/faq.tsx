@@ -431,11 +431,17 @@ export default function FAQSection() {
   };
 
   return (
-    <section ref={sectionRef} className="relative w-full min-h-screen bg-[#020204] overflow-hidden py-24 sm:py-32 flex flex-col justify-center items-center" id="faq">
+    <section ref={sectionRef} className="relative w-full min-h-screen bg-[#050508] overflow-hidden py-24 sm:py-32 flex flex-col justify-center items-center" id="faq">
       
-      {/* ── Background Ambience ── */}
+      {/* ── Background Ambience (Matching Timeline/Domain Grid) ── */}
+      <div 
+        className="absolute inset-0 pointer-events-none" 
+        style={{
+          backgroundImage: 'linear-gradient(rgba(255, 10, 55, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 10, 55, 0.03) 1px, transparent 1px)',
+          backgroundSize: '30px 30px'
+        }}
+      />
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,rgba(255,0,51,0.03)_0%,transparent_60%)]" />
-      <div className="absolute inset-0 pointer-events-none opacity-5 mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
 
       <div className="w-full max-w-5xl mx-auto px-5 relative z-10">
 
