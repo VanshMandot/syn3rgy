@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
 export function RegisterButton() {
   const [displayText, setDisplayText] = useState("REGISTER NOW");
   const [isHovered, setIsHovered] = useState(false);
+  const [isInDomains, setIsInDomains] = useState(false);
 
   // Periodic glitch text effect — same pattern as EnterButton
   useEffect(() => {
@@ -36,6 +38,18 @@ export function RegisterButton() {
       clearTimeout(initial);
       clearInterval(periodic);
     };
+  }, []);
+
+  // Watch #domains section — move button to bottom-left when visible
+  useEffect(() => {
+    const domainsEl = document.getElementById("domains");
+    if (!domainsEl) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setIsInDomains(entry.isIntersecting),
+      { threshold: 0.1 }
+    );
+    obs.observe(domainsEl);
+    return () => obs.disconnect();
   }, []);
 
   return (
@@ -86,16 +100,22 @@ export function RegisterButton() {
         }
       `}</style>
 
-      <a
-        id="register-button"
-        href="https://example.com/register"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-8 right-8 z-[9999] no-underline focus:outline-none"
-        aria-label="Register for SYNERGY 3.0"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+      <div 
+        className="fixed bottom-8 left-8 right-8 z-[9999] pointer-events-none flex items-end"
+        style={{ justifyContent: isInDomains ? "flex-start" : "flex-end" }}
       >
+        <motion.a
+          layout
+          transition={{ type: "spring", stiffness: 70, damping: 20 }}
+          id="register-button"
+          href="https://example.com/register"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="pointer-events-auto no-underline focus:outline-none max-w-fit"
+          aria-label="Register for SYNERGY 3.0"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
         {/* Outer glow + float container */}
         <div
           style={{ minWidth: '260px', padding: '0.5rem 2.0rem' }}
@@ -152,7 +172,8 @@ export function RegisterButton() {
             `}
           />
         </div>
-      </a>
+</motion.a>
+      </div>
     </>
   );
 }
