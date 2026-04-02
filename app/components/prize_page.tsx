@@ -77,7 +77,7 @@ function CrackedOverlay({ color }: { color: string }) {
         <path d="M50 50 L35 45 L25 55 L10 40" className="animate-pulse" />
         <circle cx="50" cy="50" r="5" style={{ stroke: color }} className="opacity-50" />
       </svg>
-      <div className="absolute inset-0 bg-white animate-impact-flash" />
+      <div className="absolute inset-0 bg-black animate-impact-flash" />
     </div>
   );
 }
@@ -250,15 +250,28 @@ export default function BorderlandGame() {
     const mPos = muzzleRef.current.getBoundingClientRect();
     const originX = mPos.left + mPos.width / 2;
     const originY = mPos.top;
-    const dist = Math.sqrt(Math.pow(ty - originY, 2) + Math.pow(tx - originX, 2));
+    // const dist = Math.sqrt(Math.pow(ty - originY, 2) + Math.pow(tx - originX, 2));
+
+    const dx = tx - originX;
+    const dy = ty - originY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    const angle = Math.atan2(dy, dx);
 
     const laser = laserRef.current;
     laser.style.left = `${originX}px`;
     laser.style.top = `${originY}px`;
     laser.style.height = `${dist}px`;
+    laser.style.transform = `rotate(${angle - Math.PI / 2}rad)`; 
+    laser.style.transformOrigin = "top center";
     laser.style.opacity = '1';
-    laser.style.backgroundColor = 'white';
-    laser.style.boxShadow = `0 0 50px ${color}`;
+    laser.style.backgroundColor = color; 
+  
+  // Layering: Core color + Darker shadow + Thin white "heat" center
+  laser.style.boxShadow = `
+    0 0 10px ${color}, 
+    0 0 30px #000000, 
+    0 0 5px rgba(255, 255, 255, 0.4) inset
+  `;
 
     setShake(true);
     setCrackingId(targetId);
