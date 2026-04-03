@@ -116,15 +116,49 @@ export function RegisterButton() {
         .reg-scan-line { animation: reg-scan 2.2s linear infinite; }
         .reg-ping-ring { animation: reg-ping 1.6s ease-out infinite; }
         .reg-corner    { animation: reg-corner-blink 1.2s step-end infinite; }
+        .reg-btn-wrapper {
+          width: max-content;
+          pointer-events: auto;
+          transition: all 1000ms cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @media (max-width: 1023px) {
+          .reg-btn-container {
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+          }
+          .reg-btn-wrapper {
+            position: relative;
+            left: auto !important;
+          }
+          .reg-btn-wrapper.mobile-hide {
+            transform: translateY(40px) !important;
+          }
+          .reg-btn-wrapper.mobile-show {
+            transform: translateY(0) !important;
+          }
+        }
+        @media (min-width: 1024px) {
+          .reg-btn-container {
+            left: 2rem;
+            right: 2rem;
+          }
+          .reg-btn-wrapper {
+            position: absolute;
+            bottom: 0;
+          }
+        }
       `}</style>
 
-      {/* Original slide animation — triggered by introComplete instead of isInDomains */}
-      <div className="fixed bottom-8 left-0 right-0 z-[9999] pointer-events-none flex justify-center h-20">
+      {/* Responsive layout: Centered on mobile, sliding left/right on desktop based on isInDomains */}
+      <div className="reg-btn-container fixed bottom-8 z-[9999] pointer-events-none h-20">
         <div
-          className="pointer-events-auto transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className={`reg-btn-wrapper ${introComplete ? "mobile-show" : "mobile-hide"}`}
           style={{
+            left: isInDomains ? "0%" : "100%",
+            transform: isInDomains ? "translateX(0%)" : "translateX(-100%)",
             opacity: introComplete ? 1 : 0,
-            transform: introComplete ? "translateY(0)" : "translateY(40px)",
           }}
         >
           <a
