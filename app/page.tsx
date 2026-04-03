@@ -123,10 +123,6 @@ export default function Home() {
 
             <div
               onClick={() => setIsFlipped(!isFlipped)}
-              onTouchEnd={(e) => {
-                e.preventDefault();
-                setIsFlipped(!isFlipped);
-              }}
               className={`relative w-72 h-[28rem] md:w-80 md:h-[32rem] cursor-pointer shadow-[0_30px_50px_rgba(255,0,0,0.1)] card-inner ${isFlipped ? 'flipped' : 'hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(255,0,0,0.5)] transition-transform duration-300'}`}
             >
               {/* --- FRONT OF CARD --- */}
@@ -187,12 +183,7 @@ export default function Home() {
                       e.stopPropagation();
                       setHasStarted(true);
                     }}
-                    onTouchEnd={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      setHasStarted(true);
-                    }}
-                    className={`border border-white/30 z-20 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_30px_rgba(255,0,0,1)] shadow-[0_0_15px_rgba(255,0,0,0.3)] ${isFlipped ? 'bg-[#050000] opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none disabled'
+                    className={`border border-white/30 z-20 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_30px_rgba(255,0,0,1)] shadow-[0_0_15px_rgba(255,0,0,0.3)] ${isFlipped ? 'bg-[#050000] opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                     } group`}
                     style={{ padding: '16px 30px', marginTop: '40px' }}
                   >

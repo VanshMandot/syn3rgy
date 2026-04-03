@@ -499,6 +499,15 @@
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
+  .container {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .mainContent {
+    flex-direction: column-reverse;
+  }
+
   .dashboardHeader {
     flex-direction: column;
     align-items: center;
@@ -508,18 +517,38 @@
   }
 
   .terminalBox {
-    min-width: 100%;
+    min-width: 90%;
+    margin-left: 0;
+    margin-top: 10px;
     justify-content: center;
   }
 
+  .timerBox {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin-top: 15px;
+  }
+
   .carouselStage {
-    flex: 1;
+    flex: none;
+    width: 100%;
     height: 45vh;
+    padding: 0;
+  }
+
+  .activeChar .charFrame {
+    height: 40vh;
+  }
+
+  .charFrame {
+    height: 30vh;
   }
 
   .bottomHUD {
+    width: 100%;
     height: auto;
-    padding: 20px 0;
+    padding: 10px 5vw 30px;
   }
 
   .hudContainer {
@@ -529,9 +558,15 @@
   }
 
   .hudCenter {
-    width: 60%;
+    width: 100%;
     position: static;
     transform: none;
+    align-items: center;
+    text-align: center;
+  }
+
+  .titleAreaHud {
+    justify-content: center;
   }
 
   .statsAndDesc {
@@ -550,6 +585,16 @@
 
   .navArrow {
     font-size: 3rem;
+    padding: 0 10px;
+    z-index: 500;
+  }
+
+  .navLeft {
+    left: 0;
+  }
+
+  .navRight {
+    right: 0;
   }
 }
 
