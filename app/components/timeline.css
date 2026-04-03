@@ -185,10 +185,10 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0; 
+  right: 0;
   z-index: 1000;
   pointer-events: none;
-  opacity: 0; 
+  opacity: 0;
   transition: opacity 1.2s;
   background: #050505;
   padding-bottom: 6px;
@@ -738,7 +738,7 @@
 }
 
 .tl-event-time-col {
-  width: 60px;
+  width: 100px;
   flex-shrink: 0;
   padding-top: 4px;
   text-align: right;
@@ -1276,30 +1276,69 @@
 
 /* ── RESPONSIVE STYLES ─────────────────────────────────────── */
 @media (max-width: 1024px) {
-  .tl-round { flex-direction: column; min-height: auto; }
-  .tl-panel-right, .tl-panel-right.flip-left { 
-    width: 100%; 
-    order: 1 !important; 
-    padding: 80px 20px 40px; 
-    justify-content: center; 
+  .tl-round {
+    flex-direction: column;
+    min-height: auto;
   }
-  .tl-panel-left, .tl-panel-left.flip-right { 
-    width: 100%; 
-    order: 2 !important; 
-    padding: 0 6vw 100px 8vw; 
+
+  .tl-panel-right,
+  .tl-panel-right.flip-left {
+    width: 100%;
+    order: 1 !important;
+    padding: 80px 20px 40px;
+    justify-content: center;
   }
-  
-  .tl-round-title { transform: translateX(0) !important; font-size: clamp(38px, 12vw, 68px); line-height: 1; }
-  .tl-meta { transform: translateX(0) !important; flex-wrap: wrap; }
-  .tl-ghost-num span { font-size: clamp(150px, 60vw, 400px); }
-  
-  .tl-card-scene { width: 250px; }
-  .tl-card-3d, .tl-card-back { width: 250px; height: 348px; }
+
+  .tl-panel-left,
+  .tl-panel-left.flip-right {
+    width: 100%;
+    order: 2 !important;
+    padding: 0 6vw 100px 8vw;
+  }
+
+  .tl-round-title {
+    transform: translateX(0) !important;
+    font-size: clamp(38px, 12vw, 68px);
+    line-height: 1;
+  }
+
+  .tl-meta {
+    transform: translateX(0) !important;
+    flex-wrap: wrap;
+  }
+
+  .tl-ghost-num span {
+    font-size: clamp(150px, 60vw, 400px);
+  }
+
+  .tl-card-scene {
+    width: 250px;
+  }
+
+  .tl-card-3d,
+  .tl-card-back {
+    width: 250px;
+    height: 348px;
+  }
 }
 
 @media (max-width: 480px) {
-  .tl-card-scene { width: 210px; }
-  .tl-card-3d, .tl-card-back { width: 210px; height: 292px; }
-  .tl-panel-left, .tl-panel-left.flip-right { padding: 0 24px 80px 24px; }
-  .tl-stat-label { width: 100px; }
+  .tl-card-scene {
+    width: 210px;
+  }
+
+  .tl-card-3d,
+  .tl-card-back {
+    width: 210px;
+    height: 292px;
+  }
+
+  .tl-panel-left,
+  .tl-panel-left.flip-right {
+    padding: 0 24px 80px 24px;
+  }
+
+  .tl-stat-label {
+    width: 100px;
+  }
 }
