@@ -76,6 +76,9 @@ export function EnterButton({ showButton, onClick, className = '' }: EnterButton
       console.warn("AudioContext synthesis failed", e);
     }
 
+    // Trigger the background audio with the entrance animation
+    window.dispatchEvent(new CustomEvent("start-bg-audio"));
+
     setTimeout(() => {
       router.push("/timeline");
     }, 500);
