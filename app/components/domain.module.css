@@ -392,13 +392,14 @@
 
 .titleText {
   font-family: 'Mileast', sans-serif !important;
-  font-size: clamp(3rem, 6vw, 6rem);
+  font-size: clamp(1.8rem, 8vw, 6rem);
   color: #FFFFFF;
   letter-spacing: 5px;
   margin: 0;
   line-height: 1;
   text-shadow: 0 0 15px rgba(var(--theme-rgb), 0.5);
   transition: text-shadow 0.5s ease;
+  word-wrap: break-word;
 }
 
 .subtitle {
