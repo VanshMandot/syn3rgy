@@ -322,9 +322,9 @@ function FAQCard({
           </div>
 
           {/* Question Text */}
-          <h3 className="text-white font-sans text-base md:text-lg font-bold leading-relaxed tracking-wide drop-shadow-md pr-4 group-hover:text-white transition-colors duration-200">
+          <p className="text-white font-sans text-base md:text-lg font-bold leading-relaxed tracking-wide drop-shadow-md pr-4 group-hover:text-white transition-colors duration-200">
             {item.question}
-          </h3>
+          </p>
 
           {/* Answer Accordion */}
           <AnimatePresence initial={false}>
@@ -458,7 +458,7 @@ export default function FAQSection() {
           </div>
           <h2 className="font-serif text-5xl md:text-7xl text-white tracking-widest drop-shadow-[0_0_20px_rgba(255,0,0,0.3)] flex items-center gap-4">
             <span className="text-red-500 animate-pulse drop-shadow-[0_0_15px_red]">♠</span>
-            INTEL
+            FAQ
             <span className="text-[#00bfff] drop-shadow-[0_0_15px_#00bfff]">♦</span>
           </h2>
           <p className="font-mono text-white/40 text-xs md:text-sm mt-6 max-w-xl mx-auto tracking-widest leading-loose">
