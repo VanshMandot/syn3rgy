@@ -119,13 +119,12 @@ export function RegisterButton() {
       `}</style>
 
       {/* Original slide animation — triggered by introComplete instead of isInDomains */}
-      <div className="fixed bottom-8 left-8 right-8 z-[9999] pointer-events-none h-20">
+      <div className="fixed bottom-8 left-0 right-0 z-[9999] pointer-events-none flex justify-center h-20">
         <div
-          className="absolute bottom-0 w-max pointer-events-auto transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className="pointer-events-auto transition-all duration-[1000ms] ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{
-            left: isInDomains ? "0%" : "100%",
-            transform: isInDomains ? "translateX(0%)" : "translateX(-100%)",
             opacity: introComplete ? 1 : 0,
+            transform: introComplete ? "translateY(0)" : "translateY(40px)",
           }}
         >
           <a
