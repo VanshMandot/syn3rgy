@@ -494,7 +494,7 @@ export default function FAQSection() {
           className="mt-20 text-center font-mono text-[0.65rem] md:text-xs text-white/30 tracking-[0.3em] uppercase flex items-center justify-center gap-4"
         >
           <span className="text-red-500/50 text-base">☠</span>
-          STILL HAVE QUESTIONS? CONTACT SYNERGY@SIGAI.IN
+          STILL HAVE QUESTIONS? CONTACT [email.com]
           <span className="text-red-500/50 text-base">☠</span>
         </motion.div>
 
