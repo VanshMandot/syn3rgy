@@ -158,8 +158,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  translate: -50% -50%;
   transform-style: preserve-3d;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -176,19 +176,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.characterItem {
-  position: absolute;
-  top: 20%;
-  left: 35%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transition: filter 0.5s ease, z-index 0s;
-  cursor: pointer;
 }
 
 .charFrame {
@@ -533,16 +520,16 @@
   .carouselStage {
     flex: none;
     width: 100%;
-    height: 45vh;
+    height: 50vh;
     padding: 0;
   }
 
   .activeChar .charFrame {
-    height: 40vh;
+    height: 42vh;
   }
 
   .charFrame {
-    height: 30vh;
+    height: 34vh;
   }
 
   .bottomHUD {
@@ -575,12 +562,12 @@
     border-top: 2px solid rgb(var(--theme-rgb));
     padding-left: 0;
     padding-top: 15px;
-    text-align: center;
-    align-items: center;
+    text-align: left;
+    align-items: flex-start;
   }
 
   .descText {
-    text-align: center;
+    text-align: left;
   }
 
   .navArrow {
