@@ -109,7 +109,7 @@
 
 /* ── FIXED CINEMATIC LAYERS ────────────────────────────────── */
 .tl-scanlines {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 490;
   pointer-events: none;
@@ -122,7 +122,7 @@
 }
 
 .tl-vignette {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 489;
   pointer-events: none;
@@ -131,7 +131,7 @@
 
 /* ── GRID BACKGROUND ───────────────────────────────────────── */
 .tl-grid-bg {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
@@ -146,7 +146,7 @@
 
 /* ── PARTICLES ─────────────────────────────────────────────── */
 .tl-particles {
-  position: fixed;
+  position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
@@ -182,7 +182,7 @@
 
 /* ── HUD ───────────────────────────────────────────────────── */
 .tl-hud {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0; 
@@ -282,10 +282,9 @@
 
 /* ── PROGRESS RAIL ─────────────────────────────────────────── */
 .tl-rail {
-  position: fixed;
+  position: absolute;
   left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 150px; /* Offset instead of 50% fixed */
   z-index: 400;
   display: flex;
   flex-direction: column;
@@ -326,8 +325,8 @@
 
 /* ── INTRO OVERLAY ─────────────────────────────────────────── */
 .tl-intro {
-  position: fixed;
-  inset: 0;
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 100vh;
   z-index: 9000;
   background: var(--aib-bg);
   display: flex;
