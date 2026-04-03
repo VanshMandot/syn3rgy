@@ -156,6 +156,13 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
+.secondary-font{
+  font-family: 'Mileast', sans-serif !important;
+}
+.primary-font{
+  font-family: 'CloisterBlack', serif !important;
+}
+
 /* Apply Mileast to ALL non-heading text elements - FORCE OVERRIDE */
 *, *::before, *::after {
   font-family: 'Mileast', sans-serif !important;

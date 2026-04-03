@@ -145,10 +145,10 @@ export default function Home() {
                   <div className={`text-red-600 text-[10rem] md:text-[11rem] leading-none drop-shadow-[0_0_35px_rgba(255,0,0,0.7)] transition-transform duration-500 ${isFlipped ? 'scale-110' : ''}`}>
                     ♥
                   </div>
-                  <span className="force-mono text-white tracking-[0.4em] text-lg md:text-xl uppercase drop-shadow-[0_0_8px_white] mt-4 text-center">
+                  <span className="secondary-font text-white tracking-[0.4em] text-lg md:text-xl uppercase drop-shadow-[0_0_8px_white] mt-4 text-center">
                     King of Hearts
                   </span>
-                  <p className="force-mono text-red-500 text-[10px] md:text-xs tracking-[0.25em] opacity-80 uppercase mt-2 text-center">
+                  <p className="primary-font text-red-500 text-[10px] md:text-xs tracking-[0.25em] opacity-80 uppercase mt-2 text-center">
                     Visa: Unlimited
                   </p>
                 </div>
@@ -158,7 +158,7 @@ export default function Home() {
                   {/* Scanline/Authorization button simulation */}
                   <div className="relative overflow-hidden border border-red-900/60 bg-red-900/10 rounded-sm shadow-[0_0_10px_rgba(255,0,0,0.2)]" style={{ padding: '8px 24px' }}>
                     <div className="absolute inset-0 bg-red-500/10 animate-pulse pointer-events-none"></div>
-                    <span className="force-mono text-red-500/90 text-[10px] md:text-xs tracking-[0.3em] uppercase whitespace-nowrap">
+                    <span className="primary-font text-red-500/90 text-[10px] md:text-xs tracking-[0.3em] uppercase whitespace-nowrap">
                       {isFlipped ? "Authorized" : "Tap to Authorize"}
                     </span>
                   </div>
@@ -176,7 +176,7 @@ export default function Home() {
                 <div className="flex flex-col items-center justify-center z-10 space-y-6 flex-grow">
                   <span className="text-white text-[6rem] leading-none animate-pulse drop-shadow-[0_0_15px_white] font-sans">☠</span>
                   
-                  <span className="force-mono text-white tracking-[0.3em] md:tracking-[0.4em] text-lg md:text-xl uppercase text-center ml-[0.2em] drop-shadow-[0_0_10px_white]">System Override</span>
+                  <span className="secondary-font text-white tracking-[0.3em] md:tracking-[0.4em] text-lg md:text-xl uppercase text-center ml-[0.2em] drop-shadow-[0_0_10px_white]">System Override</span>
 
                   <button
                     onClick={(e) => {
@@ -187,7 +187,7 @@ export default function Home() {
                     } group`}
                     style={{ padding: '16px 30px', marginTop: '40px' }}
                   >
-                    <p className="force-mono text-white text-[10px] md:text-xs tracking-[0.5em] font-bold group-hover:text-red-500 transition-colors drop-shadow-[0_0_5px_white]">ENTER ARENA</p>
+                    <p className="primary-font text-white text-[10px] md:text-xs tracking-[0.5em] font-bold group-hover:text-red-500 transition-colors drop-shadow-[0_0_5px_white]">ENTER ARENA</p>
                   </button>
                 </div>
               </div>

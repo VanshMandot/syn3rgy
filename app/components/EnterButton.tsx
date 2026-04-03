@@ -117,8 +117,8 @@ export function EnterButton({ showButton, onClick, className = '' }: EnterButton
           {/* Header */}
           <div className="flex flex-col items-center w-full border-b border-red-900/50 pb-4 relative">
             <span className="text-red-500 text-3xl md:text-4xl mb-3 animate-pulse drop-shadow-[0_0_10px_red]">♠</span>
-            <p className="force-mono text-red-500/80 text-[9px] md:text-xs tracking-[0.3em] uppercase">Device Authorized</p>
-            <span className="force-mono text-white text-lg md:text-2xl tracking-[0.4em] md:tracking-[0.5em] uppercase mt-2 drop-shadow-[0_0_10px_red]">Face Card</span>
+            <p className="secondary-font text-red-500/80 text-[9px] md:text-xs tracking-[0.3em] uppercase">Device Authorized</p>
+            <span className="primary-font text-white text-lg md:text-2xl tracking-[0.4em] md:tracking-[0.5em] uppercase mt-2 drop-shadow-[0_0_10px_red]">Face Card</span>
             <div className="absolute top-0 right-0 w-2 h-2 bg-red-600 rounded-full animate-ping" />
           </div>
 
@@ -131,7 +131,7 @@ export function EnterButton({ showButton, onClick, className = '' }: EnterButton
           {/* The Button */}
           <button 
             onClick={handleEnterClick}
-            className="force-mono w-full bg-gradient-to-r from-red-950 via-red-800 to-red-950 tracking-[0.3em] md:tracking-[0.4em] text-white text-[10px] md:text-sm uppercase hover:from-red-600 hover:via-red-500 hover:to-red-600 shadow-[0_0_15px_rgba(255,0,0,0.4)] hover:shadow-[0_0_40px_rgba(255,0,0,1)] border border-red-500 transition-all duration-300 relative overflow-hidden group"
+            className="primary-font w-full bg-gradient-to-r from-red-950 via-red-800 to-red-950 tracking-[0.3em] md:tracking-[0.4em] text-white text-[10px] md:text-sm uppercase hover:from-red-600 hover:via-red-500 hover:to-red-600 shadow-[0_0_15px_rgba(255,0,0,0.4)] hover:shadow-[0_0_40px_rgba(255,0,0,1)] border border-red-500 transition-all duration-300 relative overflow-hidden group"
             style={{ padding: '20px 40px' }}
           >
             <span className="relative z-10 whitespace-nowrap">{displayText}</span>

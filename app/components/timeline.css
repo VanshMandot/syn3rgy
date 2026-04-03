@@ -185,10 +185,10 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  z-index: 500;
+  right: 0; 
+  z-index: 1000;
   pointer-events: none;
-  opacity: 0;
+  opacity: 0; 
   transition: opacity 1.2s;
   background: #050505;
   padding-bottom: 6px;
