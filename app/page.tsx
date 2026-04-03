@@ -228,7 +228,10 @@ export default function Home() {
       {/* Skip Button */}
       {startVideo && !showButton && (
         <button
-          onClick={() => { router.push("/timeline"); }}
+          onClick={() => { 
+            window.dispatchEvent(new CustomEvent("start-bg-audio"));
+            router.push("/timeline"); 
+          }}
           className="absolute top-6 right-6 lg:top-10 lg:right-10 z-[999] pointer-events-auto text-white font-mono text-[10px] md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase border-2 border-red-500 bg-red-900/90 shadow-[0_0_20px_rgba(255,0,0,0.8)] backdrop-blur-md transition-all duration-300 hover:bg-red-600 hover:scale-105"
           style={{ padding: '12px 24px' }}
         >
