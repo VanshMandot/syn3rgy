@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { VideoLayer } from "./components/VideoLayer";
 import { GlitchOverlay } from "./components/GlitchOverlay";
 import { EnterButton } from "./components/EnterButton";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -87,7 +88,7 @@ export default function Home() {
 
         {/* Dynamic Dystopian Sky & Background */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#050000]">
-          <img src="/bg-city.png" className="absolute inset-0 w-full h-full object-cover opacity-60 contrast-125 saturate-150" alt="Cyberpunk City" />
+          <Image src="/bg-city.webp" className="absolute inset-0 w-full h-full object-cover opacity-60 contrast-125 saturate-150" alt="Cyberpunk City" fill style={{ objectFit: 'cover' }} />
 
           {/* Deep Blood-Red Sun/Glow */}
           <div className="absolute top-[-30%] left-1/2 -translate-x-1/2 w-[200vw] h-[200vw] md:w-[100vw] md:h-[100vw] bg-[radial-gradient(circle,rgba(255,0,0,0.5)_0%,transparent_60%)] animate-pulse mix-blend-overlay" />

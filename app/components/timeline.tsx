@@ -8,6 +8,7 @@ import React, {
   CSSProperties,
 } from "react";
 import { useInView } from "framer-motion";
+import Image from "next/image";
 import "./timeline.css";
 
 // ─────────────────────────────────────────────────────────────────
@@ -85,11 +86,11 @@ export const hackathonRounds: RoundData[] = [
     cardStripLabel: "Jack of Clubs — Day One",
     cardBackColors: ["rgba(0,245,212,.18)", "rgba(0,245,212,.3)", "rgba(0,245,212,.42)"],
     reverseLayout: false,
-    cardImage: "/timeline_cards/jackclubs.png",
+    cardImage: "/timeline_cards/jackclubs.webp",
     cardBackImages: [
-      "/timeline_cards/jackspades.png",
-      "/timeline_cards/jackhearts.png",
-      "/timeline_cards/jackdiamonds.png"
+      "/timeline_cards/jackspades.webp",
+      "/timeline_cards/jackhearts.webp",
+      "/timeline_cards/jackdiamonds.webp"
     ],
     events: [
       { time: "", title: "Registrations Begin", description: "Check in and collect your player badge." },
@@ -129,11 +130,11 @@ export const hackathonRounds: RoundData[] = [
     cardBackColors: ["rgba(255,214,10,.18)", "rgba(255,214,10,.3)", "rgba(255,214,10,.42)"],
     cardAnimDelay: "-3.5s",
     reverseLayout: true,
-    cardImage: "/timeline_cards/queenclubs.png",
+    cardImage: "/timeline_cards/queenclubs.webp",
     cardBackImages: [
-      "/timeline_cards/queenspades.png",
-      "/timeline_cards/queenhearts.png",
-      "/timeline_cards/queendiamonds.png"
+      "/timeline_cards/queenspades.webp",
+      "/timeline_cards/queenhearts.webp",
+      "/timeline_cards/queendiamonds.webp"
     ],
     dotStyle: { borderColor: "var(--aib-gold)", boxShadow: "0 0 8px rgba(255,214,10,.4)" },
     events: [
@@ -176,11 +177,11 @@ export const hackathonRounds: RoundData[] = [
     cardBackColors: ["rgba(217,4,41,.28)", "rgba(217,4,41,.45)", "rgba(217,4,41,.62)"],
     cardAnimDelay: "-1.8s",
     reverseLayout: false,
-    cardImage: "/timeline_cards/kingclubs.png",
+    cardImage: "/timeline_cards/kingclubs.webp",
     cardBackImages: [
-      "/timeline_cards/kingspades.png",
-      "/timeline_cards/kinghearts.png",
-      "/timeline_cards/kingdiamonds.png"
+      "/timeline_cards/kingspades.webp",
+      "/timeline_cards/kinghearts.webp",
+      "/timeline_cards/kingdiamonds.webp"
     ],
     events: [
       { time: "12:00 A.M", title: "Mentoring Round 2", description: "Progress review and debugging support. Overnight Development Phase continues." },
@@ -233,18 +234,18 @@ const HUD_MESSAGES = [
 ];
 
 const INTRO_CARDS = [
-  { v: "J", s: "♠", c: "#ededed", img: "/timeline_cards/jackspades.png" },
-  { v: "J", s: "♥", c: "#d90429", img: "/timeline_cards/jackhearts.png" },
-  { v: "J", s: "♦", c: "#d90429", img: "/timeline_cards/jackdiamonds.png" },
-  { v: "J", s: "♣", c: "#ededed", img: "/timeline_cards/jackclubs.png" },
-  { v: "Q", s: "♠", c: "#ededed", img: "/timeline_cards/queenspades.png" },
-  { v: "Q", s: "♥", c: "#d90429", img: "/timeline_cards/queenhearts.png" },
-  { v: "Q", s: "♦", c: "#d90429", img: "/timeline_cards/queendiamonds.png" },
-  { v: "Q", s: "♣", c: "#ededed", img: "/timeline_cards/queenclubs.png" },
-  { v: "K", s: "♠", c: "#ededed", img: "/timeline_cards/kingspades.png" },
-  { v: "K", s: "♥", c: "#d90429", img: "/timeline_cards/kinghearts.png" },
-  { v: "K", s: "♦", c: "#d90429", img: "/timeline_cards/kingdiamonds.png" },
-  { v: "K", s: "♣", c: "#ededed", img: "/timeline_cards/kingclubs.png" },
+  { v: "J", s: "♠", c: "#ededed", img: "/timeline_cards/jackspades.webp" },
+  { v: "J", s: "♥", c: "#d90429", img: "/timeline_cards/jackhearts.webp" },
+  { v: "J", s: "♦", c: "#d90429", img: "/timeline_cards/jackdiamonds.webp" },
+  { v: "J", s: "♣", c: "#ededed", img: "/timeline_cards/jackclubs.webp" },
+  { v: "Q", s: "♠", c: "#ededed", img: "/timeline_cards/queenspades.webp" },
+  { v: "Q", s: "♥", c: "#d90429", img: "/timeline_cards/queenhearts.webp" },
+  { v: "Q", s: "♦", c: "#d90429", img: "/timeline_cards/queendiamonds.webp" },
+  { v: "Q", s: "♣", c: "#ededed", img: "/timeline_cards/queenclubs.webp" },
+  { v: "K", s: "♠", c: "#ededed", img: "/timeline_cards/kingspades.webp" },
+  { v: "K", s: "♥", c: "#d90429", img: "/timeline_cards/kinghearts.webp" },
+  { v: "K", s: "♦", c: "#d90429", img: "/timeline_cards/kingdiamonds.webp" },
+  { v: "K", s: "♣", c: "#ededed", img: "/timeline_cards/kingclubs.webp" },
 ];
 
 
@@ -432,10 +433,14 @@ function CardScene({ round, revealed }: CardSceneProps) {
         </div>
 
         <div className="tl-card-face" style={round.cardFaceStyle}>
-          <img
+          <Image
             src={round.cardImage}
             alt={round.cardStripLabel}
             className="tl-card-img"
+            fill
+            style={{
+              objectFit: 'cover',
+            }}
           />
           <div className="tl-card-scanlines" />
         </div>
@@ -856,27 +861,23 @@ function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
               }}>
                 {/* Front face — card image */}
                 <div className="tl-ic-face">
-                  <img
+                  <Image
                     src={d.img}
                     alt={`${d.v}${d.s}`}
+                    fill
                     style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
+                      objectFit: 'cover',
                     }}
                   />
                 </div>
                 {/* Back face — facedown image */}
                 <div className="tl-ic-face tl-ic-back">
-                  <img
-                    src="/timeline_cards/facedown.png"
+                  <Image
+                    src="/timeline_cards/facedown.webp"
                     alt="Card back"
+                    fill
                     style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
+                      objectFit: 'cover',
                     }}
                   />
                 </div>
@@ -912,14 +913,12 @@ function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
                 transition: "box-shadow 0.8s ease",
               }}
             >
-              <img
-                src="/timeline_cards/timeline.png"
+              <Image
+                src="/timeline_cards/timeline.webp"
                 alt="Timeline"
+                fill
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
+                  objectFit: 'cover',
                 }}
               />
             </div>
@@ -934,14 +933,12 @@ function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
                 transition: "box-shadow 0.8s ease",
               }}
             >
-              <img
-                src="/timeline_cards/facedown.png"
+              <Image
+                src="/timeline_cards/facedown.webp"
                 alt="Card back"
+                fill
                 style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                  display: "block",
+                  objectFit: 'cover',
                 }}
               />
             </div>

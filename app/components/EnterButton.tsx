@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface EnterButtonProps {
   showButton: boolean;
@@ -105,7 +106,7 @@ export function EnterButton({ showButton, onClick, className = '' }: EnterButton
         
         {/* Terminal Environment Backdrop Replace */}
         <div className={`absolute inset-0 -z-10 transition-opacity duration-1000 ${isExiting ? 'opacity-0' : 'opacity-100'}`}>
-          <img src="/bg-terminal.png" className="absolute inset-0 w-full h-full object-cover opacity-60" alt="Cyberpunk Control Terminal" />
+          <Image src="/bg-terminal.webp" className="absolute inset-0 w-full h-full object-cover opacity-60" alt="Cyberpunk Control Terminal" fill style={{ objectFit: 'cover' }} />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0a0000] via-transparent to-[#0a0000] opacity-80" />
         </div>
 

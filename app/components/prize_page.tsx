@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, Suspense } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useGLTF, Float, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
+import Image from 'next/image';
 
 // --- 1. 3D Model Component ---
 function GunModel({ targetRotation }: { targetRotation: [number, number, number] }) {
@@ -111,13 +112,13 @@ function TrophyCard({ id, prize, glowColor, isRevealed, delay, imageSrc, frontIm
       style={{ transform: getTransform(), opacity: isFanned ? 1 : 0.8, zIndex: isFanned ? (id === 'c2' ? 1010 : 1000 + index) : 1000 + index, transition: 'all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)' }}>
       <div className="w-full h-full preserve-3d" style={{ animation: isFanned ? `drift 8s ease-in-out infinite ${delay}` : 'none' }}>
         <div className={`absolute inset-0 rounded-2xl flex flex-col items-center justify-center transition-all duration-1000 ${isRevealed ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`} style={{ background: 'transparent', boxShadow: isRevealed ? `0 0 60px ${glowColor}55` : 'none' }}>
-          <img src={imageSrc} alt="prize" className="absolute w-[230%] h-[230%] object-contain max-w-none pointer-events-none z-10" style={{ top: '42%', left: '50%', transform: 'translate(-50%, -50%)', filter: isRevealed ? `drop-shadow(0 0 40px ${glowColor})` : 'none' }} />
+          <Image src={imageSrc} alt="prize" className="absolute w-[230%] h-[230%] object-contain max-w-none pointer-events-none z-10" style={{ top: '42%', left: '50%', transform: 'translate(-50%, -50%)', filter: isRevealed ? `drop-shadow(0 0 40px ${glowColor})` : 'none' }} width={300} height={300} />
           <div className="absolute bottom-4 z-20 text-center">
             <div className="text-white text-xl md:text-5xl font-black italic tracking-tighter" style={{ textShadow: `0 0 20px ${glowColor}` }}>{prize}</div>
           </div>
         </div>
         <div className={`absolute inset-0 z-30 overflow-hidden bg-transparent border border-white/20 rounded-2xl flex items-center justify-center transition-all duration-150 ${isRevealed ? 'animate-shatter pointer-events-none' : 'opacity-100'}`}>
-          <img src={frontImage} alt="card face" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${isCracking ? 'opacity-40' : 'opacity-95'}`} />
+          <Image src={frontImage} alt="card face" className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${isCracking ? 'opacity-40' : 'opacity-95'}`} width={280} height={400} />
           {isCracking && <CrackedOverlay color={glowColor} />}
         </div>
         {isRevealed && <ShatterEffect color={glowColor} />}
@@ -147,9 +148,9 @@ export default function BorderlandGame() {
   const hasInteracted = useRef(false);
 
   const CARDS_DATA = [
-    { id: "c1", prize: "₹15,000", color: "#0000FF", img: "queen_trophy.png", frontImg: "queenheart_blue.png", delay: "0s" },
-    { id: "c2", prize: "₹25,000", color: "#FF8C00", img: "king_trophy.png", frontImg: "kingspade_red.png", delay: "-2s" },
-    { id: "c3", prize: "₹10,000", color: "#00FF00", img: "jack_trophy.png", frontImg: "jackclub_green.png", delay: "-4s" }
+    { id: "c1", prize: "₹15,000", color: "#0000FF", img: "/queen_trophy.webp", frontImg: "/queenheart_blue.webp", delay: "0s" },
+    { id: "c2", prize: "₹25,000", color: "#FF8C00", img: "/king_trophy.webp", frontImg: "/kingspade_red.webp", delay: "-2s" },
+    { id: "c3", prize: "₹10,000", color: "#00FF00", img: "/jack_trophy.webp", frontImg: "/jackclub_green.webp", delay: "-4s" }
   ];
 
   useEffect(() => {
@@ -262,7 +263,7 @@ export default function BorderlandGame() {
 
   return (
     <div ref={sectionRef} className={`relative w-full h-screen min-h-[600px] overflow-hidden transition-transform duration-75 ${shake ? 'scale-[1.01]' : 'scale-100'}`}>
-      <div className="absolute inset-0 z-0 bg-center bg-cover" style={{ backgroundImage: "url('/bg_prize.jpeg')", filter: 'brightness(0.6) contrast(1.2)' }} />
+      <div className="absolute inset-0 z-0 bg-center bg-cover" style={{ backgroundImage: "url('/bg_prize.webp')", filter: 'brightness(0.6) contrast(1.2)' }} />
 
       <div className="absolute top-10 left-1/2 -translate-x-1/2 z-[500] text-center w-full px-4 pointer-events-none">
         <h1 className="text-white text-4xl md:text-7xl font-black italic tracking-tighter" style={{ textShadow: '0 0 40px rgba(255,0,0,0.8)' }}>PRIZE VAULT</h1>

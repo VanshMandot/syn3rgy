@@ -12,9 +12,9 @@ const DOMAINS = [
     title: "WEB DEV",
     subtitle: "Playstyle: Smart, adaptive, problem-solver, system thinker....",
     description: "A master of logic and structure, Arisu navigates complex systems with precision. He builds seamless digital worlds, solving problems step by step and turning chaos into clean, functional design.",
-    image: "/characters/web.png",
-    cardImage: "/cards/spade.png",
-    backImage: "/characters/blue.png",
+    image: "/characters/web.webp",
+    cardImage: "/timeline_cards/jackspades.webp",
+    backImage: "/characters/blue.webp",
     themeRgb: "0, 191, 255", // Neon Cyan
     stats: [
       { name: "HP", val: 92 },
@@ -31,9 +31,9 @@ const DOMAINS = [
     title: "BLOCKCHAIN",
     subtitle: "Playstyle: Strategic, unpredictable, high IQ plays....",
     description: "Cold, calculated, and always ten steps ahead. Chishiya thrives in systems built on trust and deception, mastering decentralization, cryptography, and high-stakes decision-making.",
-    image: "/characters/blockchain.png",
-    cardImage: "/cards/club.png",
-    backImage: "/characters/yellow.png",
+    image: "/characters/blockchain.webp",
+    cardImage: "/timeline_cards/jackclubs.webp",
+    backImage: "/characters/yellow.webp",
     themeRgb: "234, 179, 8", // Neon Gold/Yellow
     stats: [
       { name: "HP", val: 88 },
@@ -50,9 +50,9 @@ const DOMAINS = [
     title: "CYBERSECURITY",
     subtitle: "Playstyle: Defensive offense, sharp instincts, resilience....",
     description: "Fearless and relentless, Kuina protects systems like a warrior. She anticipates threats, breaks through defenses, and ensures nothing slips past unnoticed.",
-    image: "/characters/kuina.png",
-    cardImage: "/cards/heart.png",
-    backImage: "/characters/red.png",
+    image: "/characters/kuina.webp",
+    cardImage: "/timeline_cards/kinghearts.webp",
+    backImage: "/characters/red.webp",
     themeRgb: "255, 0, 51", // Brutal Red
     stats: [
       { name: "HP", val: 95 },
@@ -69,9 +69,9 @@ const DOMAINS = [
     title: "AI / ML",
     subtitle: "Playstyle: Speed, adaptability, pattern recognition....",
     description: "Fast, precise, and always learning. Faith moves through data like a city skyline—adapting, predicting, and optimizing every step with intelligence and agility.",
-    image: "/characters/aiml.png",
-    cardImage: "/cards/diamond.png",
-    backImage: "/characters/green.png",
+    image: "/characters/aiml.webp",
+    cardImage: "/timeline_cards/kingdiamonds.webp",
+    backImage: "/characters/green.webp",
     themeRgb: "0, 255, 170", // Neon Mint Green
     stats: [
       { name: "HP", val: 90 },
@@ -88,9 +88,9 @@ const DOMAINS = [
     title: "OPEN INNOVATION",
     subtitle: "Playstyle: Aggressive, decisive, team-driven....",
     description: "A force of raw ambition and leadership. Aguni drives bold ideas into action, uniting people under pressure and pushing innovation beyond limits.",
-    image: "/characters/open.png",
-    cardImage: "/cards/joker.png",
-    backImage: "/characters/purple.png",
+    image: "/characters/open.webp",
+    cardImage: "/timeline_cards/facedown.webp",
+    backImage: "/characters/purple.webp",
     themeRgb: "176, 38, 255", // Neon Purple
     stats: [
       { name: "HP", val: 85 },
