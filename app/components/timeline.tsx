@@ -7,6 +7,7 @@ import React, {
   useCallback,
   CSSProperties,
 } from "react";
+import { useInView } from "framer-motion";
 import "./timeline.css";
 
 // ─────────────────────────────────────────────────────────────────
@@ -711,6 +712,8 @@ interface IntroCardState {
 }
 
 function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const [removed, setRemoved] = useState(false);
   const [introOut, setIntroOut] = useState(false);
   const [cardStates, setCardStates] = useState<IntroCardState[]>(() =>
@@ -742,6 +745,7 @@ function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
   );
 
   useEffect(() => {
+    if (!isInView) return;
     const t1 = setTimeout(() => {
       // SPLIT
       setCardStates((prev) =>
@@ -817,12 +821,12 @@ function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
       return () => clearTimeout(t2);
     }, 750);
     return () => clearTimeout(t1);
-  }, [onComplete, onFlyStart]);
+  }, [onComplete, onFlyStart, isInView]);
 
   if (removed) return null;
 
   return (
-    <div className={`tl-intro${introOut ? " out" : ""}`}>
+    <div ref={ref} className={`tl-intro${introOut ? " out" : ""}`}>
       <div className="tl-intro-corner tl">SYSTEM_READY // INITIATING</div>
       <div className="tl-intro-corner tr">
         PROTOCOL: BORDERLAND
