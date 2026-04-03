@@ -25,7 +25,7 @@ export interface StatEntry {
   value: number; // 0–100
 }
 
-export type Difficulty = "easy" | "medium" | "hard";
+export type Difficulty = "easy" | "medium" | "hard"
 export type GlowColor = "teal" | "gold" | "crim";
 
 export interface RoundData {
@@ -61,10 +61,10 @@ export interface RoundData {
 
 export const hackathonRounds: RoundData[] = [
   {
-    id: "r1",
+    id: "r0",
     index: 0,
-    roundNum: "01",
-    dayCode: "DAY_1 // REGISTRATION & KICKOFF",
+    roundNum: "00",
+    dayCode: "4th April - 12th April // REGISTRATION & KICKOFF",
     difficulty: "easy",
     title: "The First Game",
     tagline: '"Welcome to the Borderland. The game begins now."',
@@ -92,24 +92,22 @@ export const hackathonRounds: RoundData[] = [
       "/timeline_cards/jackdiamonds.png"
     ],
     events: [
-      { time: "09:00", title: "Gates Open — Registration", description: "Check in and collect your player badge." },
-      { time: "10:30", title: "Opening Ceremony", description: "Theme announcement and rules revealed." },
-      { time: "12:00", title: "Hacking Begins", description: "Teams enter the arena. The clock starts." },
-      { time: "18:00", title: "Mentorship Round 1", description: "Industry mentors offer guidance." },
-      { time: "21:00", title: "Night Challenge", description: "Surprise mini-game for bonus points." },
+      { time: "", title: "Registrations Begin", description: "Check in and collect your player badge." },
+      { time: "", title: "PPT Submission by 12th April", description: "Present your strategy. Submit your pitch deck before your visas expire — only the prepared survive." },
+      { time: "", title: "Survival of the Fittest", description: "The weak are eliminated. Only 40 teams advance to face the real game." }
     ],
     stats: [
       { label: "INTENSITY", value: 38 },
       { label: "RISK", value: 28 },
-      { label: "REWARD", value: 55 },
-      { label: "TEAMWORK", value: 82 },
+      { label: "REWARD", value: 45 },
+      { label: "TEAMWORK", value: 60 },
     ],
   },
   {
-    id: "r2",
+    id: "r1",
     index: 1,
-    roundNum: "02",
-    dayCode: "DAY_2 // BUILD & BATTLE",
+    roundNum: "01",
+    dayCode: "18th April - DAY_1 // BUILD & BATTLE",
     difficulty: "medium",
     title: "The Queen's Gambit",
     tagline: '"Only the strongest ideas survive."',
@@ -139,24 +137,24 @@ export const hackathonRounds: RoundData[] = [
     ],
     dotStyle: { borderColor: "var(--aib-gold)", boxShadow: "0 0 8px rgba(255,214,10,.4)" },
     events: [
-      { time: "08:00", title: "Sunrise Check-in", description: "Mandatory progress review." },
-      { time: "10:00", title: "Workshop: Weapons Upgrade", description: "AI/ML, Web3, and cloud workshops." },
-      { time: "13:00", title: "Mid-Game Review", description: "Judges observe. Pivot or persevere." },
-      { time: "16:00", title: "Sponsor Challenges", description: "Side quests with exclusive prizes." },
-      { time: "22:00", title: "Code Freeze Warning", description: "12 hours until final submission." },
+      { time: "1:00 P.M", title: "Reporting Time", description: "All participants must report to the venue. Verification and onboarding will be conducted." },
+      { time: "1:30 P.M", title: "Problem Statement Allotment (FCFS)", description: "Problem statements alloted on  a First-Come First-Serve basis via form." },
+      { time: "2:00 P.M", title: "Coding Round Begins", description: "Start of the 24-hour hackathon. Teams begin development." },
+      { time: "7:00 P.M", title: "Mentoring Round 1", description: "Teams present ideas; mentors provide guidance." },
+      { time: "8:00 P.M", title: "Dinner Break", description: "Dinner arranged in slots for participants." },
     ],
     stats: [
       { label: "INTENSITY", value: 65 },
       { label: "RISK", value: 60 },
       { label: "REWARD", value: 74 },
-      { label: "PRESSURE", value: 80 },
+      { label: "TEAMWORK", value: 80 },
     ],
   },
   {
-    id: "r3",
+    id: "r2",
     index: 2,
-    roundNum: "03",
-    dayCode: "DAY_3 // DEMO & JUDGEMENT",
+    roundNum: "01",
+    dayCode: "DAY_2 // DEMO & JUDGEMENT",
     difficulty: "hard",
     title: "The King's Verdict",
     tagline: '"The King decides who returns to the real world."',
@@ -185,17 +183,16 @@ export const hackathonRounds: RoundData[] = [
       "/timeline_cards/kingdiamonds.png"
     ],
     events: [
-      { time: "08:00", title: "Final Submission Hand-in", description: "Hacking concludes. Hands off keyboards." },
-      { time: "09:30", title: "Demo Exhibitions", description: "Showcase your surviving projects." },
-      { time: "13:00", title: "The Final Judgement", description: "Top 10 teams pitch on the main stage." },
-      { time: "15:30", title: "Closing Ceremony & Awards", description: "Prize distribution and closing remarks." },
-      { time: "17:00", title: "Game Cleared", description: "Hackathon officially ends. Survivors depart." },
+      { time: "12:00 A.M", title: "Mentoring Round 2", description: "Progress review and debugging support. Overnight Development Phase continues." },
+      { time: "8:00 A.M", title: "Breakfast Break", description: "Breakfast provided; teams continue work." },
+      { time: "2:00 PM", title: "Coding Ends", description: "Strict code freeze after 24 hours." },
+      { time: "2:00 PM", title: "Lunch & Judging", description: "Lunch with simultaneous team-wise judging." }
     ],
     stats: [
-      { label: "INTENSITY", value: 95 },
-      { label: "RISK", value: 90 },
+      { label: "INTENSITY", value: 100 },
+      { label: "RISK", value: 100 },
       { label: "REWARD", value: 100 },
-      { label: "GLORY", value: 100 },
+      { label: "TEAMWORK", value: 100 },
     ],
   },
 ];
@@ -622,7 +619,7 @@ function RoundSection({ round, onVisibilityChange, pageReady }: RoundSectionProp
       <div className="tl-events">
         {round.events.map((ev, i) => (
           <EventRow
-            key={ev.time}
+            key={`${round.id}-ev-${i}`}
             event={ev}
             isLast={i === round.events.length - 1}
             revealDelay={420 + i * 160}
