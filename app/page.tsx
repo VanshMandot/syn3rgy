@@ -32,10 +32,12 @@ export default function Home() {
   }, [startVideo]);
 
   const handleVideoEnded = () => {
-    setGlitch(true);
+
+    window.dispatchEvent(new CustomEvent("start-bg-audio"));
+
     setTimeout(() => {
-      setShowButton(true);
-    }, 800);
+      router.push("/timeline");
+    }, 100);
   };
 
   if (!hasStarted) {
@@ -101,13 +103,13 @@ export default function Home() {
 
         {/* 3D Laser Grid Floor */}
         <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_center,transparent_20%,#050000_80%)] pointer-events-none" />
-        <div className="absolute bottom-[-60vh] left-[-50vw] w-[200vw] h-[150vh] opacity-40 pointer-events-none z-0 animate-grid"
+        {/* <div className="absolute bottom-[-60vh] left-[-50vw] w-[200vw] h-[150vh] opacity-40 pointer-events-none z-0 animate-grid"
           style={{
             backgroundImage: 'linear-gradient(to right, #f00 2px, transparent 2px), linear-gradient(to bottom, #f00 2px, transparent 2px)',
             backgroundSize: '100px 100px',
             transformOrigin: 'top center'
           }}
-        />
+        /> */}
 
         <div className="absolute top-8 w-full flex justify-between items-center px-8 md:px-12 text-red-600/70 font-mono text-xs md:text-sm tracking-[0.3em] uppercase z-10 drop-shadow-[0_0_8px_red]">
           <span>Tokyo Metropolitan</span>
@@ -153,12 +155,16 @@ export default function Home() {
                   </p>
                 </div>
 
-                {/* Bottom Section - Anchored to absolute bottom */}
                 <div className="absolute bottom-8 flex flex-col items-center w-full px-6 z-10">
-                  {/* Scanline/Authorization button simulation */}
-                  <div className="relative overflow-hidden border border-red-900/60 bg-red-900/10 rounded-sm shadow-[0_0_10px_rgba(255,0,0,0.2)]" style={{ padding: '8px 24px' }}>
-                    <div className="absolute inset-0 bg-red-500/10 animate-pulse pointer-events-none"></div>
-                    <span className="primary-font text-red-500/90 text-[10px] md:text-xs tracking-[0.3em] uppercase whitespace-nowrap">
+                  <div 
+                    className="relative overflow-hidden border border-red-500 bg-red-950/40 rounded-sm shadow-[0_0_15px_rgba(255,0,0,0.4)]" 
+                    style={{ padding: '12px 32px' }}
+                  >
+                    {/* Animated scanning line to match EnterButton vibe */}
+                    <div className="absolute top-0 left-[-100%] w-full h-[1px] bg-white opacity-50 animate-[scan_2s_linear_infinite]" 
+                        style={{ boxShadow: '0 0 10px white' }} />
+                    
+                    <span className="secondary-fonttext-white text-[10px] md:text-xs tracking-[0.4em] uppercase whitespace-nowrap drop-shadow-[0_0_8px_rgba(255,0,0,0.8)]">
                       ENTER ARENA
                     </span>
                   </div>

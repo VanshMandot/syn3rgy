@@ -27,11 +27,17 @@ export function VideoLayer({ videoRef, isVisible, onEnded, className = '' }: Vid
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  useEffect(() => {
+    if (videoRef && 'current' in videoRef && videoRef.current) {
+      videoRef.current.volume = 0.15;
+      videoRef.current.playbackRate = 1.5;
+    }
+  }, [videoSrc]);
+
   return (
     <video
       ref={videoRef}
       src={videoSrc}
-      muted
       playsInline
       preload="auto"
       onEnded={onEnded}
