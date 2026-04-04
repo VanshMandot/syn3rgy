@@ -27,10 +27,10 @@ export default function MainGamePage() {
         <PrizeSection />
       </div>
 
-      {/* 4. FAQ Section */}
+      {/* 4. FAQ Section
       <div className="w-full relative z-40 block bg-black">
         <FAQSection />
-      </div>
+      </div> */}
     </main>
   );
 }
