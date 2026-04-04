@@ -138,6 +138,15 @@ export function RegisterButton() {
           .reg-btn-wrapper.mobile-show {
             transform: translateY(0) !important;
           }
+          .reg-btn-outer {
+            animation: reg-border-pulse 2.5s ease-in-out infinite !important;
+            min-width: auto !important;
+            padding: 0.4rem 1.5rem !important;
+          }
+          .reg-btn-container {
+            bottom: 0.75rem !important;
+            height: auto !important;
+          }
         }
         @media (min-width: 1024px) {
           .reg-btn-container {
