@@ -239,17 +239,6 @@ export default function HybridDomainPage() {
         <div className={styles.terminalBox}>
           <div className={styles.typingText}>{typedText}</div>
         </div>
-
-        <div
-          className={styles.timerBox}
-          style={{
-            opacity: introComplete ? 1 : 0,
-            transition: "opacity 0.8s ease 0.3s",
-          }}
-        >
-          <div className={styles.timerLabel}>T-MINUS // SURVIVAL TICKER</div>
-          <div className={styles.timerValue}>{introComplete ? timer : "72:00:00"}</div>
-        </div>
       </div>
 
       {/* CAROUSEL STAGE & HUD CONTENT */}

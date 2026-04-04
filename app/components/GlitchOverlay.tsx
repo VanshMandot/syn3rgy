@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 // ─────────────────────────────────────────────────────────────────
 //  GLITCH OVERLAY (existing)
@@ -35,9 +35,11 @@ export function LaserCursor() {
   const mouseRef = useRef<TrailPoint>({ X: -100, Y: -100 });
   const trailPointsRef = useRef<TrailPoint[]>([]);
   const animIdRef = useRef<number>(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const draw = useCallback(() => {
     const trail = trailPointsRef.current;
+    if (trail.length === 0) return;
     const mouse = mouseRef.current;
     let x = mouse.X;
     let y = mouse.Y;
@@ -79,11 +81,11 @@ export function LaserCursor() {
   }, []);
 
   useEffect(() => {
-    // Initialize 12 trail interpolation points
-    trailPointsRef.current = [];
-    for (let i = 0; i < 12; i++) {
-      trailPointsRef.current.push({ X: -100, Y: -100 });
-    }
+    const mql = window.matchMedia("(pointer: coarse)");
+    setIsMobile(mql.matches);
+    if (mql.matches) return;
+
+    trailPointsRef.current = Array.from({ length: 12 }, () => ({ X: -100, Y: -100 }));
 
     const handleMouseMove = (e: MouseEvent) => {
       if (pointerRef.current) {
@@ -94,19 +96,7 @@ export function LaserCursor() {
       mouseRef.current.Y = e.clientY + 4;
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      const touch = e.touches[0];
-      if (!touch) return;
-      if (pointerRef.current) {
-        pointerRef.current.style.left = touch.clientX + 'px';
-        pointerRef.current.style.top = touch.clientY + 'px';
-      }
-      mouseRef.current.X = touch.clientX + 4;
-      mouseRef.current.Y = touch.clientY + 4;
-    };
-
     window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('touchmove', handleTouchMove, { passive: true });
 
     function animate() {
       draw();
@@ -116,10 +106,11 @@ export function LaserCursor() {
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
       cancelAnimationFrame(animIdRef.current);
     };
   }, [draw]);
+
+  if (isMobile) return null;
 
   return (
     <div className="laser-cursor-container" aria-hidden="true">

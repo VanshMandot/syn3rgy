@@ -10,7 +10,6 @@ import Image from "next/image";
 export default function Home() {
   const router = useRouter();
   const [hasStarted, setHasStarted] = useState(false);
-  const [isFlipped, setIsFlipped] = useState(false);
   const [startVideo, setStartVideo] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [glitch, setGlitch] = useState(false);
@@ -19,7 +18,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!hasStarted) return;
-    const videoTimer = setTimeout(() => setStartVideo(true), 1000);
+    const videoTimer = setTimeout(() => setStartVideo(true), 100);
     return () => clearTimeout(videoTimer);
   }, [hasStarted]);
 
@@ -123,8 +122,8 @@ export default function Home() {
           <div className="animate-float-card flex items-center justify-center">
 
             <div
-              onClick={() => setIsFlipped(!isFlipped)}
-              className={`relative w-72 h-[28rem] md:w-80 md:h-[32rem] cursor-pointer shadow-[0_30px_50px_rgba(255,0,0,0.1)] card-inner ${isFlipped ? 'flipped' : 'hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(255,0,0,0.5)] transition-transform duration-300'}`}
+              onClick={() => setHasStarted(true)}
+              className="relative w-72 h-[28rem] md:w-80 md:h-[32rem] cursor-pointer shadow-[0_30px_50px_rgba(255,0,0,0.1)] hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(255,0,0,0.5)] transition-transform duration-300"
             >
               {/* --- FRONT OF CARD --- */}
               <div className="card-face absolute inset-0 bg-black/90 border-[3px] border-red-900/80 rounded-2xl flex flex-col justify-between shadow-[inset_0_0_50px_rgba(255,0,0,0.1)] overflow-hidden pb-8">
@@ -143,7 +142,7 @@ export default function Home() {
 
                 {/* Absolute Center: Big Heart + "King of Hearts" + "VISA: Unlimited" */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center justify-center w-full z-10">
-                  <div className={`text-red-600 text-[10rem] md:text-[11rem] leading-none drop-shadow-[0_0_35px_rgba(255,0,0,0.7)] transition-transform duration-500 ${isFlipped ? 'scale-110' : ''}`}>
+                  <div className="text-red-600 text-[10rem] md:text-[11rem] leading-none drop-shadow-[0_0_35px_rgba(255,0,0,0.7)] transition-transform duration-500">
                     ♥
                   </div>
                   <span className="secondary-font text-white tracking-[0.4em] text-lg md:text-xl uppercase drop-shadow-[0_0_8px_white] mt-4 text-center">
@@ -160,36 +159,9 @@ export default function Home() {
                   <div className="relative overflow-hidden border border-red-900/60 bg-red-900/10 rounded-sm shadow-[0_0_10px_rgba(255,0,0,0.2)]" style={{ padding: '8px 24px' }}>
                     <div className="absolute inset-0 bg-red-500/10 animate-pulse pointer-events-none"></div>
                     <span className="primary-font text-red-500/90 text-[10px] md:text-xs tracking-[0.3em] uppercase whitespace-nowrap">
-                      {isFlipped ? "Authorized" : "Tap to Authorize"}
+                      ENTER ARENA
                     </span>
                   </div>
-                </div>
-              </div>
-
-              {/* --- BACK OF CARD --- */}
-              <div className="card-face card-back absolute inset-0 bg-gradient-to-b from-red-950 to-red-900 border-[3px] border-red-600 rounded-2xl flex flex-col items-center justify-center shadow-[0_0_60px_rgba(255,0,0,0.5)] overflow-hidden">
-                {/* Diagonal caution stripes */}
-                <div className="absolute inset-0 bg-[repeating-linear-gradient(45deg,transparent,transparent_15px,rgba(0,0,0,0.5)_15px,rgba(0,0,0,0.5)_30px)] pointer-events-none" />
-                
-                {/* Glowing Core */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-red-600/20 blur-[50px] rounded-full pointer-events-none"></div>
-
-                <div className="flex flex-col items-center justify-center z-10 space-y-6 flex-grow">
-                  <span className="text-white text-[6rem] leading-none animate-pulse drop-shadow-[0_0_15px_white] font-sans">☠</span>
-                  
-                  <span className="secondary-font text-white tracking-[0.3em] md:tracking-[0.4em] text-lg md:text-xl uppercase text-center ml-[0.2em] drop-shadow-[0_0_10px_white]">System Override</span>
-
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setHasStarted(true);
-                    }}
-                    className={`border border-white/30 z-20 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_30px_rgba(255,0,0,1)] shadow-[0_0_15px_rgba(255,0,0,0.3)] ${isFlipped ? 'bg-[#050000] opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-                    } group`}
-                    style={{ padding: '16px 30px', marginTop: '40px' }}
-                  >
-                    <p className="primary-font text-white text-[10px] md:text-xs tracking-[0.5em] font-bold group-hover:text-red-500 transition-colors drop-shadow-[0_0_5px_white]">ENTER ARENA</p>
-                  </button>
                 </div>
               </div>
             </div>
@@ -218,7 +190,7 @@ export default function Home() {
 
       {/* Dark overlay for readability */}
       <div
-        className={`absolute inset-0 bg-black/60 z-10 pointer-events-none transition-opacity duration-1000 ${
+        className={`absolute inset-0 bg-black/60 z-10 pointer-events-none transition-opacity duration-100 ${
           startVideo ? 'opacity-100' : 'opacity-0'
         }`}
       />

@@ -1,6 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@400;500;600;700;800;900&display=swap');
 @import url('https://fonts.cdnfonts.com/css/mileast');
 
+/* Hide scrollbar for Chrome, Safari, Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for IE/Edge legacy */
+body {
+  -ms-overflow-style: none;
+}
+
 /* Cloister Black font for headings */
 @font-face {
   font-family: 'CloisterBlack';
@@ -383,4 +398,10 @@ html *::after {
   filter: url(#laser-glow);
   stroke: url(#laser-gradient);
   stroke-width: 2;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .laser-cursor-container {
+    display: none !important;
+  }
 }

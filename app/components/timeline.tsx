@@ -53,7 +53,7 @@ export interface RoundData {
   cardImage: string;        // path to card image in timeline_cards
   cardBackImages: [string, string, string];
   events: DayEvent[];
-  stats: StatEntry[];
+  // stats: StatEntry[];
 }
 
 // ─────────────────────────────────────────────────────────────────
@@ -97,12 +97,6 @@ export const hackathonRounds: RoundData[] = [
       { time: "", title: "PPT Submission by 12th April", description: "Present your strategy. Submit your pitch deck before your visas expire — only the prepared survive." },
       { time: "", title: "Survival of the Fittest", description: "The weak are eliminated. Only 40 teams advance to face the real game." }
     ],
-    stats: [
-      { label: "INTENSITY", value: 38 },
-      { label: "RISK", value: 28 },
-      { label: "REWARD", value: 45 },
-      { label: "TEAMWORK", value: 60 },
-    ],
   },
   {
     id: "r1",
@@ -144,12 +138,6 @@ export const hackathonRounds: RoundData[] = [
       { time: "7:00 P.M", title: "Mentoring Round 1", description: "Teams present ideas; mentors provide guidance." },
       { time: "8:00 P.M", title: "Dinner Break", description: "Dinner arranged in slots for participants." },
     ],
-    stats: [
-      { label: "INTENSITY", value: 65 },
-      { label: "RISK", value: 60 },
-      { label: "REWARD", value: 74 },
-      { label: "TEAMWORK", value: 80 },
-    ],
   },
   {
     id: "r2",
@@ -188,12 +176,6 @@ export const hackathonRounds: RoundData[] = [
       { time: "8:00 A.M", title: "Breakfast Break", description: "Breakfast provided; teams continue work." },
       { time: "2:00 PM", title: "Coding Ends", description: "Strict code freeze after 24 hours." },
       { time: "2:00 PM", title: "Lunch & Judging", description: "Lunch with simultaneous team-wise judging." }
-    ],
-    stats: [
-      { label: "INTENSITY", value: 100 },
-      { label: "RISK", value: 100 },
-      { label: "REWARD", value: 100 },
-      { label: "TEAMWORK", value: 100 },
     ],
   },
 ];
@@ -377,7 +359,8 @@ function CardScene({ round, revealed }: CardSceneProps) {
   const handleMouseEnter = useCallback(() => {
     backRefs.forEach((r, i) => {
       if (!r.current) return;
-      const sgn = round.reverseLayout ? 1 : i % 2 === 0 ? -1 : 1;
+      const base = i % 2 === 0 ? -1 : 1;
+      const sgn = round.reverseLayout ? -base : base;
       r.current.style.transform = `rotate(${sgn * (i + 1) * 18}deg) translate(${sgn * (i + 1) * 60}px,${(i + 1) * 12}px)`;
     });
   }, [round.reverseLayout]);
@@ -451,7 +434,7 @@ function CardScene({ round, revealed }: CardSceneProps) {
 
       {/* Label strip below card */}
       <div className="tl-card-strip">
-        <div className="tl-card-strip-val">{round.cardStripLabel}</div>
+        {/* <div className="tl-card-strip-val">{round.cardStripLabel}</div> */}
         <div className="tl-card-strip-line" style={{ background: round.cardShadowColor }} />
       </div>
     </div>
@@ -541,8 +524,8 @@ function RoundSection({ round, onVisibilityChange, pageReady }: RoundSectionProp
   const [titleIn, setTitleIn] = useState(false);
   const [taglineIn, setTaglineIn] = useState(false);
   const [divbarIn, setDivbarIn] = useState(false);
-  const [statsIn, setStatsIn] = useState(false);
-  const [statsFill, setStatsFill] = useState(false);
+  // const [statsIn, setStatsIn] = useState(false);
+  // const [statsFill, setStatsFill] = useState(false);
   const [revealed, setRevealed] = useState(false);
   const [ghostY, setGhostY] = useState(0);
 
@@ -560,8 +543,8 @@ function RoundSection({ round, onVisibilityChange, pageReady }: RoundSectionProp
           setTimeout(() => setTitleIn(true), 130);
           setTimeout(() => setTaglineIn(true), 260);
           setTimeout(() => setDivbarIn(true), 390);
-          setTimeout(() => setStatsIn(true), 500);
-          setTimeout(() => setStatsFill(true), 650);
+          // setTimeout(() => setStatsIn(true), 500);
+          // setTimeout(() => setStatsFill(true), 650);
           obs.unobserve(el);
         }
       },
@@ -634,17 +617,6 @@ function RoundSection({ round, onVisibilityChange, pageReady }: RoundSectionProp
         ))}
       </div>
 
-      {/* STATS */}
-      <div className={`tl-stat-panel${statsIn ? " in" : ""}`}>
-        {round.stats.map((stat) => (
-          <StatBar
-            key={stat.label}
-            stat={stat}
-            difficulty={round.difficulty}
-            triggered={statsFill}
-          />
-        ))}
-      </div>
     </div>
   );
 
@@ -829,15 +801,6 @@ function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
 
   return (
     <div ref={ref} className={`tl-intro${introOut ? " out" : ""}`}>
-      <div className="tl-intro-corner tl">SYSTEM_READY // INITIATING</div>
-      <div className="tl-intro-corner tr">
-        PROTOCOL: BORDERLAND
-        <br />
-        STATUS: ACTIVE
-      </div>
-      <div className="tl-intro-corner bl">GAME: HACKATHON_TIMELINE</div>
-      <div className="tl-intro-corner br">ROUNDS: 3 DETECTED</div>
-
       <div className="tl-arena">
         {/* Regular playing cards */}
         {INTRO_CARDS.map((d, i) => {
@@ -945,8 +908,6 @@ function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
           </div>
         </div>
       </div>
-
-      <div className="tl-lore-blink">— Enter the Borderland —</div>
     </div>
   );
 }
@@ -1012,13 +973,25 @@ function Particles({ active }: { active: boolean }) {
 //  ROOT COMPONENT
 // ─────────────────────────────────────────────────────────────────
 
-export default function BorderlandTimeline() {
+export default function BorderlandTimeline({ timelineStarted }: { timelineStarted: boolean }) {
   const [hudVisible, setHudVisible] = useState(false);
   const [railVisible, setRailVisible] = useState(false);
   const [pageVisible, setPageVisible] = useState(false);
   const [particlesActive, setParticlesActive] = useState(false);
   const [activeRound, setActiveRound] = useState(0);
   const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    if (timelineStarted && !pageVisible) {
+      document.body.style.overflow = "hidden";
+    } else if (pageVisible) {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [pageVisible, timelineStarted]);
 
 
   const sysMessage = useCyclingMessage(HUD_MESSAGES, 3200);
@@ -1061,7 +1034,7 @@ export default function BorderlandTimeline() {
   if (!isMounted) return null;
 
   return (
-    <div className="tl-root">
+    <div id="timeline" className="tl-root">
       {/* Custom cursor */}
       <div className="tl-cursor" ref={cursorRef} />
 

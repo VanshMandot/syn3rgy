@@ -5,7 +5,12 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 // Suit symbols for the raining cards
 const SUITS = ["♠", "♥", "♦", "♣"];
-const SUIT_COLORS = ["text-red-600", "text-white", "text-red-500", "text-gray-400"];
+const SUIT_COLORS = [
+  "text-red-600",
+  "text-white",
+  "text-red-500",
+  "text-gray-400",
+];
 
 interface FallingCard {
   id: number;
@@ -18,10 +23,39 @@ interface FallingCard {
   rotation: number;
 }
 
-export default function HeroBanner() {
+export default function HeroBanner({ timelineStarted }: { timelineStarted: boolean }) {
   const [cards, setCards] = useState<FallingCard[]>([]);
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [timer, setTimer] = useState("00:00:00");
+
+  useEffect(() => {
+    const targetDate = new Date("2026-04-18T13:00:00+05:30");
+
+    const updateTimer = () => {
+      const now = new Date();
+      const diff = targetDate.getTime() - now.getTime();
+
+      if (diff <= 0) {
+        setTimer("00:00:00");
+        return;
+      }
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      setTimer(
+        `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`
+      );
+    };
+
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const { scrollY } = useScroll();
   // HeroBanner fades out and shifts down slightly for a parallax effect as you scroll
@@ -30,17 +64,27 @@ export default function HeroBanner() {
 
   useEffect(() => {
     // Generate initial set of falling cards
-    const initialCards: FallingCard[] = Array.from({ length: 40 }).map((_, i) => ({
-      id: i,
-      suit: SUITS[Math.floor(Math.random() * SUITS.length)],
-      colorClass: SUIT_COLORS[Math.floor(Math.random() * SUIT_COLORS.length)],
-      left: `${Math.random() * 100}%`,
-      delay: Math.random() * 5,
-      duration: Math.random() * 5 + 4, // 4 to 9 seconds falling duration
-      size: Math.random() * 2 + 1.5, // 1.5rem to 3.5rem size
-      rotation: (Math.random() - 0.5) * 360,
-    }));
+    const initialCards: FallingCard[] = Array.from({ length: 40 }).map(
+      (_, i) => ({
+        id: i,
+        suit: SUITS[Math.floor(Math.random() * SUITS.length)],
+        colorClass: SUIT_COLORS[Math.floor(Math.random() * SUIT_COLORS.length)],
+        left: `${Math.random() * 100}%`,
+        delay: Math.random() * 5,
+        duration: Math.random() * 5 + 4, // 4 to 9 seconds falling duration
+        size: Math.random() * 2 + 1.5, // 1.5rem to 3.5rem size
+        rotation: (Math.random() - 0.5) * 360,
+      }),
+    );
     setCards(initialCards);
+  }, []);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -56,17 +100,61 @@ export default function HeroBanner() {
   return (
     <div
       className="relative w-full h-screen min-h-[600px] overflow-hidden bg-[#050000] select-none font-sans border-b-2 border-red-900/50"
-      onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      onMouseMove={!isMobile ? handleMouseMove : undefined}
+      onMouseEnter={!isMobile ? () => setIsHovering(true) : undefined}
+      onMouseLeave={!isMobile ? () => setIsHovering(false) : undefined}
     >
+      <style>{`
+  .timerBox {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    z-index: 50;
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+    background: rgba(5, 5, 5, 0.95);
+    padding: 6px 12px;
+    border: 1px solid rgba(255, 0, 0, 0.35);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+  }
+
+  .timerLabel {
+    font-size: 0.6rem;
+    color: #9CA3AF;
+    letter-spacing: 1px;
+  }
+
+  .timerValue {
+    font-size: 1.4rem;
+    color: rgb(255, 0, 0);
+    font-weight: bold;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+    line-height: 1;
+  }
+
+  @media (max-width: 768px) {
+    .timerBox {
+      top: 10px;
+      right: 12px;
+      padding: 5px 10px;
+    }
+
+    .timerValue {
+      font-size: 1.1rem;
+    }
+  }
+`}</style>
       <motion.div
         style={{ opacity, y: yOffset }}
         className="absolute inset-0 w-full h-full flex flex-col items-center justify-center"
       >
         {/* Background with interactive Red Spotlight */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-
           {/* Black & White Base Layer */}
           <div
             className="absolute inset-0 bg-cover bg-center transition-transform duration-1000 ease-out"
@@ -76,22 +164,24 @@ export default function HeroBanner() {
           {/* Darkening Overlay for text readability */}
           <div className="absolute inset-0 bg-black/60 pointer-events-none" />
 
-          {/* Dynamic Red Spotlight (Uses mix-blend to colorize the area behind it) */}
-          <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-300 mix-blend-color"
-            style={{
-              opacity: isHovering ? 1 : 0,
-              background: `radial-gradient(circle 250px at ${mousePos.x}% ${mousePos.y}%, rgba(255, 0, 0, 1) 0%, transparent 100%)`
-            }}
-          />
-          {/* Dynamic Red Glow (Adds visceral light) */}
-          <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-300 mix-blend-screen"
-            style={{
-              opacity: isHovering ? 1 : 0,
-              background: `radial-gradient(circle 180px at ${mousePos.x}% ${mousePos.y}%, rgba(255, 0, 0, 0.45) 0%, transparent 100%)`
-            }}
-          />
+          {!isMobile && (
+            <>
+              <div
+                className="absolute inset-0 pointer-events-none transition-opacity duration-300 mix-blend-color"
+                style={{
+                  opacity: isHovering ? 1 : 0,
+                  background: `radial-gradient(circle 250px at ${mousePos.x}% ${mousePos.y}%, rgba(255, 0, 0, 1) 0%, transparent 100%)`,
+                }}
+              />
+              <div
+                className="absolute inset-0 pointer-events-none transition-opacity duration-300 mix-blend-screen"
+                style={{
+                  opacity: isHovering ? 1 : 0,
+                  background: `radial-gradient(circle 180px at ${mousePos.x}% ${mousePos.y}%, rgba(255, 0, 0, 0.45) 0%, transparent 100%)`,
+                }}
+              />
+            </>
+          )}
         </div>
 
         {/* Raining Cards Animation */}
@@ -103,7 +193,7 @@ export default function HeroBanner() {
               animate={{
                 y: "110vh",
                 opacity: [0, 0.8, 0.8, 0],
-                rotate: card.rotation + (Math.random() > 0.5 ? 180 : -180)
+                rotate: card.rotation + (Math.random() > 0.5 ? 180 : -180),
               }}
               transition={{
                 duration: card.duration,
@@ -127,9 +217,16 @@ export default function HeroBanner() {
         {/* TV Static Overlay */}
         <div
           className="absolute inset-0 opacity-[0.03] z-[2] pointer-events-none mix-blend-overlay"
-          style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")' }}
+          style={{
+            backgroundImage:
+              'url("https://www.transparenttextures.com/patterns/stardust.png")',
+          }}
         />
 
+        <div className="timerBox">
+          <div className="timerLabel">T-MINUS // SURVIVAL TICKER</div>
+          <div className="timerValue">{timer}</div>
+        </div>
         {/* HUD Elements */}
         <div className="absolute top-6 left-6 md:top-10 md:left-10 z-20 font-mono text-[10px] md:text-sm text-red-500 tracking-[0.3em] uppercase">
           PLAYER ID: UNKNOWN <br />
@@ -138,7 +235,6 @@ export default function HeroBanner() {
 
         {/* Main Title Content */}
         <div className="relative z-20 flex flex-col items-center justify-center w-full px-4 text-center pointer-events-none">
-
           {/* Subtitle */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -150,7 +246,9 @@ export default function HeroBanner() {
           </motion.div>
 
           {/* CSS for text glitches */}
-          <style dangerouslySetInnerHTML={{__html: `
+          <style
+            dangerouslySetInnerHTML={{
+              __html: `
             .glitch-word {
               position: relative;
               display: inline-block;
@@ -194,7 +292,9 @@ export default function HeroBanner() {
               80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, 2px); }
               100% { clip-path: inset(5% 0 80% 0); transform: translate(-2px, -1px); }
             }
-          `}} />
+          `,
+            }}
+          />
 
           {/* Title decorated with Cards and Glitch */}
           <motion.h1
@@ -204,42 +304,66 @@ export default function HeroBanner() {
             transition={{ duration: 1, ease: "easeOut" }}
             style={{ textShadow: "0px 0px 20px rgba(0, 0, 0, 0.9)" }}
           >
-            <span className="glitch-word" data-text="SYNERGY">SYNERGY</span>
-            <span className="text-white/80 text-[0.7em] drop-shadow-md pb-2 md:pb-4">♠</span>
-            <span className="glitch-word" data-text="IN">IN</span>
+            <span className="glitch-word" data-text="SYNERGY">
+              SYNERGY
+            </span>
+            <span className="text-white/80 text-[0.7em] drop-shadow-md pb-2 md:pb-4">
+              ♠
+            </span>
+            <span className="glitch-word" data-text="IN">
+              IN
+            </span>
             {/* <span className="text-red-600 text-[0.7em] drop-shadow-[0_0_15px_rgba(255,0,0,0.8)] pb-2 md:pb-4">♥</span> */}
-            <span className="glitch-word" data-text="BORDERLAND">BORDERLAND</span>
+            <span className="glitch-word" data-text="BORDERLAND">
+              BORDERLAND
+            </span>
           </motion.h1>
-
         </div>
+      </motion.div>
 
-        {/* Action / Warning box */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 1 }}
-          className="mt-10 md:mt-16 relative overflow-hidden group/btn cursor-pointer z-20 pointer-events-auto"
-          onClick={() => {
-            const timeline = document.getElementById("timeline") || document.querySelector(".tl-round");
-            if (timeline) {
-              timeline.scrollIntoView({ behavior: "smooth" });
-            } else {
-              window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
-            }
-          }}
-        >
-          {/* Glowing border effects for the button */}
-          <div className="absolute inset-0 border border-red-700/50 group-hover/btn:border-red-500 transition-colors duration-300"></div>
-          <div className="absolute inset-0 bg-red-950/40 backdrop-blur-md"></div>
+      {/* Action / Warning box */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{
+          opacity: isMobile ? (timelineStarted ? 0 : 1) : 1,
+          y: isMobile ? (timelineStarted ? 40 : 0) : 0,
+        }}
+        transition={{ duration: 0.4 }}
+        className={`
+        ${isMobile ? "fixed bottom-18 left-1/2 -translate-x-1/2" : "absolute bottom-16 left-1/2 -translate-x-1/2"}
+        z-50 cursor-pointer
+      `}
+        onClick={() => {
+          window.dispatchEvent(new Event("triggerTimeline"));
+          const timeline =
+            document.getElementById("timeline") ||
+            document.querySelector(".tl-round");
+          if (timeline) {
+            const rect = timeline.getBoundingClientRect();
+            const offset = window.innerHeight * 0.0001;
+            window.scrollTo({
+              top: window.scrollY + rect.top - offset,
+              behavior: "smooth",
+            });
+          } else {
+            window.scrollBy({
+              top: window.innerHeight * 1.3,
+              behavior: "smooth",
+            });
+          }
+        }}
+      >
+        {/* Glowing border effects for the button */}
+        <div className="absolute inset-0 border border-red-700/50 group-hover/btn:border-red-500 transition-colors duration-300"></div>
+        <div className="absolute inset-0 bg-red-950/40 backdrop-blur-md"></div>
 
-          <div className="relative px-8 md:px-12 py-3 md:py-4 flex items-center gap-4 group-hover/btn:bg-red-900/30 transition-colors duration-300">
-            <span className="text-red-500 animate-pulse">▼</span>
-            <p className="font-mono text-red-500 text-xs md:text-sm tracking-[0.4em] uppercase font-bold group-hover/btn:text-white transition-colors duration-300">
-              Scroll down to survive
-            </p>
-            <span className="text-red-500 animate-pulse">▼</span>
-          </div>
-        </motion.div>
+        <div className="relative px-8 md:px-12 py-3 md:py-4 flex items-center gap-4 group-hover/btn:bg-red-900/30 transition-colors duration-300">
+          {!isMobile && <span className="text-red-500 animate-pulse">▼</span>}
+          <p className="font-mono text-red-500 text-xs md:text-sm tracking-[0.4em] uppercase font-bold group-hover/btn:text-white transition-colors duration-300">
+            {isMobile? "Scroll down":"Scroll down to survive"}
+          </p>
+          {!isMobile && <span className="text-red-500 animate-pulse">▼</span>}
+        </div>
       </motion.div>
     </div>
   );

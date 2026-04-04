@@ -143,10 +143,6 @@ export function RegisterButton() {
             min-width: auto !important;
             padding: 0.4rem 1.5rem !important;
           }
-          .reg-btn-container {
-            bottom: 0.75rem !important;
-            height: auto !important;
-          }
         }
         @media (min-width: 1024px) {
           .reg-btn-container {
@@ -161,7 +157,7 @@ export function RegisterButton() {
       `}</style>
 
       {/* Responsive layout: Centered on mobile, sliding left/right on desktop based on isInDomains */}
-      <div className="reg-btn-container fixed bottom-8 z-[9999] pointer-events-none h-20">
+      <div className="reg-btn-container fixed bottom-4 z-[9999] pointer-events-none h-20">
         <div
           className={`reg-btn-wrapper ${introComplete ? "mobile-show" : "mobile-hide"}`}
           style={{
