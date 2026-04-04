@@ -191,13 +191,13 @@ export function RegisterButton() {
                 <div className="reg-ping-ring absolute inset-0 rounded-full bg-red-500" />
               </div>
 
-              <span className="text-red-500 text-3xl leading-none drop-shadow-[0_0_12px_rgba(255,0,51,0.9)] animate-pulse">♠</span>
+              <span className="hidden md:inline text-red-500 text-3xl leading-none drop-shadow-[0_0_12px_rgba(255,0,51,0.9)] animate-pulse">♠</span>
 
               <span className={`font-mono text-sm md:text-base tracking-[0.32em] uppercase whitespace-nowrap transition-colors duration-200 ${isHovered ? "text-red-400 drop-shadow-[0_0_8px_rgba(255,0,51,0.8)]" : "text-white drop-shadow-[0_0_5px_rgba(255,0,51,0.4)]"}`}>
                 {displayText}
               </span>
 
-              <span className="font-mono text-red-600/65 text-[10px] md:text-[11px] tracking-[0.25em] uppercase">
+              <span className="hidden md:inline font-mono text-red-600/65 text-[10px] md:text-[11px] tracking-[0.25em] uppercase">
                 VISA REQUIRED
               </span>
 

@@ -754,14 +754,14 @@ function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
         prev.map((s) => {
           let xt = 120 + Math.random() * 90;
           if (Math.random() < 0.5) xt *= -1;
-          return { ...s, x: xt, y: (Math.random() - 0.5) * 55, rot: (Math.random() - 0.5) * 25, duration: 0.5, easing: "ease" };
+          return { ...s, x: xt, y: (Math.random() - 0.5) * 55, rot: (Math.random() - 0.5) * 25, duration: 0.25, easing: "ease" };
         })
       );
 
       const t2 = setTimeout(() => {
         // MERGE
         setCardStates((prev) =>
-          prev.map((s) => ({ ...s, x: 0, y: 0, rot: (Math.random() - 0.5) * 7, duration: 0.55, easing: "ease" }))
+          prev.map((s) => ({ ...s, x: 0, y: 0, rot: (Math.random() - 0.5) * 7, duration: 0.25, easing: "ease" }))
         );
 
         const t3 = setTimeout(() => {
@@ -777,12 +777,12 @@ function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
                 rot: (Math.random() - 0.5) * 65,
                 scale: 0.82,
                 facedown: false,
-                duration: 1,
+                duration: 0.5,
                 easing: "cubic-bezier(.25,.46,.45,.94)",
               };
             })
           );
-          setTitleState((s) => ({ ...s, x: 0, y: 0, rot: 0, scale: 1.45, facedown: false, duration: 1, easing: "cubic-bezier(.25,.46,.45,.94)" }));
+          setTitleState((s) => ({ ...s, x: 0, y: 0, rot: 0, scale: 1.45, facedown: false, duration: 0.5, easing: "cubic-bezier(.25,.46,.45,.94)" }));
 
           const t4 = setTimeout(() => {
             setTitleGlow(true);
@@ -800,28 +800,28 @@ function CardIntro({ onComplete, onFlyStart }: CardIntroProps) {
                     rot: (Math.random() - 0.5) * 100,
                     scale: 0.3,
                     opacity: 0,
-                    duration: 1.1,
+                    duration: 0.5,
                     easing: "cubic-bezier(.55,.06,.68,.19)",
                   };
                 })
               );
-              setTitleState((s) => ({ ...s, y: -650, scale: 0.3, opacity: 0, duration: 1.1, easing: "cubic-bezier(.55,.06,.68,.19)" }));
+              setTitleState((s) => ({ ...s, y: -650, scale: 0.3, opacity: 0, duration: 0.5, easing: "cubic-bezier(.55,.06,.68,.19)" }));
 
               const t6 = setTimeout(() => {
                 setIntroOut(true);
                 onComplete();
-                setTimeout(() => setRemoved(true), 2000);
-              }, 900);
+                setTimeout(() => setRemoved(true), 800);
+              }, 450);
               return () => clearTimeout(t6);
-            }, 3400);
+            }, 1200);
             return () => clearTimeout(t5);
-          }, 1000);
+          }, 450);
           return () => clearTimeout(t4);
-        }, 580);
+        }, 250);
         return () => clearTimeout(t3);
-      }, 480);
+      }, 200);
       return () => clearTimeout(t2);
-    }, 750);
+    }, 200);
     return () => clearTimeout(t1);
   }, [onComplete, onFlyStart, isInView]);
 
