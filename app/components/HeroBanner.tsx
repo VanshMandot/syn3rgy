@@ -106,7 +106,7 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
     >
       <style>{`
   .timerBox {
-    display: none;
+    display: flex;
     position: absolute;
     top: 16px;
     right: 20px;
@@ -122,12 +122,6 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
     backdrop-filter: blur(4px);
   }
 
-  @media (min-width: 768px) {
-    .timerBox {
-      display: flex;
-    }
-  }
-
   .timerLabel {
     font-size: 0.6rem;
     color: #9CA3AF;
@@ -141,6 +135,18 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
     letter-spacing: 2px;
     text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
     line-height: 1;
+  }
+
+  @media (max-width: 768px) {
+    .timerBox {
+      top: 10px;
+      right: 12px;
+      padding: 5px 10px;
+    }
+
+    .timerValue {
+      font-size: 1.1rem;
+    }
   }
 `}</style>
       <motion.div
@@ -226,13 +232,13 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
           PLAYER ID: UNKNOWN <br />
           <span className="text-white">STATUS: IN_GAME</span>
         </div>}
-        <div className="absolute top-5 right-5 md:right-auto md:items-center z-20">
+        {/* <div className="absolute top-5 right-5 md:right-auto md:items-center z-20">
           <img 
             src="/logo2.jpeg"
             alt="Player HUD Logo"
             className="w-32 md:w-48 lg:w-56 h-auto object-contain"
           />
-        </div>
+        </div> */}
 
         {/* Main Title Content */}
         <div className="relative z-20 flex flex-col items-center justify-center w-full px-4 text-center pointer-events-none">
