@@ -228,10 +228,10 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
           <div className="timerValue">{timer}</div>
         </div>
         {/* HUD Elements */}
-        <div className="absolute top-6 left-6 md:top-10 md:left-10 z-20 font-mono text-[10px] md:text-sm text-red-500 tracking-[0.3em] uppercase">
+        {!isMobile && <div className="absolute top-6 left-6 md:top-10 md:left-10 z-20 font-mono text-[10px] md:text-sm text-red-500 tracking-[0.3em] uppercase">
           PLAYER ID: UNKNOWN <br />
           <span className="text-white">STATUS: IN_GAME</span>
-        </div>
+        </div>}
 
         {/* Main Title Content */}
         <div className="relative z-20 flex flex-col items-center justify-center w-full px-4 text-center pointer-events-none">
@@ -333,7 +333,7 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
         transition={{ duration: 0.4 }}
         className={`
         ${isMobile ? "fixed bottom-18 left-1/2 -translate-x-1/2" : "absolute bottom-16 left-1/2 -translate-x-1/2"}
-        z-50 cursor-pointer
+        z-50 cursor-pointer w-max
       `}
         onClick={() => {
           window.dispatchEvent(new Event("triggerTimeline"));

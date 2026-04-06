@@ -108,9 +108,9 @@ export default function Home() {
           }}
         /> */}
 
-        <div className="absolute top-8 w-full flex justify-between items-center px-8 md:px-12 text-red-600/70 font-mono text-xs md:text-sm tracking-[0.3em] uppercase z-10 drop-shadow-[0_0_8px_red]">
+        <div className="absolute top-8 w-full flex justify-center md:justify-between items-center px-8 md:px-12 text-red-600/70 font-mono text-xs md:text-sm tracking-[0.3em] uppercase z-10 drop-shadow-[0_0_8px_red]">
           <span>Tokyo Metropolitan</span>
-          <span className="animate-pulse flex items-center gap-2">
+          <span className="hidden md:flex animate-pulse flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-red-600 shadow-[0_0_10px_red]"></span>
             Population: 0
           </span>

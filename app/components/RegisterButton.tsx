@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export function RegisterButton() {
   const [displayText, setDisplayText] = useState("REGISTER NOW");
@@ -8,11 +9,13 @@ export function RegisterButton() {
   const [isInDomains, setIsInDomains] = useState(false);
   // Gate: only attach the domain observer after the card intro animation ends
   const [introComplete, setIntroComplete] = useState(false);
+  const pathname = usePathname();
 
   // Wait for timeline card intro to finish before doing anything
   useEffect(() => {
     const onIntroComplete = () => setIntroComplete(true);
     window.addEventListener("timeline-intro-complete", onIntroComplete);
+    if (pathname !== "/timeline") setIntroComplete(false);
     return () => window.removeEventListener("timeline-intro-complete", onIntroComplete);
   }, []);
 
@@ -76,6 +79,10 @@ export function RegisterButton() {
       if (obs) obs.disconnect();
     };
   }, [introComplete]);
+
+  if (pathname !== "/timeline") {
+    return null;
+  }
 
   return (
     <>
@@ -147,7 +154,7 @@ export function RegisterButton() {
       `}</style>
 
       {/* Responsive layout: Centered on mobile, sliding left/right on desktop based on isInDomains */}
-      <div className="reg-btn-container fixed bottom-0 z-[9999] pointer-events-none h-20">
+      <div className="reg-btn-container fixed bottom-0 md:bottom-4 z-[9999] pointer-events-none h-20">
         <div
           className={`reg-btn-wrapper ${introComplete ? "mobile-show" : "mobile-hide"}`}
           style={{
