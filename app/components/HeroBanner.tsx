@@ -64,7 +64,7 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
 
   useEffect(() => {
     // Generate initial set of falling cards
-    const initialCards: FallingCard[] = Array.from({ length: 40 }).map(
+    const initialCards: FallingCard[] = Array.from({ length: 20 }).map(
       (_, i) => ({
         id: i,
         suit: SUITS[Math.floor(Math.random() * SUITS.length)],
@@ -261,13 +261,14 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
               left: 0;
               width: 100%;
               height: 100%;
-              opacity: 0.8;
+              opacity: 0.6;
               pointer-events: none;
             }
+            @media (min-width: 640px) {
             .glitch-word::before {
               left: 3px;
               text-shadow: -2px 0 red;
-              animation: glitch-anim-1 2s infinite linear alternate-reverse;
+              animation: glitch-anim-1 1s infinite linear alternate-reverse;
             }
             .glitch-word::after {
               left: -3px;
@@ -291,6 +292,7 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
               60% { clip-path: inset(20% 0 50% 0); transform: translate(-1px, -2px); }
               80% { clip-path: inset(50% 0 30% 0); transform: translate(1px, 2px); }
               100% { clip-path: inset(5% 0 80% 0); transform: translate(-2px, -1px); }
+            }
             }
           `,
             }}

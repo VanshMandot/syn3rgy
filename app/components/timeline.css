@@ -540,6 +540,7 @@
   letter-spacing: 0.3em;
   color: var(--aib-green);
   text-transform: uppercase;
+  flex-shrink: 0;
 }
 
 .tl-meta-sep {
@@ -576,6 +577,52 @@
   color: var(--aib-red2);
   border-color: rgba(255, 10, 55, 0.5);
   background: rgba(255, 10, 55, 0.08);
+}
+@media (max-width: 768px) {
+  .tl-meta {
+    flex-direction: column; 
+    align-items: center;    
+    text-align: center;
+    gap: 8px; /* Slightly more breathing room */
+    
+    /* Change animation: fly in from bottom instead of left for mobile centering */
+    transform: translateY(20px); 
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .tl-meta.in {
+    transform: translateY(0);
+  }
+
+  /* 1. Day Code at the top */
+  .day-code {
+    order: 2;
+    margin: 0;
+    width: 100%;
+  }
+
+  /* 2. Round Num in middle */
+  .round-num {
+    order: 1;
+    margin: 0;
+    width: 100%;
+  }
+
+  /* 3. Red Separator at the bottom */
+  .tl-meta-sep:not(.hide-mobile) {
+    order: 3;
+    width: 60px; /* Wider line looks better centered */
+    height: 2px; /* Slightly thicker for the "glitch" feel */
+    margin-top: 5px;
+    /* Ensure it doesn't shrink */
+    flex-basis: auto; 
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
 }
 
 /* ── ROUND TITLE ───────────────────────────────────────────── */
@@ -901,6 +948,21 @@
   transform-style: preserve-3d;
   animation: tl-cfloat 7s ease-in-out infinite;
   will-change: transform;
+}
+
+@media (max-width: 768px) {
+  .tl-card-back {
+    transform: rotate(0deg) translate(0, 0) !important;
+    scale: 0.85; 
+  }
+  
+  /* Ensure the scene container doesn't try to expand */
+  .tl-card-scene {
+    transform: scale(0.85);
+    width: auto;
+    overflow: visible;
+    margin-bottom: -10px;
+  }
 }
 
 @keyframes tl-cfloat {
@@ -1369,6 +1431,35 @@
   }
 }
 
+.show-mobile-only {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .tl-panel-right,
+  .tl-panel-right.flip-left {
+    width: 100%;
+    order: 1 !important;
+    padding: 20px 20px 40px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: flex-start; 
+  }
+
+  .show-mobile-only {
+    display: block !important;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .tl-round-title {
+    transform: none !important; 
+    position: relative;
+    z-index: 5;
+  }
+}
+
 @media (max-width: 480px) {
   .tl-hud-phase {
     font-size: clamp(1.2rem, 5.5vw, 1.8rem);
@@ -1398,5 +1489,11 @@
 
   .tl-stat-label {
     width: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
   }
 }

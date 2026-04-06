@@ -80,16 +80,6 @@ export function RegisterButton() {
   return (
     <>
       <style>{`
-        @keyframes reg-float {
-          0%, 100% {
-            transform: translateY(0px);
-            box-shadow: 0 0 18px rgba(255,0,51,0.45), 0 0 40px rgba(255,0,51,0.12), inset 0 0 8px rgba(255,0,51,0.1);
-          }
-          50% {
-            transform: translateY(-7px);
-            box-shadow: 0 0 32px rgba(255,0,51,0.75), 0 0 70px rgba(255,0,51,0.25), inset 0 0 16px rgba(255,0,51,0.2);
-          }
-        }
         @keyframes reg-border-pulse {
           0%, 100% { border-color: rgba(255,0,51,0.55); }
           50%       { border-color: rgba(255,0,51,1); }
@@ -157,12 +147,12 @@ export function RegisterButton() {
       `}</style>
 
       {/* Responsive layout: Centered on mobile, sliding left/right on desktop based on isInDomains */}
-      <div className="reg-btn-container fixed bottom-4 z-[9999] pointer-events-none h-20">
+      <div className="reg-btn-container fixed bottom-0 z-[9999] pointer-events-none h-20">
         <div
           className={`reg-btn-wrapper ${introComplete ? "mobile-show" : "mobile-hide"}`}
           style={{
-            left: isInDomains ? "0%" : "100%",
-            transform: isInDomains ? "translateX(0%)" : "translateX(-100%)",
+            left: "100%",
+            transform: "translateX(-100%)",
             opacity: introComplete ? 1 : 0,
           }}
         >

@@ -556,6 +556,18 @@
     text-align: center;
   }
 
+  @media (max-width: 768px) {
+  .statsAndDesc {
+    display: none !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .statsAndDesc {
+    display: flex; 
+  }
+}
+
   .navArrow {
     font-size: 3rem;
     padding: 0 10px;

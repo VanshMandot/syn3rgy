@@ -3,8 +3,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { VideoLayer } from "./components/VideoLayer";
-import { GlitchOverlay } from "./components/GlitchOverlay";
-import { EnterButton } from "./components/EnterButton";
 import Image from "next/image";
 
 export default function Home() {
@@ -12,7 +10,6 @@ export default function Home() {
   const [hasStarted, setHasStarted] = useState(false);
   const [startVideo, setStartVideo] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  const [glitch, setGlitch] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -125,7 +122,7 @@ export default function Home() {
 
             <div
               onClick={() => setHasStarted(true)}
-              className="relative w-72 h-[28rem] md:w-80 md:h-[32rem] cursor-pointer shadow-[0_30px_50px_rgba(255,0,0,0.1)] hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(255,0,0,0.5)] transition-transform duration-300"
+              className="relative w-72 h-[28rem] md:w-80 md:h-[32rem] cursor-pointer shadow-[0_30px_50px_rgba(255,0,0,0.1)] hover:scale-[1.02] hover:shadow-[0_0_50px_rgba(255,0,0,0.5)] transition-all group rounded-2xl"
             >
               {/* --- FRONT OF CARD --- */}
               <div className="card-face absolute inset-0 bg-black/90 border-[3px] border-red-900/80 rounded-2xl flex flex-col justify-between shadow-[inset_0_0_50px_rgba(255,0,0,0.1)] overflow-hidden pb-8">
@@ -200,9 +197,6 @@ export default function Home() {
           startVideo ? 'opacity-100' : 'opacity-0'
         }`}
       />
-
-      <GlitchOverlay active={glitch} className="z-30 backdrop-contrast-200" />
-      <EnterButton showButton={showButton} className="z-40" />
 
       {/* Skip Button */}
       {startVideo && !showButton && (

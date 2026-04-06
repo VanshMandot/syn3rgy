@@ -29,7 +29,7 @@ export function VideoLayer({ videoRef, isVisible, onEnded, className = '' }: Vid
 
   useEffect(() => {
     if (videoRef && 'current' in videoRef && videoRef.current) {
-      videoRef.current.volume = 0.15;
+      videoRef.current.volume = 0.5;
       videoRef.current.playbackRate = 1.5;
     }
   }, [videoSrc]);
