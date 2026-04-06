@@ -106,12 +106,12 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
     >
       <style>{`
   .timerBox {
+    display: flex;
     position: absolute;
     top: 16px;
     right: 20px;
     z-index: 50;
     text-align: right;
-    display: flex;
     flex-direction: column;
     pointer-events: none;
     background: rgba(5, 5, 5, 0.95);
@@ -228,10 +228,17 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
           <div className="timerValue">{timer}</div>
         </div>
         {/* HUD Elements */}
-        {!isMobile && <div className="absolute top-6 left-6 md:top-10 md:left-10 z-20 font-mono text-[10px] md:text-sm text-red-500 tracking-[0.3em] uppercase">
+        {!isMobile && <div className="absolute top-5 left-10 z-20 font-mono text-[10px] md:text-sm text-red-500 tracking-[0.3em] uppercase">
           PLAYER ID: UNKNOWN <br />
           <span className="text-white">STATUS: IN_GAME</span>
         </div>}
+        {/* <div className="absolute top-5 right-5 md:right-auto md:items-center z-20">
+          <img 
+            src="/logo2.jpeg"
+            alt="Player HUD Logo"
+            className="w-32 md:w-48 lg:w-56 h-auto object-contain"
+          />
+        </div> */}
 
         {/* Main Title Content */}
         <div className="relative z-20 flex flex-col items-center justify-center w-full px-4 text-center pointer-events-none">

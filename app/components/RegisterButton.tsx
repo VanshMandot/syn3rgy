@@ -165,7 +165,7 @@ export function RegisterButton() {
         >
           <a
             id="register-button"
-            href="https://example.com/register"
+            href="https://unstop.com/o/8n0VRdU?lb=k4RWa3I3&utm_medium=Share&utm_source=djsisa1531&utm_campaign=Online_coding_challenge"
             target="_blank"
             rel="noopener noreferrer"
             className="no-underline focus:outline-none block w-fit"
