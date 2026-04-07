@@ -65,7 +65,7 @@
       id: "r0",
       index: 0,
       roundNum: "00",
-      dayCode: "4th April - 12th April // REGISTRATION & KICKOFF",
+      dayCode: "4th April - 14th April // REGISTRATION & KICKOFF",
       difficulty: "easy",
       title: "The First Game",
       tagline: '"Welcome to the Borderland. The game begins now."',
@@ -94,7 +94,7 @@
       ],
       events: [
         { time: "", title: "Registrations Begin", description: "Check in and collect your player badge." },
-        { time: "", title: "PPT Submission by 12th April", description: "Present your strategy. Submit your pitch deck before your visas expire — only the prepared survive." },
+        { time: "", title: "PPT Submission by 14th April", description: "Present your strategy. Submit your pitch deck before your visas expire — only the prepared survive." },
         { time: "", title: "Survival of the Fittest", description: "The weak are eliminated. Only 40 teams advance to face the real game." }
       ],
     },
