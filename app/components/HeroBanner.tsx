@@ -301,25 +301,32 @@ export default function HeroBanner({ timelineStarted }: { timelineStarted: boole
 
           {/* Title decorated with Cards and Glitch */}
           <motion.h1
-            className="secondary-font text-4xl sm:text-5xl md:text-6xl lg:text-[7rem] xl:text-[8rem] font-black text-white uppercase mb-4 px-2 py-4 flex flex-wrap justify-center items-center gap-x-3 md:gap-x-4 lg:gap-x-6 leading-tight"
+            className="secondary-font text-4xl sm:text-5xl md:text-6xl lg:text-[7rem] xl:text-[8rem] font-black text-white uppercase mb-4 px-2 py-4 flex flex-col flex-wrap justify-center items-center gap-x-3 md:gap-x-4 lg:gap-x-6 leading-tight"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: "easeOut" }}
             style={{ textShadow: "0px 0px 20px rgba(0, 0, 0, 0.9)" }}
           >
-            <span className="glitch-word" data-text="SYNERGY">
-              SYNERGY
-            </span>
-            <span className="text-white/80 text-[0.7em] drop-shadow-md pb-2 md:pb-4">
-              ♠
-            </span>
-            <span className="glitch-word" data-text="IN">
-              IN
-            </span>
-            {/* <span className="text-red-600 text-[0.7em] drop-shadow-[0_0_15px_rgba(255,0,0,0.8)] pb-2 md:pb-4">♥</span> */}
-            <span className="glitch-word" data-text="BORDERLAND">
-              BORDERLAND
-            </span>
+<div className="flex items-center gap-x-3 md:gap-x-6">
+    <span className="text-white/80 text-[0.6em] drop-shadow-md pb-2 md:pb-4">
+      ♠
+    </span>
+    <span className="glitch-word" data-text="SYNERGY">
+      SYN3RGY
+    </span>
+    <span className="text-white/80 text-[0.6em] drop-shadow-md pb-2 md:pb-4">
+      ♠
+    </span>
+  </div>
+
+  <div className="flex items-center gap-x-3 md:gap-x-6 mt-2 md:mt-0">
+    <span className="glitch-word opacity-90" data-text="IN">
+      IN
+    </span>
+    <span className="glitch-word" data-text="BORDERLAND">
+      BORDERLAND
+    </span>
+  </div>
           </motion.h1>
         </div>
       </motion.div>
